@@ -38,7 +38,7 @@ script = ExtResource("3_dybc4")
 [node name="untitled" parent="RotatingSection" instance=ExtResource("3_l2hlo")]
 
 [node name="Area3D" type="Area3D" parent="RotatingSection"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 462, 0, 1.99998)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -55, 0, 2)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RotatingSection/Area3D"]
 shape = SubResource("BoxShape3D_30q01")
