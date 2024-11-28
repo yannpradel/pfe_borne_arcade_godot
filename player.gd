@@ -11,19 +11,35 @@ var move_direction = Vector3.ZERO  # Direction actuelle du déplacement
 
 var has_double_jumped = false
 
+# Flags pour enregistrer les commandes UDP
+var move_left_flag = false
+var move_right_flag = false
+var move_back_flag = false
+var move_forward_flag = false
+
 func _physics_process(delta):
-	# Réinitialise la direction à chaque frame
+	# Réinitialise la direction uniquement si aucune commande n'est active
 	move_direction = Vector3.ZERO
 
-	# Détection des mouvements horizontaux via le clavier
+	# Ajout des directions depuis les commandes UDP
+	if move_left_flag:
+		move_direction.x -= 1
+	if move_right_flag:
+		move_direction.x += 1
+	if move_back_flag:
+		move_direction.z += 1
+	if move_forward_flag:
+		move_direction.z -= 1
+
+	# Ajout des directions depuis le clavier
 	if Input.is_action_pressed("move_right"):
-		move_right()
+		move_direction.x += 1
 	if Input.is_action_pressed("move_left"):
-		move_left()
+		move_direction.x -= 1
 	if Input.is_action_pressed("move_back"):
-		move_back()
+		move_direction.z += 1
 	if Input.is_action_pressed("move_forward"):
-		move_forward()
+		move_direction.z -= 1
 
 	# Si une direction est spécifiée, normalise et oriente le Pivot
 	if move_direction != Vector3.ZERO:
@@ -33,10 +49,6 @@ func _physics_process(delta):
 	# Mise à jour des vitesses en fonction de la direction
 	target_velocity.x = move_direction.x * speed
 	target_velocity.z = move_direction.z * speed
-
-	# Gestion du saut et du double saut via le clavier
-	if Input.is_action_just_pressed("jump"):
-		jump()
 
 	# Gravité si le personnage est en l'air
 	if not is_on_floor():
@@ -49,44 +61,43 @@ func _physics_process(delta):
 	# Ajuste la vitesse de la caméra
 	adjust_camera_speed(delta)
 
-# Déplacement vers la gauche
+# Commandes UDP
 func move_left():
-	print("Déplacement à gauche")
-	move_direction.x = -1
-	$Pivot.basis = Basis.looking_at(move_direction)
+	move_left_flag = true
 
-# Déplacement vers la droite
 func move_right():
-	print("Déplacement à droite")
-	move_direction.x = 1
-	$Pivot.basis = Basis.looking_at(move_direction)
+	move_right_flag = true
 
-# Déplacement vers l'arrière
 func move_back():
-	print("Déplacement vers l'arrière")
-	move_direction.z = 1
-	$Pivot.basis = Basis.looking_at(move_direction)
+	move_back_flag = true
 
-# Déplacement vers l'avant
 func move_forward():
-	print("Déplacement vers l'avant")
-	move_direction.z = -1
-	$Pivot.basis = Basis.looking_at(move_direction)
+	move_forward_flag = true
+
+func stop_move_left():
+	move_left_flag = false
+
+func stop_move_right():
+	move_right_flag = false
+
+func stop_move_back():
+	move_back_flag = false
+
+func stop_move_forward():
+	move_forward_flag = false
 
 # Saut
 func jump():
 	if is_on_floor():
-		print("Saut")
 		target_velocity.y = jump_force
 		has_double_jumped = false
 	elif not has_double_jumped:
-		print("Double saut")
 		target_velocity.y = jump_force
 		has_double_jumped = true
 
 # Ajustement de la vitesse de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
-	var target_camera_z = global_transform.origin.z + 40
+	var target_camera_z = global_transform.origin.z + 50
 	var camera_position = camera.global_transform.origin.z
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
 	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)

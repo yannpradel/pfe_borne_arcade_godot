@@ -4,7 +4,6 @@ extends Node
 var server := UDPServer.new()
 var port := 12345
 var player: CharacterBody3D  # Référence au personnage à contrôler
-var fps_label: Label  # Référence au Label pour afficher les FPS
 
 func _ready():
 	print("Démarrage du serveur UDP sur le port %d..." % port)
@@ -21,18 +20,7 @@ func _ready():
 	else:
 		print("Erreur : Impossible de trouver le joueur.")
 
-	# Référence au Label pour afficher les FPS
-	fps_label = $FPSLabel  # Remplacez $FPSLabel par le chemin exact du Label
-	if fps_label:
-		print("FPSLabel trouvé avec succès.")
-	else:
-		print("Erreur : FPSLabel introuvable.")
-
 func _process(delta):
-	# Met à jour les FPS dans le Label
-	if fps_label:
-		fps_label.text = "FPS : %d" % Engine.get_frames_per_second()
-	
 	server.poll()  # Vérifie les connexions UDP
 
 	while server.is_connection_available():
@@ -40,18 +28,27 @@ func _process(delta):
 		if peer:
 			var packet = peer.get_packet()
 			var command = packet.get_string_from_utf8()
-			print("Commande reçue : %s" % command)
 
 			# Interpréter les commandes
 			match command:
 				"BUTTON_GAUCHE":
 					player.move_left()
+				"STOP_BUTTON_GAUCHE":
+					player.stop_move_left()
 				"BUTTON_DROIT":
 					player.move_right()
+				"STOP_BUTTON_DROIT":
+					player.stop_move_right()
+				"BUTTON_AVANT":
+					player.move_forward()
+				"STOP_BUTTON_AVANT":
+					player.stop_move_forward()
+				"BUTTON_ARRIERE":
+					player.move_back()
+				"STOP_BUTTON_ARRIERE":
+					player.stop_move_back()
 				"BUTTON_SAUT":
 					player.jump()
-				"BUTTON_BAS":
-					player.move_back()
 				_:
 					print("Commande inconnue : %s" % command)
 
