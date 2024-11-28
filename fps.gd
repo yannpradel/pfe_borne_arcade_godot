@@ -1,34 +1,45 @@
 extends Node
 
 var udp_socket = UDPServer.new()
-var port = 12345  # Port pour le socket UDP
-@onready var fps_label = $FPSLabel  # Assurez-vous que le chemin soit correct
+var port = 12345  # Port utilisé pour l'écoute UDP
 
 func _ready():
-	if udp_socket.listen(port) != OK:
-		print("Impossible de démarrer le serveur UDP")
-		return
-	print("Serveur UDP démarré sur le port %d" % port)
+	# Tente de démarrer le serveur UDP
+	var result = udp_socket.listen(port)
+	if result != OK:
+		print("Erreur : Impossible de démarrer le serveur UDP sur le port %d. Code d'erreur : %d" % [port, result])
+	else:
+		print("Serveur UDP démarré sur le port %d" % port)
 
 func _process(delta):
-		# Calcule et affiche les FPS
-	fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
+	# Vérifie si des données sont disponibles sur le port
 	while udp_socket.is_connection_available():
 		var packet = udp_socket.get_packet()
-		var message = packet.get_string_from_utf8()
-		if message == "BUTTON_1_PRESSED":
-			handle_button_1()
-		elif message == "BUTTON_2_PRESSED":
-			handle_button_2()
+		print("=== Données détectées ===")
+		print("Taille du paquet :", packet.size())  # Taille des données reçues
+		print("Données brutes :", packet)  # Contenu brut du paquet
+
+		if packet.size() > 0:
+			# Essaie de décoder les données en UTF-8
+			var message = packet.get_string_from_utf8()
+			print("Message décodé :", message)
+			
+			# Traite le message en fonction de son contenu
+			if message == "BUTTON_1_PRESSED":
+				print("Action détectée : Bouton 1 pressé")
+				handle_button_1()
+			elif message == "BUTTON_2_PRESSED":
+				print("Action détectée : Bouton 2 pressé")
+				handle_button_2()
+			else:
+				print("Message inconnu reçu :", message)
 
 func handle_button_1():
-	print("Bouton 1 pressé !")
-	# Ajoutez ici la logique pour le bouton 1, par exemple :
-	# Déplacer un personnage à gauche
-	pass
+	# Logique pour le bouton 1
+	print("Fonction handle_button_1 appelée")
+	print("Ajoutez ici une action pour le bouton 1")
 
 func handle_button_2():
-	print("Bouton 2 pressé !")
-	# Ajoutez ici la logique pour le bouton 2, par exemple :
-	# Déplacer un personnage à droite
-	pass
+	# Logique pour le bouton 2
+	print("Fonction handle_button_2 appelée")
+	print("Ajoutez ici une action pour le bouton 2")
