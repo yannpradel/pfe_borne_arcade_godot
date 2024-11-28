@@ -2,9 +2,11 @@ class_name ServerNode
 extends Node
 
 var server := UDPServer.new()
+var port := 12345
+var player: CharacterBody3D  # Référence au personnage à contrôler
+var fps_label: Label  # Référence au Label pour afficher les FPS
 
 func _ready():
-	var port = 12345
 	print("Démarrage du serveur UDP sur le port %d..." % port)
 	var result = server.listen(port)
 	if result != OK:
@@ -12,15 +14,44 @@ func _ready():
 	else:
 		print("Serveur UDP démarré avec succès sur le port %d" % port)
 
-func _process(delta):
-	server.poll()  # Nécessaire pour vérifier les connexions entrantes
+	# Référence au joueur
+	player = $Player  # Remplacez $Player par le chemin exact de votre personnage
+	if player:
+		print("Référence au joueur trouvée.")
+	else:
+		print("Erreur : Impossible de trouver le joueur.")
 
-	# Vérifie si une connexion est disponible
+	# Référence au Label pour afficher les FPS
+	fps_label = $FPSLabel  # Remplacez $FPSLabel par le chemin exact du Label
+	if fps_label:
+		print("FPSLabel trouvé avec succès.")
+	else:
+		print("Erreur : FPSLabel introuvable.")
+
+func _process(delta):
+	# Met à jour les FPS dans le Label
+	if fps_label:
+		fps_label.text = "FPS : %d" % Engine.get_frames_per_second()
+	
+	server.poll()  # Vérifie les connexions UDP
+
 	while server.is_connection_available():
 		var peer: PacketPeerUDP = server.take_connection()
 		if peer:
 			var packet = peer.get_packet()
-			print("Connexion reçue : %s:%d" % [peer.get_packet_ip(), peer.get_packet_port()])
-			print("Message reçu : %s" % [packet.get_string_from_utf8()])
-			# Répond directement au client
+			var command = packet.get_string_from_utf8()
+			print("Commande reçue : %s" % command)
+
+			# Interpréter les commandes
+			match command:
+				"BUTTON_GAUCHE":
+					player.move_left()
+				"BUTTON_DROIT":
+					player.move_right()
+				"BUTTON_SAUT":
+					player.jump()
+				_:
+					print("Commande inconnue : %s" % command)
+
+			# Répondre au client (facultatif)
 			peer.put_packet(packet)
