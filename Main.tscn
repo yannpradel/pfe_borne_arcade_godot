@@ -20,7 +20,7 @@ transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.766044, 0.642788, 0, -0.642788, 0.766044, 0, 15, 27)
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 32.8261, 27)
 size = 19.0
 
 [node name="FPSLabel" type="Label" parent="."]
@@ -38,7 +38,7 @@ script = ExtResource("3_dybc4")
 [node name="untitled" parent="RotatingSection" instance=ExtResource("3_l2hlo")]
 
 [node name="Area3D" type="Area3D" parent="RotatingSection"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 462, 0, 1.99998)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.246, 0, 1.99999)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RotatingSection/Area3D"]
 shape = SubResource("BoxShape3D_30q01")
