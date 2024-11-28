@@ -114,3 +114,7 @@ Merci de votre intérêt pour ce projet ! Toute contribution est la bienvenue po
 
 Pour toute question, n'hésitez pas à ouvrir une issue sur le dépôt GitHub.
 
+
+
+5. récupérer les fichiers pour exporter depuis godot 
+
