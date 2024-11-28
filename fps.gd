@@ -4,12 +4,16 @@ var udp_socket = UDPServer.new()
 var port = 12345  # Port utilisé pour l'écoute UDP
 
 func _ready():
-	# Tente de démarrer le serveur UDP
-	var result = udp_socket.listen(port)
+	print("Démarrage du serveur UDP...")
+	var result = udp_socket.listen(port, "*")  # Écoute sur toutes les interfaces
 	if result != OK:
 		print("Erreur : Impossible de démarrer le serveur UDP sur le port %d. Code d'erreur : %d" % [port, result])
 	else:
 		print("Serveur UDP démarré sur le port %d" % port)
+		# Affiche les détails du serveur
+		print("Adresse IP d'écoute : %s" % udp_socket.get_local_address())
+		print("Port d'écoute : %d" % port)
+
 
 func _process(delta):
 	# Vérifie si des données sont disponibles sur le port
