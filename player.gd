@@ -17,13 +17,13 @@ func _physics_process(delta):
 
 	# Détection des mouvements horizontaux via le clavier
 	if Input.is_action_pressed("move_right"):
-		move_direction.x += 1
+		move_right()
 	if Input.is_action_pressed("move_left"):
-		move_direction.x -= 1
+		move_left()
 	if Input.is_action_pressed("move_back"):
-		move_direction.z += 1
+		move_back()
 	if Input.is_action_pressed("move_forward"):
-		move_direction.z -= 1
+		move_forward()
 
 	# Si une direction est spécifiée, normalise et oriente le Pivot
 	if move_direction != Vector3.ZERO:
@@ -60,10 +60,17 @@ func move_right():
 	print("Déplacement à droite")
 	move_direction.x = 1
 	$Pivot.basis = Basis.looking_at(move_direction)
-	
+
+# Déplacement vers l'arrière
 func move_back():
 	print("Déplacement vers l'arrière")
 	move_direction.z = 1
+	$Pivot.basis = Basis.looking_at(move_direction)
+
+# Déplacement vers l'avant
+func move_forward():
+	print("Déplacement vers l'avant")
+	move_direction.z = -1
 	$Pivot.basis = Basis.looking_at(move_direction)
 
 # Saut
@@ -79,7 +86,7 @@ func jump():
 
 # Ajustement de la vitesse de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
-	var target_camera_z = global_transform.origin.z + 50
+	var target_camera_z = global_transform.origin.z + 40
 	var camera_position = camera.global_transform.origin.z
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
 	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
