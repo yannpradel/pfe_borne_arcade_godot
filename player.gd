@@ -11,27 +11,28 @@ var move_direction = Vector3.ZERO  # Direction actuelle du déplacement
 
 var has_double_jumped = false
 
-# Flags pour enregistrer les commandes UDP
+# Flags pour les commandes UDP
 var move_left_flag = false
 var move_right_flag = false
-var move_back_flag = false
 var move_forward_flag = false
+var move_back_flag = true  # Toujours vrai pour un mouvement constant vers l'arrière
 
 func _physics_process(delta):
-	# Réinitialise la direction uniquement si aucune commande n'est active
+	# Réinitialise la direction
 	move_direction = Vector3.ZERO
 
-	# Ajout des directions depuis les commandes UDP
+	# Mouvement constant vers l'arrière
+	move_direction.z += 1
+
+	# Ajout des directions via les flags UDP
 	if move_left_flag:
 		move_direction.x -= 1
 	if move_right_flag:
 		move_direction.x += 1
-	if move_back_flag:
-		move_direction.z += 1
 	if move_forward_flag:
 		move_direction.z -= 1
 
-	# Ajout des directions depuis le clavier
+	# Ajout des directions via le clavier
 	if Input.is_action_pressed("move_right"):
 		move_direction.x += 1
 	if Input.is_action_pressed("move_left"):
@@ -41,7 +42,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("move_forward"):
 		move_direction.z -= 1
 
-	# Si une direction est spécifiée, normalise et oriente le Pivot
+	# Normalisation de la direction et mise à jour de l'orientation
 	if move_direction != Vector3.ZERO:
 		move_direction = move_direction.normalized()
 		$Pivot.basis = Basis.looking_at(move_direction)
@@ -68,11 +69,11 @@ func move_left():
 func move_right():
 	move_right_flag = true
 
-func move_back():
-	move_back_flag = true
-
 func move_forward():
 	move_forward_flag = true
+
+func move_back():
+	move_back_flag = true
 
 func stop_move_left():
 	move_left_flag = false
@@ -80,11 +81,11 @@ func stop_move_left():
 func stop_move_right():
 	move_right_flag = false
 
-func stop_move_back():
-	move_back_flag = false
-
 func stop_move_forward():
 	move_forward_flag = false
+
+func stop_move_back():
+	move_back_flag = false
 
 # Saut
 func jump():
