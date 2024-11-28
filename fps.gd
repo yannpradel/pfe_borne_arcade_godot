@@ -50,6 +50,8 @@ func _process(delta):
 					player.move_right()
 				"BUTTON_SAUT":
 					player.jump()
+				"BUTTON_BAS":
+					player.move_back()
 				_:
 					print("Commande inconnue : %s" % command)
 
