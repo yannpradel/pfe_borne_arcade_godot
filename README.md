@@ -116,5 +116,11 @@ Pour toute question, n'hésitez pas à ouvrir une issue sur le dépôt GitHub.
 
 
 
-5. récupérer les fichiers pour exporter depuis godot 
+5. récupérer les fichiers pour exporter depuis godot
+
+
+
+TUTO METTRE TEXTURE :
+il faut aller dans shading, selectionner l'objet qu'on veut, ajouter, texture, texture image
+ça fait un bloc on relie la coueur avec la couleur du BSDF, puis sur nouvelle, ou alor dans la liste à gauche dans le tapis
 
