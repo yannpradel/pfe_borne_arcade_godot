@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://jfknoqa35h4f"
-path="res://.godot/imported/Plan de travail 1 copie 11120x120.png-64857555fefec7a8c6e4408e264d8c7d.ctex"
+uid="uid://bb1tla8lf77ea"
+path="res://.godot/imported/tapis.jpg-b5e337fece4de4a032a2516491317d6b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets - blender/textures/Plan de travail 1 copie 11120x120.png"
-dest_files=["res://.godot/imported/Plan de travail 1 copie 11120x120.png-64857555fefec7a8c6e4408e264d8c7d.ctex"]
+source_file="res://tapis.jpg"
+dest_files=["res://.godot/imported/tapis.jpg-b5e337fece4de4a032a2516491317d6b.ctex"]
 
 [params]
 
