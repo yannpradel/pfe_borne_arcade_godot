@@ -9,4 +9,4 @@ chmod +x Squash\ the\ Creeps\ \(3D\).pck
 
 sleep 3  # Pause de 3 secondes avant le lancement
 
-./Squash\ the\ Creeps\ \(3D\)V2.sh
+./Squash\ the\ Creeps\ \(3D\).sh
