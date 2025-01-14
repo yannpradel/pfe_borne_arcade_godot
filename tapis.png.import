@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cikvdlktb8oct"
-path="res://.godot/imported/tapis.jpg-cf845de5159aaf408546c0ce91dc0ad4.ctex"
+uid="uid://cnbj2ebia1m2u"
+path="res://.godot/imported/tapis.png-74326ef6264d68047d32f0ac7dfb87fa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets - blender/textures/tapis.jpg"
-dest_files=["res://.godot/imported/tapis.jpg-cf845de5159aaf408546c0ce91dc0ad4.ctex"]
+source_file="res://tapis.png"
+dest_files=["res://.godot/imported/tapis.png-74326ef6264d68047d32f0ac7dfb87fa.ctex"]
 
 [params]
 
