@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://fps.gd" id="1_0ilsh"]
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://Player.tscn" id="1_pc7mc"]
 [ext_resource type="Script" path="res://rotating_section.gd" id="3_dybc4"]
-[ext_resource type="PackedScene" uid="uid://bqsd5t1vj7tr5" path="res://untitled.glb" id="3_l2hlo"]
+[ext_resource type="PackedScene" uid="uid://c43bvi8p3c01o" path="res://untitled.glb" id="3_l2hlo"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
 size = Vector3(10, 10, 50)
