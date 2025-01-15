@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://fps.gd" id="1_0ilsh"]
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://Player.tscn" id="1_pc7mc"]
 [ext_resource type="Script" path="res://rotating_section.gd" id="3_dybc4"]
-[ext_resource type="PackedScene" uid="uid://c2ykqycurduwg" path="res://untitled.glb" id="3_l2hlo"]
+[ext_resource type="PackedScene" uid="uid://6q8kj7l0408n" path="res://poison.tscn" id="4_vx1c7"]
 [ext_resource type="AudioStream" uid="uid://07lfs53dc6ct" path="res://music/song.wav" id="5_1cf5p"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
@@ -22,7 +22,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -85.9372)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 32.8261, -58.6349)
+transform = Transform3D(1, 0, 0, 0, 0.322497, 0.946571, 0, -0.946571, 0.322497, 0, 27.9298, -62.6693)
 size = 19.0
 
 [node name="FPSLabel" type="Label" parent="."]
@@ -37,7 +37,7 @@ grow_horizontal = 0
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 87)
 script = ExtResource("3_dybc4")
 
-[node name="untitled" parent="RotatingSection" instance=ExtResource("3_l2hlo")]
+[node name="untitled" parent="RotatingSection" instance=ExtResource("4_vx1c7")]
 
 [node name="Area3D" type="Area3D" parent="RotatingSection"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.246, 0, 1.99999)
