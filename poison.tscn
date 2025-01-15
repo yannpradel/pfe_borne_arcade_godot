@@ -1,0 +1,56 @@
+[gd_scene load_steps=8 format=3 uid="uid://6q8kj7l0408n"]
+
+[ext_resource type="PackedScene" uid="uid://c2ykqycurduwg" path="res://untitled.glb" id="1_by61u"]
+[ext_resource type="Shader" path="res://fumee.gdshader" id="2_a5gqm"]
+[ext_resource type="Shader" path="res://poison.gdshader" id="2_m2on7"]
+[ext_resource type="Texture2D" uid="uid://d1uo0unmwydlp" path="res://poison.png" id="3_s8gp7"]
+[ext_resource type="Texture2D" uid="uid://dqslcd2gfgpml" path="res://poison_noise_texture.tres" id="4_4npwy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e53s6"]
+render_priority = 0
+shader = ExtResource("2_a5gqm")
+shader_parameter/time_speed = 1.0
+shader_parameter/distortion_strength = 0.2
+shader_parameter/lava_texture = ExtResource("4_4npwy")
+shader_parameter/noise_texture = ExtResource("4_4npwy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ki20"]
+render_priority = 0
+shader = ExtResource("2_m2on7")
+shader_parameter/time_speed = 1.0
+shader_parameter/distortion_strength = 0.2
+shader_parameter/lava_texture = ExtResource("3_s8gp7")
+shader_parameter/noise_texture = ExtResource("3_s8gp7")
+
+[node name="untitled" instance=ExtResource("1_by61u")]
+
+[node name="vide1" parent="." index="37"]
+surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
+
+[node name="vide2" parent="." index="38"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 153.557, -7.69013, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide3" parent="." index="39"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 236.778, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide4" parent="." index="40"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide5" parent="." index="41"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide6" parent="." index="84"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 420.87, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide7" parent="." index="85"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 486.595, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide8" parent="." index="86"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 577.717, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
