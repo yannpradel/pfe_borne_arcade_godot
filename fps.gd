@@ -1,56 +1,53 @@
 class_name ServerNode
 extends Node
 
-var server := UDPServer.new()
-var port := 12345
+var server := TCPServer.new()  # Créer un serveur TCP
+var port := 12345  # Port d'écoute
+var client = null  # Stocker le client connecté
+
 var player: CharacterBody3D  # Référence au personnage à contrôler
 
 func _ready():
-	print("Démarrage du serveur UDP sur le port %d..." % port)
-	var result = server.listen(port)
-	if result != OK:
-		print("Erreur : Impossible de démarrer le serveur UDP sur le port %d. Code d'erreur : %d" % [port, result])
+	var err = server.listen(port)
+	if err == OK:
+		print("Serveur TCP démarré sur le port %d" % port)
+		set_process(true)
+		
+		# Trouver et assigner la référence au joueur (supposons qu'il est un enfant de la scène principale)
+		player = $Player  # Assure-toi que le nœud "Player" existe dans la scène
 	else:
-		print("Serveur UDP démarré avec succès sur le port %d" % port)
-
-	# Référence au joueur
-	player = $Player  # Remplacez $Player par le chemin exact de votre personnage
-	if player:
-		print("Référence au joueur trouvée.")
-	else:
-		print("Erreur : Impossible de trouver le joueur.")
+		print("Erreur lors du démarrage du serveur TCP : %s" % err)
 
 func _process(delta):
-	server.poll()  # Vérifie les connexions UDP
+	if server.is_connection_available():
+		client = server.take_connection()  # Accepter une nouvelle connexion
+		if client != null:
+			print("Nouveau client connecté.")
+	
+	if client != null and client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+		if client.get_available_bytes() > 0:
+			var data = client.get_utf8_string(client.get_available_bytes())
+			print("Données reçues du client : %s" % data)
 
-	while server.is_connection_available():
-		var peer: PacketPeerUDP = server.take_connection()
-		if peer:
-			var packet = peer.get_packet()
-			var command = packet.get_string_from_utf8()
+			# Si les données sont des coordonnées, les extraire
+			if data.find("X:") != -1:
+				var x_str = data.split(": ")[1]
+				var x = int(x_str)
+				
+				# Limiter la valeur de X entre 0 et 255
+				x = clamp(x, 0, 255)
+				
+				print("Coordonnée extraite : X = %d" % x)
 
-			# Interpréter les commandes
-			match command:
-				"BUTTON_GAUCHE":
-					player.move_left()
-				"STOP_BUTTON_GAUCHE":
-					player.stop_move_left()
-				"BUTTON_DROIT":
-					player.move_right()
-				"STOP_BUTTON_DROIT":
-					player.stop_move_right()
-				"BUTTON_AVANT":
-					player.move_forward()
-				"STOP_BUTTON_AVANT":
-					player.stop_move_forward()
-				"BUTTON_ARRIERE":
-					player.move_back()
-				"STOP_BUTTON_ARRIERE":
-					player.stop_move_back()
-				"BUTTON_SAUT":
-					player.jump()
-				_:
-					print("Commande inconnue : %s" % command)
+				# Déplacer le personnage en fonction de la coordonnée X reçue
+				_move_player(x)
 
-			# Répondre au client (facultatif)
-			peer.put_packet(packet)
+func _move_player(x: int):
+	# Déplacement du personnage uniquement sur l'axe X
+	var new_position = Vector3(x, player.global_position.y, player.global_position.z)
+	player.global_position = new_position
+	print("Personnage déplacé à : X = %d" % x)
+
+func _exit_tree():
+	server.stop()
+	print("Serveur TCP arrêté.")
