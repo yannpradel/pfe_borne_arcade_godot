@@ -41,6 +41,8 @@ func _physics_process(delta):
 		move_direction.z += 1
 	if Input.is_action_pressed("move_forward"):
 		move_direction.z -= 1
+	if Input.is_action_just_pressed("jump"):
+		jump()
 
 	# Normalisation de la direction et mise à jour de l'orientation
 	if move_direction != Vector3.ZERO:
