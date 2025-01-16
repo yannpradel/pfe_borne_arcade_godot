@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var speed = 14
 @export var fall_acceleration = 75
-@export var jump_force = 15
+@export var jump_force = 30
 @export var max_camera_speed = 22.5
 
 var target_velocity = Vector3.ZERO
