@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5n74s1jvxgg5"
-path.s3tc="res://.godot/imported/pierrePlateforme.jpg-bda566d085c6a5251b23790c36e54b12.s3tc.ctex"
-path.etc2="res://.godot/imported/pierrePlateforme.jpg-bda566d085c6a5251b23790c36e54b12.etc2.ctex"
+uid="uid://cg2nydaoqbn57"
+path.s3tc="res://.godot/imported/poison_yann_128.png-0d4e5d43d2534b7abeeb436675e04a48.s3tc.ctex"
+path.etc2="res://.godot/imported/poison_yann_128.png-0d4e5d43d2534b7abeeb436675e04a48.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://pierrePlateforme.jpg"
-dest_files=["res://.godot/imported/pierrePlateforme.jpg-bda566d085c6a5251b23790c36e54b12.s3tc.ctex", "res://.godot/imported/pierrePlateforme.jpg-bda566d085c6a5251b23790c36e54b12.etc2.ctex"]
+source_file="res://poison_yann_128.png"
+dest_files=["res://.godot/imported/poison_yann_128.png-0d4e5d43d2534b7abeeb436675e04a48.s3tc.ctex", "res://.godot/imported/poison_yann_128.png-0d4e5d43d2534b7abeeb436675e04a48.etc2.ctex"]
 
 [params]
 
