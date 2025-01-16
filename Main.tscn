@@ -37,7 +37,7 @@ grow_horizontal = 0
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 87)
 script = ExtResource("3_dybc4")
 
-[node name="untitled" parent="RotatingSection" instance=ExtResource("4_vx1c7")]
+[node name="untitled2" parent="RotatingSection" instance=ExtResource("4_vx1c7")]
 
 [node name="Area3D" type="Area3D" parent="RotatingSection"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.246, 0, 1.99999)

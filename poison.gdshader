@@ -15,5 +15,5 @@ void fragment() {
     vec4 lava_color = texture(lava_texture, uv + distortion);
 
     ALBEDO = lava_color.rgb;
-	EMISSION = lava_color.rgb * 0.5;
+	EMISSION = lava_color.rgb * 0.4;
 	}
