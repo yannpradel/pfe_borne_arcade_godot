@@ -24,33 +24,33 @@ shader_parameter/noise_texture = ExtResource("4_4npwy")
 
 [node name="untitled" instance=ExtResource("1_by61u")]
 
-[node name="vide1" parent="." index="39"]
+[node name="vide1" parent="." index="44"]
 surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
 
-[node name="vide2" parent="." index="40"]
+[node name="vide2" parent="." index="45"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 153.557, -7.69013, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide3" parent="." index="41"]
+[node name="vide3" parent="." index="46"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 236.778, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide4" parent="." index="42"]
+[node name="vide4" parent="." index="47"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide5" parent="." index="43"]
+[node name="vide5" parent="." index="48"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide6" parent="." index="84"]
+[node name="vide6" parent="." index="89"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 420.87, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide7" parent="." index="85"]
+[node name="vide7" parent="." index="90"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 486.595, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide8" parent="." index="86"]
+[node name="vide8" parent="." index="91"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 577.717, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
