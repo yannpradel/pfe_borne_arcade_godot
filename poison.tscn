@@ -34,8 +34,9 @@ render_priority = 0
 shader = ExtResource("8_l5cyn")
 shader_parameter/time_speed = 0.2
 shader_parameter/distortion_strength = 0.2
-shader_parameter/emission_strength = 3.0
-shader_parameter/red_boost = 1.5
+shader_parameter/emission_strength = 0.0
+shader_parameter/red_boost = 3.0
+shader_parameter/color_balance = 0.8
 shader_parameter/lava_texture = ExtResource("9_q5gun")
 shader_parameter/noise_texture = ExtResource("4_4npwy")
 
