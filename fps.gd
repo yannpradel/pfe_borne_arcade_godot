@@ -13,8 +13,10 @@ func _ready():
 		print("Serveur TCP démarré sur le port %d" % port)
 		set_process(true)
 		
-		# Trouver et assigner la référence au joueur (supposons qu'il est un enfant de la scène principale)
-		player = $Player  # Assure-toi que le nœud "Player" existe dans la scène
+		# Trouver et assigner la référence au joueur
+		player = get_node("../Player")  # Chemin relatif à partir de ServerNode
+		if player == null:
+			print("Erreur : le nœud 'Player' est introuvable. Vérifiez le nom ou la hiérarchie.")
 	else:
 		print("Erreur lors du démarrage du serveur TCP : %s" % err)
 
@@ -26,27 +28,21 @@ func _process(delta):
 	
 	if client != null and client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		if client.get_available_bytes() > 0:
-			var data = client.get_utf8_string(client.get_available_bytes())
+			var data = client.get_utf8_string(client.get_available_bytes()).strip_edges()
 			print("Données reçues du client : %s" % data)
 
-			# Si les données sont des coordonnées, les extraire
+			# Extraire les coordonnées X depuis les données reçues
 			if data.find("X:") != -1:
-				var x_str = data.split(": ")[1]
-				var x = int(x_str)
-				
-				# Limiter la valeur de X entre 0 et 255
-				x = clamp(x, 0, 255)
-				
-				print("Coordonnée extraite : X = %d" % x)
-
-				# Déplacer le personnage en fonction de la coordonnée X reçue
+				var x_str = data.split(":")[1]
+				var x = float(x_str)  # Pas de vérification
 				_move_player(x)
 
-func _move_player(x: int):
+func _move_player(x: float):
 	# Déplacement du personnage uniquement sur l'axe X
-	var new_position = Vector3(x, player.global_position.y, player.global_position.z)
-	player.global_position = new_position
-	print("Personnage déplacé à : X = %d" % x)
+	if player != null:
+		player.global_position.x = x
+	else:
+		print("Erreur : Le joueur n'est pas disponible.")
 
 func _exit_tree():
 	server.stop()
