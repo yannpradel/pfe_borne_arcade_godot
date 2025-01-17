@@ -1,20 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://dau3h8tsnwuv"]
+[gd_scene load_steps=2 format=3 uid="uid://dvxrnvw7v31bv"]
 
 [ext_resource type="PackedScene" uid="uid://c2ykqycurduwg" path="res://untitled.glb" id="1_4oe5e"]
-[ext_resource type="Shader" path="res://green_lava.gdshader" id="2_5hymv"]
-[ext_resource type="Texture2D" uid="uid://d1uo0unmwydlp" path="res://poison.png" id="3_m0nq2"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fgqvs"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1ircm"]
-render_priority = 0
-shader = ExtResource("2_5hymv")
-shader_parameter/time_speed = 1.0
-shader_parameter/distortion_strength = 0.2
-shader_parameter/lava_texture = ExtResource("3_m0nq2")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_fgqvs")
 
 [node name="untitled" instance=ExtResource("1_4oe5e")]
-
-[node name="vide1 " parent="." index="4"]
-surface_material_override/0 = SubResource("ShaderMaterial_1ircm")
