@@ -25,7 +25,7 @@ shader_parameter/lava_texture = ExtResource("5_7d4lx")
 shader_parameter/noise_texture = ExtResource("4_4npwy")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_drbgk"]
-size = Vector3(0.763672, 3.56664, 8.72287)
+size = Vector3(0.763672, 4.45172, 14.2375)
 
 [node name="untitled" instance=ExtResource("1_by61u")]
 
@@ -49,12 +49,12 @@ transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _011" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -243.878, 0, -1.85882)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200.861, 0, 0)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _011/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.118164, 1.28332, -0.00749207)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2887, 2.00261, -0.258703)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="vide6" parent="." index="89"]

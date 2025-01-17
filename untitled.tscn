@@ -10,7 +10,7 @@ size = Vector3(0.763672, 3.56664, 8.72287)
 [node name="untitled" instance=ExtResource("1_4oe5e")]
 
 [node name="Area3D" type="Area3D" parent="plateform2 _011" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -243.878, 0, -1.85882)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.216, 0, -1.85882)
 script = ExtResource("2_pn0yd")
 laser_scene = ExtResource("3_cqu8a")
 
