@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://6q8kj7l0408n"]
+[gd_scene load_steps=14 format=3 uid="uid://6q8kj7l0408n"]
 
 [ext_resource type="PackedScene" uid="uid://c2ykqycurduwg" path="res://untitled.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://fumee.gdshader" id="2_a5gqm"]
@@ -7,14 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://cg2nydaoqbn57" path="res://poison_yann_128.png" id="5_7d4lx"]
 [ext_resource type="Script" path="res://laser_trigger.gd" id="6_koqju"]
 [ext_resource type="PackedScene" uid="uid://bbtb5qtrnovpk" path="res://laser_scene.tscn" id="7_snknl"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e53s6"]
-render_priority = 0
-shader = ExtResource("2_a5gqm")
-shader_parameter/time_speed = 1.0
-shader_parameter/distortion_strength = 0.2
-shader_parameter/lava_texture = ExtResource("4_4npwy")
-shader_parameter/noise_texture = ExtResource("4_4npwy")
+[ext_resource type="Shader" path="res://lave.gdshader" id="8_l5cyn"]
+[ext_resource type="Texture2D" uid="uid://dg0h0iyyx5n35" path="res://lave.jpg" id="9_q5gun"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ki20"]
 render_priority = 0
@@ -24,10 +18,31 @@ shader_parameter/distortion_strength = 0.2
 shader_parameter/lava_texture = ExtResource("5_7d4lx")
 shader_parameter/noise_texture = ExtResource("4_4npwy")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e53s6"]
+render_priority = 0
+shader = ExtResource("2_a5gqm")
+shader_parameter/time_speed = 1.0
+shader_parameter/distortion_strength = 0.2
+shader_parameter/lava_texture = ExtResource("4_4npwy")
+shader_parameter/noise_texture = ExtResource("4_4npwy")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_drbgk"]
 size = Vector3(0.763672, 4.45172, 14.2375)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gx3ge"]
+render_priority = 0
+shader = ExtResource("8_l5cyn")
+shader_parameter/time_speed = 0.2
+shader_parameter/distortion_strength = 0.2
+shader_parameter/emission_strength = 3.0
+shader_parameter/red_boost = 1.5
+shader_parameter/lava_texture = ExtResource("9_q5gun")
+shader_parameter/noise_texture = ExtResource("4_4npwy")
+
 [node name="untitled" instance=ExtResource("1_by61u")]
+
+[node name="vide12" parent="." index="8"]
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
 [node name="vide1" parent="." index="44"]
 surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
@@ -68,5 +83,16 @@ surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 [node name="vide8" parent="." index="91"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 577.717, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide9" parent="." index="100"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 139.149, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_gx3ge")
+
+[node name="vide10" parent="." index="101"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 123.705, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_gx3ge")
+
+[node name="vide11" parent="." index="103"]
+surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
 
 [connection signal="body_entered" from="plateform2 _011/Area3D" to="plateform2 _011/Area3D" method="_on_body_entered"]
