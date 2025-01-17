@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bbtb5qtrnovpk"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_i8sy7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yudak"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0, 2.49956, 0)
+mesh = SubResource("CapsuleMesh_i8sy7")
+surface_material_override/0 = SubResource("StandardMaterial3D_yudak")
