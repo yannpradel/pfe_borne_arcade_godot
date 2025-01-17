@@ -10,7 +10,6 @@
 size = Vector3(10, 10, 50)
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_0ilsh")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
@@ -48,5 +47,8 @@ shape = SubResource("BoxShape3D_30q01")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_1cf5p")
 autoplay = true
+
+[node name="ServerNode" type="Node" parent="."]
+script = ExtResource("1_0ilsh")
 
 [connection signal="body_entered" from="RotatingSection/Area3D" to="RotatingSection" method="_on_area_3d_body_entered"]
