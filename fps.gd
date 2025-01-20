@@ -14,7 +14,7 @@ func _ready():
 		set_process(true)
 		
 		# Trouver et assigner la référence au joueur (supposons qu'il est un enfant de la scène principale)
-		player = $Player  # Assure-toi que le nœud "Player" existe dans la scène
+		player = get_tree().get_root().get_node("Main/Player")
 	else:
 		print("Erreur lors du démarrage du serveur TCP : %s" % err)
 		
