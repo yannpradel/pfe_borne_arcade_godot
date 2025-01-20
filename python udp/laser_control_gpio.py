@@ -33,21 +33,18 @@ try:
         data = sock.recv(1024).decode('utf-8').strip()
         if data:
             print(f"Données reçues de Godot : {data}")
-            
-            # Traitement des commandes
-            try:
-                command, value = data.split()
-                pin_index = int(value)
-                if command == "LASER_ON":
-                    lines[pin_index].set_value(1)  # Activer le laser
-                    print(f"Laser {pin_index} activé")
-                elif command == "LASER_OFF":
-                    lines[pin_index].set_value(0)  # Désactiver le laser
-                    print(f"Laser {pin_index} désactivé")
-                else:
-                    print(f"Commande inconnue reçue : {command}")
-            except (ValueError, IndexError):
-                print(f"Erreur dans le traitement de la commande : {data}")
+
+            # Vérification si les données sont valides (exactement 3 caractères, composées uniquement de 0 et 1)
+            if len(data) == 3 and all(c in '01' for c in data):
+                for i, value in enumerate(data):
+                    if value == '1':
+                        lines[i].set_value(1)  # Activer le GPIO correspondant
+                        print(f"Laser {i} activé")
+                    else:
+                        lines[i].set_value(0)  # Désactiver le GPIO correspondant
+                        print(f"Laser {i} désactivé")
+            else:
+                print(f"Données invalides reçues : {data}")
 
 except KeyboardInterrupt:
     print("Arrêt du client TCP.")
