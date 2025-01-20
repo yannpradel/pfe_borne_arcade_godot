@@ -1,6 +1,5 @@
 import socket
 import gpiod
-import time
 
 # Configuration des GPIO
 LASER_PINS = [17, 27, 22]  # Exemple : GPIO 17, 27, 22
@@ -14,27 +13,28 @@ for line in lines:
     line.request(consumer="laser_control", type=gpiod.LINE_REQ_DIR_OUT)
     line.set_value(0)  # Éteindre tous les lasers par défaut
 
-# Configuration du serveur TCP
-HOST = '0.0.0.0'  # Écoute sur toutes les interfaces
-PORT = 12345  # Port de communication
+# Configuration du client TCP
+SERVER_IP = '127.0.0.1'  # Adresse IP du serveur Godot
+SERVER_PORT = 12345      # Port du serveur Godot
 
-server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind((HOST, PORT))
-server.listen(5)
-
-print(f"Serveur TCP en écoute sur {HOST}:{PORT}...")
+# Connexion au serveur TCP (Godot)
+print(f"Tentative de connexion au serveur TCP Godot ({SERVER_IP}:{SERVER_PORT})...")
+try:
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((SERVER_IP, SERVER_PORT))
+    print("Connexion au serveur TCP réussie.")
+except socket.error as e:
+    print(f"Erreur lors de la connexion au serveur TCP : {e}")
+    exit(1)
 
 try:
     while True:
-        client, address = server.accept()
-        print(f"Connexion établie avec {address}")
-        
-        data = client.recv(1024).decode('utf-8').strip()  # Réception des données
+        # Réception des données envoyées par Godot
+        data = sock.recv(1024).decode('utf-8').strip()
         if data:
-            print(f"Données reçues : {data}")
+            print(f"Données reçues de Godot : {data}")
             
             # Traitement des commandes
-            # Exemple de commande : "LASER_ON 0" pour allumer le laser connecté à LASER_PINS[0]
             try:
                 command, value = data.split()
                 pin_index = int(value)
@@ -45,18 +45,17 @@ try:
                     lines[pin_index].set_value(0)  # Désactiver le laser
                     print(f"Laser {pin_index} désactivé")
                 else:
-                    print(f"Commande inconnue : {command}")
+                    print(f"Commande inconnue reçue : {command}")
             except (ValueError, IndexError):
                 print(f"Erreur dans le traitement de la commande : {data}")
-        
-        client.close()
+
 except KeyboardInterrupt:
-    print("Arrêt du serveur")
+    print("Arrêt du client TCP.")
 finally:
-    # Libérer toutes les lignes GPIO
+    # Libérer toutes les lignes GPIO et fermer la connexion TCP
     for line in lines:
         line.set_value(0)
         line.release()
     chip.close()
-    server.close()
-    print("GPIO et serveur TCP nettoyés.")
+    sock.close()
+    print("GPIO libérés et connexion TCP fermée.")
