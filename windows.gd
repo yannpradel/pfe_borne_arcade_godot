@@ -1,16 +1,12 @@
 extends Node
 
 func _ready():
-	# Référence absolue pour accéder au nœud "Window"
+	# Mettre la fenêtre principale en plein écran
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+	# Configurer une deuxième fenêtre en plein écran
 	var window = $Window
-	var window2 = $Window2
-
-	# Positionner la première fenêtre
-	window.position = Vector2(0, 0)  # Position sur le premier écran
-	window.size = Vector2(1920, 1080)  # Taille de la fenêtre
+	window.size = Vector2(1920, 1080)  # Taille de la deuxième fenêtre
+	window.position = Vector2(1920, 0)  # Position sur le deuxième écran
+	window.mode = Window.MODE_FULLSCREEN  # Activer le plein écran pour la deuxième fenêtre
 	window.show()
-
-	# Positionner la deuxième fenêtre
-	window2.position = Vector2(0, 0)  # Position sur le second écran
-	window2.size = Vector2(1920, 1080)  # Taille de la fenêtre
-	window2.show()
