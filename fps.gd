@@ -70,6 +70,7 @@ func _launch_python_script():
 	# Convertit les arguments en PackedStringArray
 	var args = PackedStringArray([absolute_path])
 
+	print("avant le execute du python")
 	# Exécute le script avec blocking = true pour capturer la sortie
 	var result = OS.execute("python3", args, output, false)  # output suivi de read_stderr
 
