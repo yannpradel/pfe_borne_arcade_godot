@@ -18,7 +18,6 @@ viewport_path = NodePath("SubViewport")
 viewport_path = NodePath("SubViewport2")
 
 [node name="Main" type="Node3D"]
-script = ExtResource("6_8ggdq")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
@@ -63,6 +62,7 @@ current = true
 auto_translate_mode = 1
 position = Vector2i(0, 100)
 size = Vector2i(500, 500)
+script = ExtResource("6_8ggdq")
 
 [node name="TextureRect" type="TextureRect" parent="Window"]
 anchors_preset = 15
