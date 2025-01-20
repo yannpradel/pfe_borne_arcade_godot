@@ -3,6 +3,7 @@ import serial
 import gpiod
 import time
 import select
+import re
 
 # Configuration des GPIO
 LASER_PINS = [17, 27, 22]  # Exemple : GPIO 17, 27, 22
@@ -43,16 +44,18 @@ print(f"Tentative de connexion au serveur TCP Godot ({SERVER_IP}:{SERVER_PORT}).
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setblocking(False)  # Mettre le socket en mode non-bloquant
+    
+    # Tentative de connexion
     sock.connect_ex((SERVER_IP, SERVER_PORT))  # Retourne immédiatement, sans bloquer
     print("Connexion en cours...")
     
-    # Attente que la connexion soit effectivement établie
-    ready_to_read, ready_to_write, in_error = select.select([], [sock], [], 5)
+    # Attente de la connexion avec select
+    ready_to_read, ready_to_write, in_error = select.select([], [sock], [], 5)  # Timeout de 5 secondes
     
     if ready_to_write:
         print("Connexion au serveur TCP réussie.")
     else:
-        print("Impossible de se connecter au serveur TCP.")
+        print("Impossible de se connecter au serveur TCP après 5 secondes.")
         sock.close()
         exit(1)
 
@@ -63,7 +66,6 @@ except socket.error as e:
 
 try:
     while True:
-        print("Début de la boucle principale.")
         
         # Utiliser select pour gérer les entrées sans bloquer
         ready_to_read, _, _ = select.select([ser, sock], [], [], 0.1)
@@ -73,20 +75,20 @@ try:
                 # Données disponibles sur le port série
                 data_from_serial = ser.readline().decode('utf-8').strip()
                 if data_from_serial:
-                    print(f"DEBUG - Données série reçues : {data_from_serial}")
+                    #print(f"DEBUG - Données série reçues : {data_from_serial}")
                     sock.sendall(data_from_serial.encode('utf-8'))
-                    print(f"Envoyé à Godot : {data_from_serial}")
-                else:
-                    print("Aucune donnée reçue du port série.")
+                    #print(f"Envoyé à Godot : {data_from_serial}")
             
             elif ready == sock:
                 # Données disponibles du serveur Godot
                 try:
                     data_from_godot = sock.recv(1024).decode('utf-8').strip()
                     if data_from_godot:
-                        print(f"Données reçues de Godot : {data_from_godot}")
+                        data_from_godot = re.sub(r'[^0-9]', '', data_from_godot)  # Garder uniquement les chiffres
+                        print(f"Données reçues de Godot : f{data_from_godot}f")
 
                         # Vérification si les données sont valides (exactement 3 caractères, composées uniquement de 0 et 1)
+                        print(f"DEBUG: {data_from_godot} - Longueur : {len(data_from_godot)}")
                         if len(data_from_godot) == 3 and all(c in '01' for c in data_from_godot):
                             print(f"Données valides reçues de Godot : {data_from_godot}")
                             for i, value in enumerate(data_from_godot):
@@ -98,20 +100,15 @@ try:
                                     print(f"Laser {i} désactivé")
                         else:
                             print(f"Données invalides reçues : {data_from_godot}")
-                    else:
-                        print("Aucune donnée reçue de Godot.")
                 except socket.error:
                     print("Erreur de lecture du socket.")
         
         # Vérification de l'état de la ligne GPIO d'entrée
         gpio_value = input_line.get_value()
-        print(f"Valeur de l'entrée GPIO : {gpio_value}")
         
         if gpio_value == 1:
-            print("Signal détecté sur le GPIO d'entrée ! Envoi de 'jump' à Godot.")
+            #print("Signal détecté sur le GPIO d'entrée ! Envoi de 'jump' à Godot.")
             sock.sendall("jump\n".encode('utf-8'))
-
-        time.sleep(0.1)  # Un petit délai pour éviter de surcharger le CPU
 
 except KeyboardInterrupt:
     print("Fermeture du programme.")
