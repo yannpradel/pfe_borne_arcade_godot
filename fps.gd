@@ -71,14 +71,3 @@ func _launch_python_script():
 	var args = PackedStringArray([absolute_path])
 
 	print("avant le execute du python")
-	# Exécute le script avec blocking = true pour capturer la sortie
-	var result = OS.execute("python3", args, output, false)  # output suivi de read_stderr
-
-	print("Chemin absolu du script Python : %s" % absolute_path)
-
-	if result == OK:
-		print("Script Python lancé avec succès :")
-		print("Sortie du script Python :\n%s" % String("\n").join(output))  # Affiche la sortie capturée
-	else:
-		print("Erreur lors du lancement du script Python. Code : %d" % result)
-		print("Sortie capturée (potentiellement des erreurs) :\n%s" % String("\n").join(output))
