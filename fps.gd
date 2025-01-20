@@ -36,9 +36,6 @@ func _process(delta):
 				var x_str = data.split(": ")[1]
 				var x = float(x_str)
 				
-				# Limiter la valeur de X entre 0 et 255
-				x = clamp(x, 0, 255)
-				
 				print("Coordonnée extraite : X = %d" % x)
 
 				# Déplacer le personnage en fonction de la coordonnée X reçue
