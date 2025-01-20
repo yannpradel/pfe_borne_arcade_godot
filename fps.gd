@@ -34,7 +34,7 @@ func _process(delta):
 			# Si les données sont des coordonnées, les extraire
 			if data.find("X:") != -1:
 				var x_str = data.split(": ")[1]
-				var x = int(x_str)
+				var x = float(x_str)
 				
 				# Limiter la valeur de X entre 0 et 255
 				x = clamp(x, 0, 255)
@@ -51,7 +51,7 @@ func _process(delta):
 				else:
 					print("Erreur : La méthode 'jump' n'existe pas ou 'player' est invalide.")
 
-func _move_player(x: int):
+func _move_player(x: float):
 	# Déplacement du personnage uniquement sur l'axe X
 	var new_position = Vector3(x, player.global_position.y, player.global_position.z)
 	player.global_position = new_position
