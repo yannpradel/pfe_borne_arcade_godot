@@ -33,7 +33,7 @@ func _process(delta):
 
 			# Si les données sont des coordonnées, les extraire
 			if data.find("X:") != -1:
-				var x_str = data.split(": ")[1]
+				var x_str = data.split(":")[1]
 				var x = float(x_str)
 				
 				print("Coordonnée extraite : X = %d" % x)
