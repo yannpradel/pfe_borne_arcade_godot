@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed = 20
+@export var speed = 14
 @export var fall_acceleration = 75
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
@@ -100,7 +100,7 @@ func jump():
 
 # Ajustement de la vitesse de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
-	var target_camera_z = global_transform.origin.z + 70
+	var target_camera_z = global_transform.origin.z + 50
 	var camera_position = camera.global_transform.origin.z
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
 	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
