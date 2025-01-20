@@ -15,7 +15,7 @@ for line in lines:
     line.set_value(0)  # Éteindre tous les lasers par défaut
 
 # Configuration du port série
-serial_port = 'COM3'  # Port série correct pour Arduino Leonardo
+serial_port = '/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_4343935353635111F101-if00'  # Port série correct pour Arduino Leonardo
 baud_rate = 9600
 
 print(f"Initialisation du port série : {serial_port} à {baud_rate} bauds")
