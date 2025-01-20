@@ -51,4 +51,9 @@ autoplay = true
 [node name="ServerNode" type="Node" parent="."]
 script = ExtResource("1_0ilsh")
 
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -83.9818)
+
 [connection signal="body_entered" from="RotatingSection/Area3D" to="RotatingSection" method="_on_area_3d_body_entered"]
