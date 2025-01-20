@@ -1,13 +1,14 @@
 extends CharacterBody3D
 
-@export var speed = 1
+@export var speed = 10
 @export var fall_acceleration = 75
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
 
 var target_velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO  # Direction actuelle du déplacement
-@onready var camera := $"../SubViewport/CameraPivot/Camera3D"
+@onready var camera := $"../CameraPivot/Camera3D"
+@onready var camera2 := $"../SubViewport/Camera3DBarnaby"
 var has_double_jumped = false
 
 # Flags pour les commandes UDP
@@ -60,8 +61,9 @@ func _physics_process(delta):
 	velocity = target_velocity
 	move_and_slide()
 
-	# Ajuste la vitesse de la caméra
+	# Ajuste la vitesse des caméras
 	adjust_camera_speed(delta)
+	adjust_camera2_speed(delta)  # Appeler aussi la fonction pour la deuxième caméra
 
 # Commandes UDP
 func move_left():
@@ -104,3 +106,11 @@ func adjust_camera_speed(delta):
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
 	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
 	camera.global_transform.origin.z += camera_speed * delta
+
+# Ajustement de la vitesse de la deuxième caméra pour suivre le personnage
+func adjust_camera2_speed(delta):
+	var target_camera_z = global_transform.origin.z + 10
+	var camera_position = camera2.global_transform.origin.z
+	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
+	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
+	camera2.global_transform.origin.z += camera_speed * delta

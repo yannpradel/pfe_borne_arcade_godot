@@ -10,7 +10,8 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
 size = Vector3(10, 10, 50)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_bvhiw"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_etd0x"]
+resource_local_to_scene = false
 viewport_path = NodePath("SubViewport")
 
 [node name="Main" type="Node3D"]
@@ -57,8 +58,7 @@ current = true
 
 [node name="Window" type="Window" parent="."]
 auto_translate_mode = 1
-own_world_3d = true
-position = Vector2i(0, 3000)
+position = Vector2i(0, 100)
 size = Vector2i(500, 500)
 
 [node name="TextureRect" type="TextureRect" parent="Window"]
@@ -67,7 +67,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("ViewportTexture_bvhiw")
+texture = SubResource("ViewportTexture_etd0x")
 
 [node name="CameraPivot" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
