@@ -7,7 +7,7 @@ extends CharacterBody3D
 
 var target_velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO  # Direction actuelle du déplacement
-@onready var camera := $"../CameraPivot/Camera3D"
+@onready var camera1 := $"../CameraPivot/Camera3D"
 
 var has_double_jumped = false
 
