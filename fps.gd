@@ -8,7 +8,6 @@ var client = null  # Stocker le client connecté
 var player: CharacterBody3D  # Référence au personnage à contrôler
 
 func _ready():
-	_launch_python_script()
 	var err = server.listen(port)
 	if err == OK:
 		print("Serveur TCP démarré sur le port %d" % port)
@@ -18,6 +17,8 @@ func _ready():
 		player = $Player  # Assure-toi que le nœud "Player" existe dans la scène
 	else:
 		print("Erreur lors du démarrage du serveur TCP : %s" % err)
+		
+	_launch_python_script()
 
 func _process(delta):
 	if server.is_connection_available():
@@ -42,12 +43,20 @@ func _process(delta):
 
 				# Déplacer le personnage en fonction de la coordonnée X reçue
 				_move_player(x)
+			
+			if data.strip_edges() == "jump":
+				if player and player.has_method("jump"):
+					player.jump()
+					print("Commande 'jump' exécutée : le joueur saute.")
+				else:
+					print("Erreur : La méthode 'jump' n'existe pas ou 'player' est invalide.")
 
 func _move_player(x: int):
 	# Déplacement du personnage uniquement sur l'axe X
 	var new_position = Vector3(x, player.global_position.y, player.global_position.z)
 	player.global_position = new_position
 	print("Personnage déplacé à : X = %d" % x)
+	
 
 func _exit_tree():
 	server.stop()
