@@ -14,9 +14,6 @@ func _ready():
 	if server_node == null:
 		print("Erreur : Impossible de trouver le nœud ServerNode.")
 
-	# Connexion du signal body_entered
-	connect("body_entered", self._on_body_entered)
-	print("Signal body_entered connecté avec succès.")
 
 func _on_body_entered(body):
 	print("Un corps est entré dans l'Area3D : %s" % body.name)
