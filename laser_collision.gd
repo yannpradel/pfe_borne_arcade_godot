@@ -20,32 +20,28 @@ func _ready():
 
 	if $CollisionShape3D:
 		body_entered.connect(_on_body_entered)
+		body_exited.connect(_on_body_exited)
 	else:
 		print("Erreur : CollisionShape3D introuvable dans Area3D !")
 
 func _on_body_entered(body):
 	if body.name == "Player" and not player_detected:
 		player_detected = true
-		send_platform_data()
+		send_laser_command("LASER_ON")  # Allume le laser
 		if $Timer:
 			$Timer.start()
 
-func send_platform_data():
-	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		var platform_data = determine_platform_position()
-		server_node.client.put_utf8_string(platform_data + "\n")
-		print("Données envoyées au serveur : %s" % platform_data)
-	else:
-		print("Erreur : Pas de client TCP connecté.")
+func _on_body_exited(body):
+	if body.name == "Player" and player_detected:
+		player_detected = false
+		send_laser_command("LASER_OFF")  # Éteint le laser
 
-func determine_platform_position() -> String:
-	var platform_x = global_transform.origin.x
-	if platform_x < -1:
-		return "100"
-	elif platform_x > 1:
-		return "001"
+func send_laser_command(command: String):
+	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+		server_node.client.put_utf8_string(command + "\n")
+		print("Commande laser envoyée au serveur : %s" % command)
 	else:
-		return "010"
+		print("Erreur : Pas de client TCP connecté pour envoyer la commande laser.")
 
 func _on_Timer_timeout():
 	if laser_scene:
