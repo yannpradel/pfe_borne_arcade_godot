@@ -1,6 +1,8 @@
 import socket
 import serial
 import gpiod
+import time
+import select
 
 # Configuration des GPIO
 LASER_PINS = [17, 27, 22]  # Exemple : GPIO 17, 27, 22
@@ -20,13 +22,13 @@ input_line = chip.get_line(INPUT_PIN)
 input_line.request(consumer="gpio_input", type=gpiod.LINE_REQ_DIR_IN)
 
 # Configuration du port série
-serial_port = '/dev/serial/by-id/usb-Arduino__www.arduino.cc__0043_4343935353635111F101-if00'  # Port série correct pour Arduino Leonardo
-baud_rate = 9600
+PORT = '/dev/serial/by-id/usb-Arduino_www.arduino.cc_0043_4343935353635111F101-if00'  # Nom du port (à adapter si nécessaire)
+BAUD_RATE = 9600  # Débit en bauds (doit correspondre à celui configuré dans le programme Arduino)
 
-print(f"Initialisation du port série : {serial_port} à {baud_rate} bauds")
+print(f"Initialisation du port série : {PORT} à {BAUD_RATE} bauds")
 # Initialisation du port série
 try:
-    ser = serial.Serial(serial_port, baud_rate, timeout=1)
+    ser = serial.Serial(PORT, BAUD_RATE, timeout=0.1)  # Timeout court pour éviter de bloquer longtemps
     print("Port série initialisé avec succès.")
 except serial.SerialException as e:
     print(f"Erreur lors de l'initialisation du port série : {e}")
@@ -40,8 +42,20 @@ print(f"Tentative de connexion au serveur TCP Godot ({SERVER_IP}:{SERVER_PORT}).
 # Connexion au serveur TCP
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect((SERVER_IP, SERVER_PORT))
-    print("Connexion au serveur TCP réussie.")
+    sock.setblocking(False)  # Mettre le socket en mode non-bloquant
+    sock.connect_ex((SERVER_IP, SERVER_PORT))  # Retourne immédiatement, sans bloquer
+    print("Connexion en cours...")
+    
+    # Attente que la connexion soit effectivement établie
+    ready_to_read, ready_to_write, in_error = select.select([], [sock], [], 5)
+    
+    if ready_to_write:
+        print("Connexion au serveur TCP réussie.")
+    else:
+        print("Impossible de se connecter au serveur TCP.")
+        sock.close()
+        exit(1)
+
 except socket.error as e:
     print(f"Erreur lors de la connexion au serveur TCP : {e}")
     ser.close()
@@ -49,37 +63,55 @@ except socket.error as e:
 
 try:
     while True:
-        # Envoi des données depuis le port série à Godot
-        if ser.in_waiting > 0:
-            # Lire les données du port série
-            data_from_serial = ser.readline().decode('utf-8').strip()
-            print(f"DEBUG - Données brutes reçues du port série : {data_from_serial}")
+        print("Début de la boucle principale.")
+        
+        # Utiliser select pour gérer les entrées sans bloquer
+        ready_to_read, _, _ = select.select([ser, sock], [], [], 0.1)
+        
+        for ready in ready_to_read:
+            if ready == ser:
+                # Données disponibles sur le port série
+                data_from_serial = ser.readline().decode('utf-8').strip()
+                if data_from_serial:
+                    print(f"DEBUG - Données série reçues : {data_from_serial}")
+                    sock.sendall(data_from_serial.encode('utf-8'))
+                    print(f"Envoyé à Godot : {data_from_serial}")
+                else:
+                    print("Aucune donnée reçue du port série.")
             
-            # Envoyer les données à Godot
-            sock.sendall(data_from_serial.encode('utf-8'))
-            print(f"Envoyé à Godot : {data_from_serial}")
+            elif ready == sock:
+                # Données disponibles du serveur Godot
+                try:
+                    data_from_godot = sock.recv(1024).decode('utf-8').strip()
+                    if data_from_godot:
+                        print(f"Données reçues de Godot : {data_from_godot}")
 
+                        # Vérification si les données sont valides (exactement 3 caractères, composées uniquement de 0 et 1)
+                        if len(data_from_godot) == 3 and all(c in '01' for c in data_from_godot):
+                            print(f"Données valides reçues de Godot : {data_from_godot}")
+                            for i, value in enumerate(data_from_godot):
+                                if value == '1':
+                                    lines[i].set_value(1)  # Activer le GPIO correspondant
+                                    print(f"Laser {i} activé")
+                                else:
+                                    lines[i].set_value(0)  # Désactiver le GPIO correspondant
+                                    print(f"Laser {i} désactivé")
+                        else:
+                            print(f"Données invalides reçues : {data_from_godot}")
+                    else:
+                        print("Aucune donnée reçue de Godot.")
+                except socket.error:
+                    print("Erreur de lecture du socket.")
+        
         # Vérification de l'état de la ligne GPIO d'entrée
-        if input_line.get_value() == 1:
+        gpio_value = input_line.get_value()
+        print(f"Valeur de l'entrée GPIO : {gpio_value}")
+        
+        if gpio_value == 1:
             print("Signal détecté sur le GPIO d'entrée ! Envoi de 'jump' à Godot.")
             sock.sendall("jump\n".encode('utf-8'))
 
-        # Réception des données envoyées par Godot
-        if sock.recv(1024):
-            data_from_godot = sock.recv(1024).decode('utf-8').strip()
-            print(f"Données reçues de Godot : {data_from_godot}")
-
-            # Vérification si les données sont valides (exactement 3 caractères, composées uniquement de 0 et 1)
-            if len(data_from_godot) == 3 and all(c in '01' for c in data_from_godot):
-                for i, value in enumerate(data_from_godot):
-                    if value == '1':
-                        lines[i].set_value(1)  # Activer le GPIO correspondant
-                        print(f"Laser {i} activé")
-                    else:
-                        lines[i].set_value(0)  # Désactiver le GPIO correspondant
-                        print(f"Laser {i} désactivé")
-            else:
-                print(f"Données invalides reçues : {data_from_godot}")
+        time.sleep(0.1)  # Un petit délai pour éviter de surcharger le CPU
 
 except KeyboardInterrupt:
     print("Fermeture du programme.")
@@ -92,4 +124,4 @@ finally:
     chip.close()
     ser.close()
     sock.close()
-    print("GPIO, port série et connexion TCP libérés.")
+    print("GPIO, port série et connexion TCP libérés.")
