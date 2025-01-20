@@ -13,12 +13,12 @@ func _ready():
 		print("Serveur TCP démarré sur le port %d" % port)
 		set_process(true)
 		
-		# Trouver et assigner la référence au joueur
-		player = get_node("../Player")  # Chemin relatif à partir de ServerNode
-		if player == null:
-			print("Erreur : le nœud 'Player' est introuvable. Vérifiez le nom ou la hiérarchie.")
+		# Trouver et assigner la référence au joueur (supposons qu'il est un enfant de la scène principale)
+		player = get_tree().get_root().get_node("Main/Player")
 	else:
 		print("Erreur lors du démarrage du serveur TCP : %s" % err)
+		
+	_launch_python_script()
 
 func _process(delta):
 	if server.is_connection_available():
@@ -28,22 +28,43 @@ func _process(delta):
 	
 	if client != null and client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		if client.get_available_bytes() > 0:
-			var data = client.get_utf8_string(client.get_available_bytes()).strip_edges()
+			var data = client.get_utf8_string(client.get_available_bytes())
 			print("Données reçues du client : %s" % data)
 
-			# Extraire les coordonnées X depuis les données reçues
+			# Si les données sont des coordonnées, les extraire
 			if data.find("X:") != -1:
 				var x_str = data.split(":")[1]
-				var x = float(x_str)  # Pas de vérification
+				var x = float(x_str)
+				
+				print("Coordonnée extraite : X = %d" % x)
+
+				# Déplacer le personnage en fonction de la coordonnée X reçue
 				_move_player(x)
+			
+			if data.strip_edges() == "jump":
+				if player and player.has_method("jump"):
+					player.jump()
+					print("Commande 'jump' exécutée : le joueur saute.")
+				else:
+					print("Erreur : La méthode 'jump' n'existe pas ou 'player' est invalide.")
 
 func _move_player(x: float):
 	# Déplacement du personnage uniquement sur l'axe X
-	if player != null:
-		player.global_position.x = x
-	else:
-		print("Erreur : Le joueur n'est pas disponible.")
+	var new_position = Vector3(x, player.global_position.y, player.global_position.z)
+	player.global_position = new_position
+	print("Personnage déplacé à : X = %d" % x)
+	
 
 func _exit_tree():
 	server.stop()
 	print("Serveur TCP arrêté.")
+	
+func _launch_python_script():
+	var python_script_path = "res://python udp/tcp_for_serial.py"  # Chemin relatif
+	var absolute_path = ProjectSettings.globalize_path(python_script_path)  # Convertit en chemin absolu
+	var output = []  # Tableau pour capturer la sortie standard (stdout)
+
+	# Convertit les arguments en PackedStringArray
+	var args = PackedStringArray([absolute_path])
+
+	print("avant le execute du python")
