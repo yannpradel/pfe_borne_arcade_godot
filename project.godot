@@ -19,10 +19,10 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/viewport_width=1366
-window/size/viewport_height=768
+window/size/viewport_width=3840
+window/size/viewport_height=1080
 window/size/mode=3
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
 [filesystem]
