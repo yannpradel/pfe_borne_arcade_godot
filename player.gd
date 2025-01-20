@@ -100,7 +100,7 @@ func jump():
 
 # Ajustement de la vitesse de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
-	var target_camera_z = global_transform.origin.z + 50
+	var target_camera_z = global_transform.origin.z + 10
 	var camera_position = camera.global_transform.origin.z
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
 	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
