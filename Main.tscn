@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dtbky5x6iqlws"]
+[gd_scene load_steps=9 format=3 uid="uid://dtbky5x6iqlws"]
 
 [ext_resource type="Script" path="res://fps.gd" id="1_0ilsh"]
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://Player.tscn" id="1_pc7mc"]
@@ -9,6 +9,12 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
 size = Vector3(10, 10, 50)
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_etd0x"]
+viewport_path = NodePath("Node2D/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1pq4l"]
+viewport_path = NodePath("SubViewport2")
+
 [node name="Main" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -16,13 +22,6 @@ transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -83.9612)
-
-[node name="CameraPivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -66.1828)
-size = 19.0
 
 [node name="FPSLabel" type="Label" parent="."]
 anchors_preset = 1
@@ -53,7 +52,41 @@ script = ExtResource("1_0ilsh")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 
-[node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport"]
+[node name="CameraPivot" type="Marker3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -69.2207)
+current = true
+size = 19.0
+
+[node name="SubViewport2" type="SubViewport" parent="."]
+
+[node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -83.9818)
+current = true
+
+[node name="Window" type="Window" parent="."]
+auto_translate_mode = 1
+position = Vector2i(0, 100)
+size = Vector2i(500, 500)
+
+[node name="TextureRect" type="TextureRect" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_etd0x")
+
+[node name="Window2" type="Window" parent="."]
+auto_translate_mode = 1
+position = Vector2i(600, 100)
+size = Vector2i(500, 500)
+
+[node name="TextureRect" type="TextureRect" parent="Window2"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_1pq4l")
 
 [connection signal="body_entered" from="RotatingSection/Area3D" to="RotatingSection" method="_on_area_3d_body_entered"]
