@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=3 uid="uid://dtbky5x6iqlws"]
+
+[ext_resource type="Script" path="res://fps.gd" id="1_0ilsh"]
+[ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://Player.tscn" id="1_pc7mc"]
+[ext_resource type="Script" path="res://rotating_section.gd" id="3_dybc4"]
+[ext_resource type="PackedScene" uid="uid://6q8kj7l0408n" path="res://poison.tscn" id="4_vx1c7"]
+[ext_resource type="AudioStream" uid="uid://07lfs53dc6ct" path="res://music/song.wav" id="5_1cf5p"]
+[ext_resource type="Script" path="res://windows.gd" id="6_8ggdq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
+size = Vector3(10, 10, 50)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_etd0x"]
+resource_local_to_scene = false
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_1pq4l"]
+viewport_path = NodePath("SubViewport2")
+
+[node name="Main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -83.9612)
+
+[node name="FPSLabel" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+
+[node name="RotatingSection" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 87)
+script = ExtResource("3_dybc4")
+
+[node name="untitled2" parent="RotatingSection" instance=ExtResource("4_vx1c7")]
+
+[node name="Area3D" type="Area3D" parent="RotatingSection"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 151.246, 0, 1.99999)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RotatingSection/Area3D"]
+shape = SubResource("BoxShape3D_30q01")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_1cf5p")
+autoplay = true
+
+[node name="ServerNode" type="Node" parent="."]
+script = ExtResource("1_0ilsh")
+
+[node name="SubViewport2" type="SubViewport" parent="."]
+
+[node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -83.9818)
+current = true
+
+[node name="Window" type="Window" parent="."]
+auto_translate_mode = 1
+position = Vector2i(0, 100)
+size = Vector2i(500, 500)
+script = ExtResource("6_8ggdq")
+
+[node name="TextureRect" type="TextureRect" parent="Window"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_etd0x")
+
+[node name="Window2" type="Window" parent="."]
+auto_translate_mode = 1
+position = Vector2i(600, 100)
+size = Vector2i(500, 500)
+
+[node name="TextureRect" type="TextureRect" parent="Window2"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_1pq4l")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="CameraPivot" type="Marker3D" parent="SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -69.2207)
+current = true
+size = 19.0
+
+[connection signal="body_entered" from="RotatingSection/Area3D" to="RotatingSection" method="_on_area_3d_body_entered"]
