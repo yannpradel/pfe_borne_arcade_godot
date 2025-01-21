@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://6q8kj7l0408n"]
+[gd_scene load_steps=24 format=3 uid="uid://6q8kj7l0408n"]
 
 [ext_resource type="PackedScene" uid="uid://c2ykqycurduwg" path="res://untitled.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://fumee.gdshader" id="2_a5gqm"]
@@ -86,13 +86,18 @@ _data = {
 "new_animation": SubResource("Animation_f6tp8")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_0i73v"]
+size = Vector3(290.676, 32.5936, 189.615)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f5f3m"]
+size = Vector3(1381.53, 18.8308, 57.8959)
+
 [node name="untitled" instance=ExtResource("1_by61u")]
 
 [node name="vide12" parent="." index="4"]
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
 [node name="Area3D" type="Area3D" parent="sol4" index="1"]
-script = ExtResource("5_7r40g")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sol4/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14819, 3.66412, -0.154175)
@@ -172,7 +177,25 @@ libraries = {
 "": SubResource("AnimationLibrary_2ywag")
 }
 
-[connection signal="body_entered" from="sol4/Area3D" to="plateform2 _011/Area3D" method="_on_area_3d_body_entered"]
+[node name="PoisonZone2" type="Area3D" parent="." index="107"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1380.25, -108.957, -58.2016)
+script = ExtResource("5_7r40g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PoisonZone2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 144.838, 84.9268, 94.3075)
+shape = SubResource("BoxShape3D_0i73v")
+
+[node name="PoisonZone" type="Area3D" parent="." index="108"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -173.833, -11.0079, -29.1008)
+script = ExtResource("5_7r40g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PoisonZone" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 690.265, -3.33098, 28.448)
+shape = SubResource("BoxShape3D_f5f3m")
+
 [connection signal="body_entered" from="sol4/Area3D" to="sol4/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="sol4/Area3D" to="plateform2 _011/Area3D" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="plateform2 _011/Area3D" to="plateform2 _011/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="sol16 _003/DoorTrigger" to="plateform2 _011/Area3D" method="_on_door_trigger_body_entered"]
+[connection signal="body_entered" from="PoisonZone2" to="plateform2 _011/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="PoisonZone" to="plateform2 _011/Area3D" method="_on_body_entered"]
