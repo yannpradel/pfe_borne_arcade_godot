@@ -13,6 +13,10 @@ var move_direction = Vector3.ZERO
 
 var has_double_jumped = false
 
+var jump_count = 0  # Nombre de sauts effectués
+var max_jump_count = 2  # Limitation normale des sauts
+var in_lava = false  # Détermine si le joueur est dans la lave
+
 # Flags pour les commandes UDP
 var move_left_flag = false
 var move_right_flag = false
@@ -32,6 +36,10 @@ func _ready():
 func _physics_process(delta):
 	# Réinitialise la direction
 	move_direction = Vector3.ZERO
+	
+	if is_on_floor():
+		jump_count = 0  # Réinitialise le compteur de saut
+
 
 	# Ajout des directions via les flags UDP
 	if move_left_flag:
@@ -93,14 +101,19 @@ func start_auto_move_z():
 	auto_move_z = true
 	print("Le déplacement automatique sur Z a été activé.")
 
-# Saut
 func jump():
-	if is_on_floor():
+	print(jump_count,max_jump_count)
+	print("essayer de sauter")
+	if in_lava:
+		# Saut continu activé
 		target_velocity.y = jump_force
-		has_double_jumped = false
-	elif not has_double_jumped:
-		target_velocity.y = jump_force
-		has_double_jumped = true
+		return
+	else:
+		# Saut normal (double saut)
+		if is_on_floor() or jump_count < max_jump_count:
+			print("saut normal")
+			target_velocity.y = jump_force
+			jump_count += 1
 
 # Ajustement de la vitesse de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
@@ -138,3 +151,19 @@ func update_lives_label():
 		var fps = Engine.get_frames_per_second()
 		# Met à jour le texte avec les vies et les FPS
 		lives_label.text = "Vies : " + str(lives) + " | FPS : " + str(fps)
+		
+func jump_high():
+	print("Grand saut activé !")
+	jump()
+	
+
+
+# Ajuste l'état lorsque le joueur entre ou sort de la lave
+func enter_lava():
+	in_lava = true
+	jump_high()
+	print("Le joueur est entré dans la lave !")
+
+func exit_lava():
+	in_lava = false
+	print("Le joueur est sorti de la lave.")

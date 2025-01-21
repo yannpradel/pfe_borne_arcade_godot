@@ -1,10 +1,11 @@
-[gd_scene load_steps=20 format=3 uid="uid://6q8kj7l0408n"]
+[gd_scene load_steps=24 format=3 uid="uid://6q8kj7l0408n"]
 
 [ext_resource type="PackedScene" uid="uid://c2ykqycurduwg" path="res://untitled.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://fumee.gdshader" id="2_a5gqm"]
 [ext_resource type="Shader" path="res://poison.gdshader" id="2_m2on7"]
 [ext_resource type="Texture2D" uid="uid://dqslcd2gfgpml" path="res://poison_noise_texture.tres" id="4_4npwy"]
 [ext_resource type="Texture2D" uid="uid://cg2nydaoqbn57" path="res://poison_yann_128.png" id="5_7d4lx"]
+[ext_resource type="Script" path="res://losing_life.gd" id="5_7r40g"]
 [ext_resource type="Script" path="res://laser_trigger.gd" id="6_koqju"]
 [ext_resource type="PackedScene" uid="uid://bbtb5qtrnovpk" path="res://laser_scene.tscn" id="7_snknl"]
 [ext_resource type="Shader" path="res://lave.gdshader" id="8_l5cyn"]
@@ -19,6 +20,9 @@ shader_parameter/time_speed = 0.2
 shader_parameter/distortion_strength = 0.2
 shader_parameter/lava_texture = ExtResource("5_7d4lx")
 shader_parameter/noise_texture = ExtResource("4_4npwy")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hqkt7"]
+size = Vector3(5.29639, 8.32825, 7.02271)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e53s6"]
 render_priority = 0
@@ -82,10 +86,22 @@ _data = {
 "new_animation": SubResource("Animation_f6tp8")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_0i73v"]
+size = Vector3(290.676, 32.5936, 189.615)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f5f3m"]
+size = Vector3(1381.53, 18.8308, 57.8959)
+
 [node name="untitled" instance=ExtResource("1_by61u")]
 
 [node name="vide12" parent="." index="4"]
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="Area3D" type="Area3D" parent="sol4" index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sol4/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14819, 3.66412, -0.154175)
+shape = SubResource("BoxShape3D_hqkt7")
 
 [node name="vide1" parent="." index="43"]
 surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
@@ -161,5 +177,25 @@ libraries = {
 "": SubResource("AnimationLibrary_2ywag")
 }
 
+[node name="PoisonZone2" type="Area3D" parent="." index="107"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1380.25, -108.957, -58.2016)
+script = ExtResource("5_7r40g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PoisonZone2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 144.838, 84.9268, 94.3075)
+shape = SubResource("BoxShape3D_0i73v")
+
+[node name="PoisonZone" type="Area3D" parent="." index="108"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -173.833, -11.0079, -29.1008)
+script = ExtResource("5_7r40g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PoisonZone" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 690.265, -3.33098, 28.448)
+shape = SubResource("BoxShape3D_f5f3m")
+
+[connection signal="body_entered" from="sol4/Area3D" to="sol4/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="sol4/Area3D" to="plateform2 _011/Area3D" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="plateform2 _011/Area3D" to="plateform2 _011/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="sol16 _003/DoorTrigger" to="plateform2 _011/Area3D" method="_on_door_trigger_body_entered"]
+[connection signal="body_entered" from="PoisonZone2" to="plateform2 _011/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="PoisonZone" to="plateform2 _011/Area3D" method="_on_body_entered"]
