@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dtbky5x6iqlws"]
+[gd_scene load_steps=13 format=3 uid="uid://dtbky5x6iqlws"]
 
 [ext_resource type="Script" path="res://fps.gd" id="1_0ilsh"]
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://Player.tscn" id="1_pc7mc"]
@@ -6,9 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://6q8kj7l0408n" path="res://poison.tscn" id="4_vx1c7"]
 [ext_resource type="AudioStream" uid="uid://07lfs53dc6ct" path="res://music/song.wav" id="5_1cf5p"]
 [ext_resource type="Script" path="res://windows.gd" id="6_8ggdq"]
-[ext_resource type="Script" path="res://camera_3d_barnaby.gd" id="7_6gmvb"]
-[ext_resource type="Texture2D" uid="uid://b11ioeku51u2l" path="res://barnaby.png" id="7_q55nw"]
-[ext_resource type="Script" path="res://camera_3d.gd" id="8_j71ug"]
+[ext_resource type="Texture2D" uid="uid://g5wdreaekjgg" path="res://barnaby.jpg" id="7_3eoko"]
 [ext_resource type="Script" path="res://barnaby.gd" id="8_n1g66"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
@@ -18,8 +16,7 @@ size = Vector3(10, 10, 50)
 viewport_path = NodePath("SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r0lcv"]
-transparency = 1
-albedo_texture = ExtResource("7_q55nw")
+albedo_texture = ExtResource("7_3eoko")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_vtdxp"]
 material = SubResource("StandardMaterial3D_r0lcv")
@@ -31,7 +28,7 @@ script = ExtResource("6_8ggdq")
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -74.7201)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -77.6891)
 
 [node name="FPSLabel" type="Label" parent="."]
 anchors_preset = 1
@@ -63,9 +60,8 @@ script = ExtResource("1_0ilsh")
 [node name="SubViewport" type="SubViewport" parent="."]
 
 [node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -56.205)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -83.9818)
 current = true
-script = ExtResource("7_6gmvb")
 
 [node name="Window" type="Window" parent="."]
 auto_translate_mode = 1
@@ -82,16 +78,18 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
 
 [node name="CameraPivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 7.6109)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -69.4488)
+transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -69.2207)
 current = true
 size = 19.0
-script = ExtResource("8_j71ug")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -99.6938)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(28, 0, 0, 0, -1.31134e-06, -15, 0, 30, -6.55671e-07, 0, 10.7516, -129.835)
+transform = Transform3D(28, 0, 0, 0, -1.31134e-06, -10, 0, 30, -4.37114e-07, 0, 6.79299, -98.6562)
 mesh = SubResource("PlaneMesh_vtdxp")
 script = ExtResource("8_n1g66")
 
