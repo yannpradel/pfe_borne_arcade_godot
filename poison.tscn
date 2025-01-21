@@ -45,21 +45,6 @@ shader_parameter/noise_texture = ExtResource("4_4npwy")
 [sub_resource type="BoxShape3D" id="BoxShape3D_xm1ic"]
 size = Vector3(19.6157, 41.2832, 6.14624)
 
-[sub_resource type="Animation" id="Animation_f6tp8"]
-resource_name = "new_animation"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("..:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(646.236, 40, 0), Vector3(646.236, -5.5, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_84udy"]
 length = 0.001
 tracks/0/type = "value"
@@ -73,6 +58,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(646.236, 40, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f6tp8"]
+resource_name = "new_animation"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(2.06667, 3.46667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(646.236, 40, 0), Vector3(646.236, -5.5, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2ywag"]
@@ -147,7 +148,7 @@ transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 759.179, -3.24243, 0.41091
 transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 646.236, 40, 0)
 
 [node name="DoorTrigger" type="Area3D" parent="sol16 _003" index="1"]
-transform = Transform3D(0.0744218, 0, 0.997227, 0, 1, 0, -0.997227, 0, 0.0744218, 305.532, -1.84683, 7.47137)
+transform = Transform3D(0.0744218, 0, 0.997227, 0, 1, 0, -0.997227, 0, 0.0744218, 309.049, -1.84683, 7.47137)
 script = ExtResource("11_ytxof")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sol16 _003/DoorTrigger" index="0"]
