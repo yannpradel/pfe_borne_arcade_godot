@@ -42,9 +42,6 @@ shader_parameter/color_balance = 0.8
 shader_parameter/lava_texture = ExtResource("9_q5gun")
 shader_parameter/noise_texture = ExtResource("4_4npwy")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_xm1ic"]
-size = Vector3(19.6157, 41.2832, 6.14624)
-
 [sub_resource type="Animation" id="Animation_f6tp8"]
 resource_name = "new_animation"
 tracks/0/type = "value"
@@ -80,6 +77,9 @@ _data = {
 "RESET": SubResource("Animation_84udy"),
 "new_animation": SubResource("Animation_f6tp8")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xm1ic"]
+size = Vector3(19.6157, 41.2832, 6.14624)
 
 [node name="untitled" instance=ExtResource("1_by61u")]
 
@@ -146,6 +146,11 @@ transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 759.179, -3.24243, 0.41091
 [node name="sol16 _003" parent="." index="105"]
 transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 646.236, 40, 0)
 
+[node name="DoorAnimationPlayer" type="AnimationPlayer" parent="sol16 _003/StaticBody3D" index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_2ywag")
+}
+
 [node name="DoorTrigger" type="Area3D" parent="sol16 _003" index="1"]
 transform = Transform3D(0.0744218, 0, 0.997227, 0, 1, 0, -0.997227, 0, 0.0744218, 305.532, -1.84683, 7.47137)
 script = ExtResource("11_ytxof")
@@ -153,12 +158,6 @@ script = ExtResource("11_ytxof")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sol16 _003/DoorTrigger" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6111, -9.77792, -0.379669)
 shape = SubResource("BoxShape3D_xm1ic")
-
-[node name="DoorAnimationPlayer" type="AnimationPlayer" parent="sol16 _003/DoorTrigger" index="1"]
-root_node = NodePath("../../StaticBody3D")
-libraries = {
-"": SubResource("AnimationLibrary_2ywag")
-}
 
 [connection signal="body_entered" from="plateform2 _011/Area3D" to="plateform2 _011/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="sol16 _003/DoorTrigger" to="plateform2 _011/Area3D" method="_on_door_trigger_body_entered"]
