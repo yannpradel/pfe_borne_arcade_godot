@@ -1,13 +1,12 @@
 extends CharacterBody3D
 
-
-@export var speed = 18
+@export var speed = 13
 @export var fall_acceleration = 75
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
 
 var target_velocity = Vector3.ZERO
-var move_direction = Vector3.ZERO  # Direction actuelle du déplacement
+var move_direction = Vector3.ZERO
 @onready var camera := $"../CameraPivot/Camera3D"
 @onready var camera2 := $"../SubViewport/Camera3DBarnaby"
 var has_double_jumped = false
@@ -16,14 +15,14 @@ var has_double_jumped = false
 var move_left_flag = false
 var move_right_flag = false
 var move_forward_flag = false
-var move_back_flag = true  # Toujours vrai pour un mouvement constant vers l'arrière
+var move_back_flag = false  # Déplacement manuel sur Z
+
+# Nouvelle variable de contrôle
+var auto_move_z = true  # Définit si le Z est auto ou manuel
 
 func _physics_process(delta):
 	# Réinitialise la direction
 	move_direction = Vector3.ZERO
-
-	# Mouvement constant vers l'arrière
-	move_direction.z += 1
 
 	# Ajout des directions via les flags UDP
 	if move_left_flag:
@@ -32,6 +31,8 @@ func _physics_process(delta):
 		move_direction.x += 1
 	if move_forward_flag:
 		move_direction.z -= 1
+	if move_back_flag:
+		move_direction.z += 1
 
 	# Ajout des directions via le clavier
 	if Input.is_action_pressed("move_right"):
@@ -44,6 +45,10 @@ func _physics_process(delta):
 		move_direction.z -= 1
 	if Input.is_action_just_pressed("jump"):
 		jump()
+
+	# Ajout du mouvement automatique sur Z si activé
+	if auto_move_z:
+		move_direction.z += 1
 
 	# Normalisation de la direction et mise à jour de l'orientation
 	if move_direction != Vector3.ZERO:
@@ -64,32 +69,18 @@ func _physics_process(delta):
 
 	# Ajuste la vitesse des caméras
 	adjust_camera_speed(delta)
-	adjust_camera2_speed(delta)  # Appeler aussi la fonction pour la deuxième caméra
+	adjust_camera2_speed(delta)
 
-# Commandes UDP
-func move_left():
-	move_left_flag = true
+# Désactive le déplacement automatique sur Z et ajuste la logique de la caméra
+func stop_auto_move_z():
+	auto_move_z = false
+	print("Le déplacement automatique sur Z a été désactivé.")
 
-func move_right():
-	move_right_flag = true
 
-func move_forward():
-	move_forward_flag = true
-
-func move_back():
-	move_back_flag = true
-
-func stop_move_left():
-	move_left_flag = false
-
-func stop_move_right():
-	move_right_flag = false
-
-func stop_move_forward():
-	move_forward_flag = false
-
-func stop_move_back():
-	move_back_flag = false
+# Active le déplacement automatique sur Z
+func start_auto_move_z():
+	auto_move_z = true
+	print("Le déplacement automatique sur Z a été activé.")
 
 # Saut
 func jump():
@@ -102,7 +93,10 @@ func jump():
 
 # Ajustement de la vitesse de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
-	var target_camera_z = global_transform.origin.z + 70
+	var target_camera_z = global_transform.origin.z + 10
+	if auto_move_z:
+		target_camera_z += 40  # Ajoute un offset seulement si auto_move_z est activé
+
 	var camera_position = camera.global_transform.origin.z
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
 	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
