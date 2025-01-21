@@ -9,6 +9,8 @@ var target_velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
 @onready var camera := $"../CameraPivot/Camera3D"
 @onready var camera2 := $"../SubViewport/Camera3DBarnaby"
+@onready var lives_label := $"../FPSLabel"
+
 var has_double_jumped = false
 
 # Flags pour les commandes UDP
@@ -20,6 +22,13 @@ var move_back_flag = false  # Déplacement manuel sur Z
 # Nouvelle variable de contrôle
 var auto_move_z = true  # Définit si le Z est auto ou manuel
 
+# Système de vie
+var lives = 7  # Le joueur commence avec 7 vies
+
+func _ready():
+	# Met à jour l'affichage initial des vies et des FPS
+	update_lives_label()
+	
 func _physics_process(delta):
 	# Réinitialise la direction
 	move_direction = Vector3.ZERO
@@ -70,6 +79,8 @@ func _physics_process(delta):
 	# Ajuste la vitesse des caméras
 	adjust_camera_speed(delta)
 	adjust_camera2_speed(delta)
+	
+	update_lives_label()
 
 # Désactive le déplacement automatique sur Z et ajuste la logique de la caméra
 func stop_auto_move_z():
@@ -109,3 +120,21 @@ func adjust_camera2_speed(delta):
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
 	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
 	camera2.global_transform.origin.z += camera_speed * delta
+	
+func lose_life():
+	lives -= 1
+	print("Le joueur a perdu une vie. Vies restantes : ", lives)
+	update_lives_label()
+	if lives <= 0:
+		game_over()
+
+func game_over():
+	print("Game Over !")
+	# Ajoute ici les actions à effectuer en cas de défaite, comme recharger la scène
+
+func update_lives_label():
+	if lives_label:
+		# Calcule les FPS
+		var fps = Engine.get_frames_per_second()
+		# Met à jour le texte avec les vies et les FPS
+		lives_label.text = "Vies : " + str(lives) + " | FPS : " + str(fps)
