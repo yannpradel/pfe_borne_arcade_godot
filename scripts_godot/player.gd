@@ -1,9 +1,12 @@
 extends CharacterBody3D
 
-@export var speed = 2
+
+@export var speed = 13
 @export var fall_acceleration = 75
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
+@export var camera_distance = 20
+@export var camera_offset_z = -15  # Distance constante entre le personnage et la caméra
 
 @export var offset_camera_1 = 10
 
@@ -14,7 +17,6 @@ var move_direction = Vector3.ZERO
 @onready var lives_label := $"../FPSLabel"
 
 const GameOverScreen = preload("res://tscn_godot/game_over.tscn")
-
 var has_double_jumped = false
 
 var jump_count = 0  # Nombre de sauts effectués
@@ -90,9 +92,8 @@ func _physics_process(delta):
 
 	# Ajuste la vitesse des caméras
 	adjust_camera_speed(delta)
-	adjust_camera2_speed(delta)
-	
 	update_lives_label()
+
 
 # Désactive le déplacement automatique sur Z et ajuste la logique de la caméra
 func stop_auto_move_z():
@@ -119,25 +120,30 @@ func jump():
 			target_velocity.y = jump_force
 			jump_count += 1
 
-# Ajustement de la vitesse de la caméra pour suivre le personnage
+# Ajustement de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
-	var target_camera_z = global_transform.origin.z + 10
+	# Calcul de la position cible de la caméra
+	var camera_position = camera.global_transform.origin
+
+	# Calcul de la position cible uniquement sur l'axe Z
+	var target_camera_z = global_transform.origin.z - camera_offset_z
+
+	# Calcul de la vitesse de déplacement sur l'axe Z uniquement
+	var camera_speed = (target_camera_z - camera_position.z) * max_camera_speed * delta
+
+	# Appliquer le mouvement uniquement sur l'axe Z
+	camera_position.z += camera_speed
+
+	# Mettre à jour la position de la caméra
+	camera.global_transform.origin = Vector3(
+		camera.global_transform.origin.x,  # X reste inchangé
+		camera.global_transform.origin.y,  # Y reste inchangé
+		camera_position.z                 # Z mis à jour
+	)
+
 	if auto_move_z:
 		target_camera_z += offset_camera_1  # Ajoute un offset seulement si auto_move_z est activé
 
-	var camera_position = camera.global_transform.origin.z
-	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
-	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
-	camera.global_transform.origin.z += camera_speed * delta
-
-# Ajustement de la vitesse de la deuxième caméra pour suivre le personnage
-func adjust_camera2_speed(delta):
-	var target_camera_z = global_transform.origin.z + 10
-	var camera_position = camera2.global_transform.origin.z
-	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
-	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
-	camera2.global_transform.origin.z += camera_speed * delta
-	
 func lose_life():
 	lives -= 1
 	print("Le joueur a perdu une vie. Vies restantes : ", lives)
