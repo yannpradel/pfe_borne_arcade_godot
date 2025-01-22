@@ -1,0 +1,57 @@
+[gd_scene load_steps=4 format=3 uid="uid://k4fefm3nuvgt"]
+
+[ext_resource type="Script" path="res://scripts_godot/game_over.gd" id="1_ui386"]
+[ext_resource type="FontFile" uid="uid://cxjyogfatwmhl" path="res://fonts/BillieDEMO-Black.otf" id="2_ivmvh"]
+[ext_resource type="FontFile" uid="uid://butwx5c7kctrf" path="res://fonts/BillieDEMO-Light.otf" id="3_6ek3p"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_right = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ui386")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_right = 1363.0
+offset_bottom = 768.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ivmvh")
+theme_override_font_sizes/font_size = 78
+text = "Game Over"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Quit" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_6ek3p")
+theme_override_font_sizes/font_size = 50
+text = "Quit
+"
+
+[node name="Restart" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_6ek3p")
+theme_override_font_sizes/font_size = 50
+text = "Restart
+"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Restart" to="." method="_on_restart_button_pressed"]
