@@ -11,7 +11,7 @@ var move_direction = Vector3.ZERO
 @onready var camera2 := $"../SubViewport/Camera3DBarnaby"
 @onready var lives_label := $"../FPSLabel"
 
-const GameOverScreen = preload("res://game_over.tscn")
+const GameOverScreen = preload("res://tscn_godot/game_over.tscn")
 
 var has_double_jumped = false
 
@@ -146,7 +146,7 @@ func lose_life():
 
 func game_over():
 	print("Game Over !")
-	get_tree().change_scene_to_file("res://game_over.tscn")  # Mets ici le chemin exact vers ta scène "game_over.tscn"
+	get_tree().change_scene_to_file("res://tscn_godot/game_over.tscn")  # Mets ici le chemin exact vers ta scène "game_over.tscn"
 
 func update_lives_label():
 	if lives_label:

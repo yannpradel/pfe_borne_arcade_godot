@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://k4fefm3nuvgt"]
 
-[ext_resource type="Script" path="res://game_over.gd" id="1_qs5cf"]
-[ext_resource type="FontFile" uid="uid://cxjyogfatwmhl" path="res://fonts/BillieDEMO-Black.otf" id="2_yjnfg"]
-[ext_resource type="FontFile" uid="uid://butwx5c7kctrf" path="res://fonts/BillieDEMO-Light.otf" id="3_7ufhu"]
+[ext_resource type="Script" path="res://scripts_godot/game_over.gd" id="1_ui386"]
+[ext_resource type="FontFile" uid="uid://cxjyogfatwmhl" path="res://fonts/BillieDEMO-Black.otf" id="2_ivmvh"]
+[ext_resource type="FontFile" uid="uid://butwx5c7kctrf" path="res://fonts/BillieDEMO-Light.otf" id="3_6ek3p"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -13,7 +13,7 @@ offset_left = -1.0
 offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_qs5cf")
+script = ExtResource("1_ui386")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
@@ -29,7 +29,7 @@ theme_override_constants/separation = 100
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_yjnfg")
+theme_override_fonts/font = ExtResource("2_ivmvh")
 theme_override_font_sizes/font_size = 78
 text = "Game Over"
 horizontal_alignment = 1
@@ -40,14 +40,14 @@ theme_override_constants/separation = 20
 
 [node name="Quit" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_7ufhu")
+theme_override_fonts/font = ExtResource("3_6ek3p")
 theme_override_font_sizes/font_size = 50
 text = "Quit
 "
 
 [node name="Restart" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_7ufhu")
+theme_override_fonts/font = ExtResource("3_6ek3p")
 theme_override_font_sizes/font_size = 50
 text = "Restart
 "
