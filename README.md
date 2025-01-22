@@ -53,23 +53,23 @@ Utilisez les scènes importées dans vos scènes Godot pour ajouter les modèles
 
 # Structure du Projet
 
-*pfe_borne_arcade_godot/
-├── assets - blender/
-│   ├── models/            # Modèles 3D (Blender)
-│   ├── textures/          # Textures et images
-├── export/                # Fichiers d'export du jeu et paramètre
-├── fonts/                 # Polices d'écritures
-├── icon/                  # Icone du jeu
-├── map/
-│   ├── model/             # Map du jeu pour Godot
-├── music/                 # Musique du jeu
-├── python udp/            # Scripts python pour la communication avec le matériel
-├── release-debug/         # Fichiers d'export pour l'architecture Linux Raspbian ARM64
-├── scripts_godot/         # Scripts Godot
-├── shader_godot/          # Shader Godot
-├── tscn_godot/            # Modèle 3D Godot
-├── mod.sh                 # Script de lancement shell pour la Raspbian
-└── project.godot          # Fichier de configuration du projet Godot*
+*pfe_borne_arcade_godot/   
+├── assets - blender/  
+│   ├── models/            # Modèles 3D (Blender)  
+│   ├── textures/          # Textures et images  
+├── export/                # Fichiers d'export du jeu et paramètre  
+├── fonts/                 # Polices d'écritures  
+├── icon/                  # Icone du jeu  
+├── map/  
+│   ├── model/             # Map du jeu pour Godot    
+├── music/                 # Musique du jeu  
+├── python udp/            # Scripts python pour la communication avec le matériel  
+├── release-debug/         # Fichiers d'export pour l'architecture Linux Raspbian ARM64  
+├── scripts_godot/         # Scripts Godot  
+├── shader_godot/          # Shader Godot  
+├── tscn_godot/            # Modèle 3D Godot  
+├── mod.sh                 # Script de lancement shell pour la Raspbian  
+└── project.godot          # Fichier de configuration du projet Godot*  
 
 # Commandes Git de Base
 
