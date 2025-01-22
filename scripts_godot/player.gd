@@ -138,15 +138,10 @@ func adjust_camera_speed(delta):
 		camera.global_transform.origin.y,  # Y reste inchangé
 		camera_position.z                 # Z mis à jour
 	)
-	var target_camera_z = global_transform.origin.z + 10
+
 	if auto_move_z:
 		target_camera_z += 40  # Ajoute un offset seulement si auto_move_z est activé
 
-	var camera_position = camera.global_transform.origin.z
-	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
-	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
-	camera.global_transform.origin.z += camera_speed * delta
-	
 func lose_life():
 	lives -= 1
 	print("Le joueur a perdu une vie. Vies restantes : ", lives)

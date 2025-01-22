@@ -8,8 +8,8 @@
 [ext_resource type="Script" path="res://scripts_godot/windows.gd" id="6_8ggdq"]
 [ext_resource type="Script" path="res://scripts_godot/camera_3d_barnaby.gd" id="7_6gmvb"]
 [ext_resource type="Texture2D" uid="uid://b11ioeku51u2l" path="res://assets - blender/textures/barnaby.png" id="7_q55nw"]
-[ext_resource type="Script" path="res://scripts_godot/camera_3d.gd" id="8_j71ug"]
-[ext_resource type="Script" path="res://scripts_godot/barnaby.gd" id="8_n1g66"]
+[ext_resource type="Script" path="res://camera_3d.gd" id="8_j71ug"]
+[ext_resource type="Script" path="res://barnaby.gd" id="8_n1g66"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
 size = Vector3(10, 10, 50)
