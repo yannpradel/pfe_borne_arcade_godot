@@ -11,6 +11,8 @@ var move_direction = Vector3.ZERO
 @onready var camera2 := $"../SubViewport/Camera3DBarnaby"
 @onready var lives_label := $"../FPSLabel"
 
+const GameOverScreen = preload("res://game_over.tscn")
+
 var has_double_jumped = false
 
 var jump_count = 0  # Nombre de sauts effectués
@@ -27,7 +29,7 @@ var move_back_flag = false  # Déplacement manuel sur Z
 var auto_move_z = true  # Définit si le Z est auto ou manuel
 
 # Système de vie
-var lives = 7  # Le joueur commence avec 7 vies
+var lives = 2  # Le joueur commence avec 7 vies
 
 func _ready():
 	# Met à jour l'affichage initial des vies et des FPS
@@ -141,9 +143,10 @@ func lose_life():
 	if lives <= 0:
 		game_over()
 
+
 func game_over():
 	print("Game Over !")
-	# Ajoute ici les actions à effectuer en cas de défaite, comme recharger la scène
+	get_tree().change_scene_to_file("res://game_over.tscn")  # Mets ici le chemin exact vers ta scène "game_over.tscn"
 
 func update_lives_label():
 	if lives_label:
@@ -155,8 +158,6 @@ func update_lives_label():
 func jump_high():
 	print("Grand saut activé !")
 	jump()
-	
-
 
 # Ajuste l'état lorsque le joueur entre ou sort de la lave
 func enter_lava():
