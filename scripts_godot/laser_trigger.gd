@@ -17,8 +17,6 @@ func _ready():
 
 
 func _on_body_entered(body):
-	print("Un corps est entré dans l'Area3D : %s" % body.name)
-
 	if body.name == "Player" and not player_detected:
 		print("Le joueur a activé le laser.")
 		player_detected = true
@@ -45,10 +43,30 @@ func _on_body_entered(body):
 func send_platform_data():
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		var platform_data = determine_platform_position()
+		
+		# Envoi immédiat de la position
 		server_node.client.put_utf8_string(platform_data + "\n")
 		print("Données envoyées au serveur : %s" % platform_data)
+		
+		# Mise en place d'un Timer pour envoyer "0" après 0.5 secondes
+		var timer = Timer.new()
+		timer.wait_time = 0.5
+		timer.one_shot = true
+		timer.connect("timeout", Callable(self, "_send_zero_to_server"))
+		add_child(timer)
+		timer.start()
 	else:
 		print("Erreur : Pas de client TCP connecté.")
+
+# ⏱️ Fonction appelée après le délai
+func _send_zero_to_server():
+	print("cense envoyer 0")
+	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+		server_node.client.put_utf8_string("0\n")
+		print("Données '0' envoyées au serveur.")
+	else:
+		print("Erreur : Pas de client TCP connecté.")
+
 
 # 🔍 Détermine la position de la plateforme pour envoyer au serveur
 func determine_platform_position() -> String:
