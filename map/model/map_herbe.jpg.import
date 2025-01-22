@@ -2,15 +2,12 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bah25lhpg2bbc"
+uid="uid://rrj3kc40i61x"
 path.s3tc="res://.godot/imported/map_herbe.jpg-1672497c6ee7e79c14c326435bd9550d.s3tc.ctex"
 path.etc2="res://.godot/imported/map_herbe.jpg-1672497c6ee7e79c14c326435bd9550d.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "bb722be29c24ee7e9023ff98e7afe1da"
 }
 
 [deps]
