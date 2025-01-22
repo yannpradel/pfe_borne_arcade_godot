@@ -45,7 +45,7 @@ Les textures doivent être stockées dans assets/textures/ pour une meilleure or
 
 Pour utiliser un modèle Blender dans Godot :
 
-Enregistrez votre fichier .blend dans le dossier assets/models/.
+Enregistrez votre fichier .blend dans le dossier map/model/map.blend.
 
 Godot détectera et importera automatiquement le fichier .blend.
 
@@ -54,11 +54,21 @@ Utilisez les scènes importées dans vos scènes Godot pour ajouter les modèles
 # Structure du Projet
 
 *pfe_borne_arcade_godot/
-├── assets/
+├── assets - blender/
 │   ├── models/            # Modèles 3D (Blender)
 │   ├── textures/          # Textures et images
-├── scenes/                # Scènes de jeu principales
-├── scripts/               # Scripts GDScript pour le gameplay
+├── export/                # Fichiers d'export du jeu et paramètre
+├── fonts/                 # Polices d'écritures
+├── icon/                  # Icone du jeu
+├── map/
+│   ├── model/             # Map du jeu pour Godot
+├── music/                 # Musique du jeu
+├── python udp/            # Scripts python pour la communication avec le matériel
+├── release-debug/         # Fichiers d'export pour l'architecture Linux Raspbian ARM64
+├── scripts_godot/         # Scripts Godot
+├── shader_godot/          # Shader Godot
+├── tscn_godot/            # Modèle 3D Godot
+├── mod.sh                 # Script de lancement shell pour la Raspbian
 └── project.godot          # Fichier de configuration du projet Godot*
 
 # Commandes Git de Base
@@ -114,13 +124,8 @@ Merci de votre intérêt pour ce projet ! Toute contribution est la bienvenue po
 
 Pour toute question, n'hésitez pas à ouvrir une issue sur le dépôt GitHub.
 
+# Export du jeu ave Godot 
 
+![Consigne export du jeu depuis Godot](image.png)
 
-5. récupérer les fichiers pour exporter depuis godot
-
-
-
-TUTO METTRE TEXTURE :
-il faut aller dans shading, selectionner l'objet qu'on veut, ajouter, texture, texture image
-ça fait un bloc on relie la coueur avec la couleur du BSDF, puis sur nouvelle, ou alor dans la liste à gauche dans le tapis
 
