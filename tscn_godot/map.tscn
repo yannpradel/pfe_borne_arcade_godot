@@ -108,6 +108,108 @@ _data = {
 [node name="vide12" parent="." index="4"]
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
+[node name="poteau _003" parent="." index="12"]
+visible = false
+
+[node name="poteau _002" parent="." index="13"]
+visible = false
+
+[node name="poteau _001" parent="." index="14"]
+visible = false
+
+[node name="poteau _004" parent="." index="15"]
+visible = false
+
+[node name="poteau _005" parent="." index="16"]
+visible = false
+
+[node name="poteau _006" parent="." index="17"]
+visible = false
+
+[node name="poteau _007" parent="." index="18"]
+visible = false
+
+[node name="poteau _008" parent="." index="19"]
+visible = false
+
+[node name="poteau _009" parent="." index="20"]
+visible = false
+
+[node name="poteau _010" parent="." index="21"]
+visible = false
+
+[node name="poteau _011" parent="." index="22"]
+visible = false
+
+[node name="poteau _012" parent="." index="23"]
+visible = false
+
+[node name="poteau _013" parent="." index="24"]
+visible = false
+
+[node name="poteau _014" parent="." index="25"]
+visible = false
+
+[node name="poteau _015" parent="." index="26"]
+visible = false
+
+[node name="poteau _016" parent="." index="27"]
+visible = false
+
+[node name="poteau _017" parent="." index="28"]
+visible = false
+
+[node name="poteau _018" parent="." index="29"]
+visible = false
+
+[node name="poteau _019" parent="." index="30"]
+visible = false
+
+[node name="poteau _020" parent="." index="31"]
+visible = false
+
+[node name="poteau _021" parent="." index="32"]
+visible = false
+
+[node name="poteau _022" parent="." index="33"]
+visible = false
+
+[node name="poteau _023" parent="." index="34"]
+visible = false
+
+[node name="poteau _024" parent="." index="35"]
+visible = false
+
+[node name="poteau _025" parent="." index="36"]
+visible = false
+
+[node name="poteau _026" parent="." index="37"]
+visible = false
+
+[node name="poteau _027" parent="." index="38"]
+visible = false
+
+[node name="poteau _028" parent="." index="39"]
+visible = false
+
+[node name="poteau _029" parent="." index="40"]
+visible = false
+
+[node name="poteau _030" parent="." index="41"]
+visible = false
+
+[node name="poteau _031" parent="." index="42"]
+visible = false
+
+[node name="poteau _032" parent="." index="43"]
+visible = false
+
+[node name="poteau _033" parent="." index="44"]
+visible = false
+
+[node name="poteau _034" parent="." index="45"]
+visible = false
+
 [node name="Area3D" type="Area3D" parent="sol4" index="1"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="sol4/Area3D" index="0"]
@@ -133,13 +235,49 @@ surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
+[node name="Area3D" type="Area3D" parent="plateform2 _010" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
+script = ExtResource("6_koqju")
+laser_scene = ExtResource("7_snknl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _010/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -5.80402)
+shape = SubResource("BoxShape3D_drbgk")
+
 [node name="Area3D" type="Area3D" parent="plateform2 _011" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -200.861, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _011/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2887, 2.00261, -0.258703)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -5.80402)
+shape = SubResource("BoxShape3D_drbgk")
+
+[node name="Area3D" type="Area3D" parent="plateform2 _012" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
+script = ExtResource("6_koqju")
+laser_scene = ExtResource("7_snknl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _012/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -5.80402)
+shape = SubResource("BoxShape3D_drbgk")
+
+[node name="Area3D" type="Area3D" parent="plateform2 _014" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
+script = ExtResource("6_koqju")
+laser_scene = ExtResource("7_snknl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _014/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -5.80402)
+shape = SubResource("BoxShape3D_drbgk")
+
+[node name="Area3D" type="Area3D" parent="plateform2 _015" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
+script = ExtResource("6_koqju")
+laser_scene = ExtResource("7_snknl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _015/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -5.80402)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="PoisonZone2" type="Area3D" parent="." index="107"]
@@ -206,7 +344,11 @@ libraries = {
 
 [connection signal="body_entered" from="sol4/Area3D" to="sol4/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="sol4/Area3D" to="plateform2 _011/Area3D" method="_on_area_3d_body_entered"]
+[connection signal="body_entered" from="plateform2 _010/Area3D" to="plateform2 _010/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="plateform2 _011/Area3D" to="plateform2 _011/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="plateform2 _012/Area3D" to="plateform2 _012/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="plateform2 _014/Area3D" to="plateform2 _014/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="plateform2 _015/Area3D" to="plateform2 _015/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="PoisonZone2" to="plateform2 _011/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="PoisonZone" to="plateform2 _011/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="sol16 _003/DoorTrigger" to="plateform2 _011/Area3D" method="_on_door_trigger_body_entered"]
