@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://dtbky5x6iqlws"]
 
-[ext_resource type="Script" path="res://fps.gd" id="1_0ilsh"]
+[ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="1_0ilsh"]
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://Player.tscn" id="1_pc7mc"]
-[ext_resource type="Script" path="res://rotating_section.gd" id="3_dybc4"]
+[ext_resource type="Script" path="res://scripts_godot/rotating_section.gd" id="3_dybc4"]
 [ext_resource type="PackedScene" uid="uid://6q8kj7l0408n" path="res://poison.tscn" id="4_vx1c7"]
 [ext_resource type="AudioStream" uid="uid://07lfs53dc6ct" path="res://music/song.wav" id="5_1cf5p"]
-[ext_resource type="Script" path="res://windows.gd" id="6_8ggdq"]
+[ext_resource type="Script" path="res://scripts_godot/windows.gd" id="6_8ggdq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_30q01"]
 size = Vector3(10, 10, 50)

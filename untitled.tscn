@@ -1,8 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dvxrnvw7v31bv"]
 
 [ext_resource type="PackedScene" uid="uid://c2ykqycurduwg" path="res://untitled.glb" id="1_4oe5e"]
-[ext_resource type="Script" path="res://laser_trigger.gd" id="2_pn0yd"]
+[ext_resource type="Script" path="res://scripts_godot/laser_trigger.gd" id="2_pn0yd"]
 [ext_resource type="PackedScene" uid="uid://bbtb5qtrnovpk" path="res://laser_scene.tscn" id="3_cqu8a"]
+
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_aosng"]
 size = Vector3(0.763672, 3.56664, 8.72287)
