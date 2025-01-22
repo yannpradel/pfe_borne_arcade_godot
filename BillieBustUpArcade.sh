@@ -1,4 +1,4 @@
 #!/bin/sh
-echo -ne '\033c\033]0;Squash the Creeps (3D)\a'
+echo -ne '\033c\033]0;BillieBustUpArcade\a'
 base_path="$(dirname "$(realpath "$0")")"
-"$base_path/Squash the Creeps (3D).arm64" "$@"
+"$base_path/BillieBustUpArcade.arm64" "$@"
