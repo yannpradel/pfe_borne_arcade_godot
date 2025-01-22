@@ -5,13 +5,12 @@
 [ext_resource type="Shader" path="res://poison.gdshader" id="2_m2on7"]
 [ext_resource type="Texture2D" uid="uid://dqslcd2gfgpml" path="res://poison_noise_texture.tres" id="4_4npwy"]
 [ext_resource type="Texture2D" uid="uid://cg2nydaoqbn57" path="res://poison_yann_128.png" id="5_7d4lx"]
-[ext_resource type="Script" path="res://losing_life.gd" id="5_7r40g"]
-[ext_resource type="Script" path="res://laser_trigger.gd" id="6_koqju"]
+[ext_resource type="Script" path="res://scripts_godot/losing_life.gd" id="5_7r40g"]
+[ext_resource type="Script" path="res://scripts_godot/laser_trigger.gd" id="6_koqju"]
 [ext_resource type="PackedScene" uid="uid://bbtb5qtrnovpk" path="res://laser_scene.tscn" id="7_snknl"]
 [ext_resource type="Shader" path="res://lave.gdshader" id="8_l5cyn"]
 [ext_resource type="Texture2D" uid="uid://dg0h0iyyx5n35" path="res://lave.jpg" id="9_q5gun"]
-[ext_resource type="Script" path="res://animation_door.gd" id="10_4lmcj"]
-[ext_resource type="Script" path="res://door_trigger.gd" id="11_ytxof"]
+[ext_resource type="Script" path="res://scripts_godot/door_trigger.gd" id="11_ytxof"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ki20"]
 render_priority = 0
@@ -45,6 +44,10 @@ shader_parameter/red_boost = 3.0
 shader_parameter/color_balance = 0.8
 shader_parameter/lava_texture = ExtResource("9_q5gun")
 shader_parameter/noise_texture = ExtResource("4_4npwy")
+
+[sub_resource type="GDScript" id="GDScript_jx1bt"]
+script/source = "extends Node3D
+"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xm1ic"]
 size = Vector3(19.6157, 41.2832, 6.14624)
@@ -155,7 +158,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_gx3ge")
 surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
 
 [node name="sol16 _001" parent="." index="103"]
-script = ExtResource("10_4lmcj")
+script = SubResource("GDScript_jx1bt")
 
 [node name="sol16 _002" parent="." index="104"]
 transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 759.179, -3.24243, 0.410919)
