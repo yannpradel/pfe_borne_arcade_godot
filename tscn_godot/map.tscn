@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://scripts_godot/losing_life.gd" id="5_7r40g"]
 [ext_resource type="Shader" path="res://shader_godot/fumee.gdshader" id="5_8qg8m"]
 [ext_resource type="Script" path="res://scripts_godot/laser_trigger.gd" id="6_koqju"]
-[ext_resource type="PackedScene" path="res://tscn_godot/laser_scene.tscn" id="7_snknl"]
+[ext_resource type="PackedScene" uid="uid://bbtb5qtrnovpk" path="res://tscn_godot/laser_scene.tscn" id="7_snknl"]
 [ext_resource type="Shader" path="res://shader_godot/lave.gdshader" id="8_dpqpm"]
 [ext_resource type="Texture2D" uid="uid://b8ogd276gs27" path="res://assets - blender/textures/lave.jpg" id="9_q5gun"]
 [ext_resource type="Script" path="res://scripts_godot/door_trigger.gd" id="11_ytxof"]
