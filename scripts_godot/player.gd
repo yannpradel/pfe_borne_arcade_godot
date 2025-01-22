@@ -1,11 +1,11 @@
 extends CharacterBody3D
 
 
-@export var speed = 13
+@export var speed = 2
 @export var fall_acceleration = 75
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
-@export var camera_distance = 20
+@export var camera_distance = 10
 @export var camera_offset_z = -15  # Distance constante entre le personnage et la caméra
 
 @export var offset_camera_1 = 10

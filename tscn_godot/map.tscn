@@ -42,6 +42,12 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_pibhc")
 [sub_resource type="BoxShape3D" id="BoxShape3D_drbgk"]
 size = Vector3(0.763672, 4.45172, 14.2375)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_0i73v"]
+size = Vector3(290.676, 32.5936, 189.615)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f5f3m"]
+size = Vector3(1381.53, 18.8308, 57.8959)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gx3ge"]
 render_priority = 0
 shader = ExtResource("8_dpqpm")
@@ -77,7 +83,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_f6tp8"]
 resource_name = "new_animation"
-
 length = 4.0
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -98,12 +103,6 @@ _data = {
 "new_animation": SubResource("Animation_f6tp8")
 }
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0i73v"]
-size = Vector3(290.676, 32.5936, 189.615)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_f5f3m"]
-size = Vector3(1381.53, 18.8308, 57.8959)
-
 [node name="map" instance=ExtResource("1_by61u")]
 
 [node name="vide12" parent="." index="4"]
@@ -115,22 +114,22 @@ surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14819, 3.66412, -0.154175)
 shape = SubResource("BoxShape3D_hqkt7")
 
-[node name="vide1" parent="." index="43"]
+[node name="vide1" parent="." index="77"]
 surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
 
-[node name="vide2" parent="." index="44"]
+[node name="vide2" parent="." index="78"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 153.557, -7.69013, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide3" parent="." index="45"]
+[node name="vide3" parent="." index="79"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 236.778, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide4" parent="." index="46"]
+[node name="vide4" parent="." index="80"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
-[node name="vide5" parent="." index="47"]
+[node name="vide5" parent="." index="81"]
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
@@ -142,52 +141,6 @@ laser_scene = ExtResource("7_snknl")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _011/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57.2887, 2.00261, -0.258703)
 shape = SubResource("BoxShape3D_drbgk")
-
-[node name="vide6" parent="." index="88"]
-transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 420.87, -7.69, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
-
-[node name="vide7" parent="." index="89"]
-transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 486.595, -7.69, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
-
-[node name="vide8" parent="." index="90"]
-transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 577.717, -7.69, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
-
-[node name="vide9" parent="." index="99"]
-transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 139.149, -7.69, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_gx3ge")
-
-[node name="vide10" parent="." index="100"]
-transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 123.705, -7.69, 0)
-surface_material_override/0 = SubResource("ShaderMaterial_gx3ge")
-
-[node name="vide11" parent="." index="102"]
-surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
-
-[node name="sol16 _001" parent="." index="103"]
-script = SubResource("GDScript_jx1bt")
-
-[node name="sol16 _002" parent="." index="104"]
-transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 759.179, -3.24243, 0.410919)
-
-[node name="sol16 _003" parent="." index="105"]
-transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 646.236, 40, 0)
-
-[node name="DoorTrigger" type="Area3D" parent="sol16 _003" index="1"]
-transform = Transform3D(0.0744218, 0, 0.997227, 0, 1, 0, -0.997227, 0, 0.0744218, 309.049, -1.84683, 7.47137)
-script = ExtResource("11_ytxof")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="sol16 _003/DoorTrigger" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6111, -9.77792, -0.379669)
-shape = SubResource("BoxShape3D_xm1ic")
-
-[node name="DoorAnimationPlayer" type="AnimationPlayer" parent="sol16 _003/DoorTrigger" index="1"]
-root_node = NodePath("../../StaticBody3D")
-libraries = {
-"": SubResource("AnimationLibrary_2ywag")
-}
 
 [node name="PoisonZone2" type="Area3D" parent="." index="107"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1380.25, -108.957, -58.2016)
@@ -205,9 +158,55 @@ script = ExtResource("5_7r40g")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 690.265, -3.33098, 28.448)
 shape = SubResource("BoxShape3D_f5f3m")
 
+[node name="vide6" parent="." index="124"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 420.87, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide7" parent="." index="125"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 486.595, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide8" parent="." index="126"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 577.717, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
+
+[node name="vide9" parent="." index="135"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 139.149, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_gx3ge")
+
+[node name="vide10" parent="." index="136"]
+transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 123.705, -7.69, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_gx3ge")
+
+[node name="vide11" parent="." index="138"]
+surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
+
+[node name="sol16 _001" parent="." index="139"]
+script = SubResource("GDScript_jx1bt")
+
+[node name="sol16 _002" parent="." index="140"]
+transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 759.179, -3.24243, 0.410919)
+
+[node name="sol16 _003" parent="." index="141"]
+transform = Transform3D(5, 0, 0, 0, 4.5, 0, 0, 0, 20, 646.236, 40, 0)
+
+[node name="DoorTrigger" type="Area3D" parent="sol16 _003" index="1"]
+transform = Transform3D(0.0744218, 0, 0.997227, 0, 1, 0, -0.997227, 0, 0.0744218, 309.049, -1.84683, 7.47137)
+script = ExtResource("11_ytxof")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sol16 _003/DoorTrigger" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6111, -9.77792, -0.379669)
+shape = SubResource("BoxShape3D_xm1ic")
+
+[node name="DoorAnimationPlayer" type="AnimationPlayer" parent="sol16 _003/DoorTrigger" index="1"]
+root_node = NodePath("../../StaticBody3D")
+libraries = {
+"": SubResource("AnimationLibrary_2ywag")
+}
+
 [connection signal="body_entered" from="sol4/Area3D" to="sol4/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="sol4/Area3D" to="plateform2 _011/Area3D" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="plateform2 _011/Area3D" to="plateform2 _011/Area3D" method="_on_body_entered"]
-[connection signal="body_entered" from="sol16 _003/DoorTrigger" to="plateform2 _011/Area3D" method="_on_door_trigger_body_entered"]
 [connection signal="body_entered" from="PoisonZone2" to="plateform2 _011/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="PoisonZone" to="plateform2 _011/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="sol16 _003/DoorTrigger" to="plateform2 _011/Area3D" method="_on_door_trigger_body_entered"]
