@@ -3,8 +3,8 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b11ioeku51u2l"
-path.s3tc="res://.godot/imported/barnaby.png-7443e288ab571526d2478c669bc45471.s3tc.ctex"
-path.etc2="res://.godot/imported/barnaby.png-7443e288ab571526d2478c669bc45471.etc2.ctex"
+path.s3tc="res://.godot/imported/barnaby.png-ad23c112438d15ce5f0ef319ba179c76.s3tc.ctex"
+path.etc2="res://.godot/imported/barnaby.png-ad23c112438d15ce5f0ef319ba179c76.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://barnaby.png"
-dest_files=["res://.godot/imported/barnaby.png-7443e288ab571526d2478c669bc45471.s3tc.ctex", "res://.godot/imported/barnaby.png-7443e288ab571526d2478c669bc45471.etc2.ctex"]
+source_file="res://assets - blender/textures/barnaby.png"
+dest_files=["res://.godot/imported/barnaby.png-ad23c112438d15ce5f0ef319ba179c76.s3tc.ctex", "res://.godot/imported/barnaby.png-ad23c112438d15ce5f0ef319ba179c76.etc2.ctex"]
 
 [params]
 
