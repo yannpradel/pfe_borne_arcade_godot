@@ -60,7 +60,7 @@ current = true
 [node name="Window" type="Window" parent="."]
 auto_translate_mode = 1
 own_world_3d = true
-position = Vector2i(0, 767)
+position = Vector2i(0, 731)
 size = Vector2i(500, 500)
 
 [node name="TextureRect" type="TextureRect" parent="Window"]
