@@ -126,6 +126,8 @@ Pour toute question, n'hésitez pas à ouvrir une issue sur le dépôt GitHub.
 
 # Export du jeu ave Godot 
 
-![Consigne export du jeu depuis Godot](image.png)
+Pour le fichier dans Débogage, mettre le .debug du dossier release-debug/, et pour le Publication, mettre le .release du même dossier. 
+
+![Consigne export du jeu depuis Godot](./export/parametre.png)
 
 
