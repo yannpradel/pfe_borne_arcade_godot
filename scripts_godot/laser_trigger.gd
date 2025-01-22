@@ -71,9 +71,11 @@ func _send_zero_to_server():
 # 🔍 Détermine la position de la plateforme pour envoyer au serveur
 func determine_platform_position() -> String:
 	var platform_x = global_transform.origin.x
+	print("X de la plateforme %d" % platform_x)
 	if platform_x < -1:
 		return "1"  # Gauche
 	elif platform_x > 1:
 		return "2"  # Droite
 	else:
 		return "3"
+	#faire des zones de plateforme -25, -7, 10
