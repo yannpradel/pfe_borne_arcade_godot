@@ -8,6 +8,8 @@ extends CharacterBody3D
 @export var camera_distance = 20
 @export var camera_offset_z = -15  # Distance constante entre le personnage et la caméra
 
+@export var offset_camera_1 = 10
+
 var target_velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
 @onready var camera := $"../CameraPivot/Camera3D"
@@ -140,7 +142,7 @@ func adjust_camera_speed(delta):
 	)
 
 	if auto_move_z:
-		target_camera_z += 40  # Ajoute un offset seulement si auto_move_z est activé
+		target_camera_z += offset_camera_1  # Ajoute un offset seulement si auto_move_z est activé
 
 func lose_life():
 	lives -= 1

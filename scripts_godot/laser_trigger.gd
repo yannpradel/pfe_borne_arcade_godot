@@ -16,7 +16,6 @@ func _ready():
 		print("Erreur : Impossible de trouver le nœud ServerNode.")
 
 
-
 func _on_body_entered(body):
 	print("Un corps est entré dans l'Area3D : %s" % body.name)
 
@@ -55,8 +54,8 @@ func send_platform_data():
 func determine_platform_position() -> String:
 	var platform_x = global_transform.origin.x
 	if platform_x < -1:
-		return "100"  # Gauche
+		return "1"  # Gauche
 	elif platform_x > 1:
-		return "001"  # Droite
+		return "2"  # Droite
 	else:
-		return "010"
+		return "3"
