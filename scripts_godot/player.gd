@@ -1,9 +1,11 @@
 extends CharacterBody3D
 
-@export var speed = 13
+@export var speed = 2
 @export var fall_acceleration = 75
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
+
+@export var offset_camera_1 = 10
 
 var target_velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
@@ -121,7 +123,7 @@ func jump():
 func adjust_camera_speed(delta):
 	var target_camera_z = global_transform.origin.z + 10
 	if auto_move_z:
-		target_camera_z += 40  # Ajoute un offset seulement si auto_move_z est activé
+		target_camera_z += offset_camera_1  # Ajoute un offset seulement si auto_move_z est activé
 
 	var camera_position = camera.global_transform.origin.z
 	var camera_speed = (target_camera_z - camera_position) * delta * max_camera_speed
