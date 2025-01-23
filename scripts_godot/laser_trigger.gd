@@ -117,3 +117,4 @@ func determine_platform_position() -> String:
 	else:
 		return "3"
 	#faire des zones de plateforme -25, -7, 10
+	

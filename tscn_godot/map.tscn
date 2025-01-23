@@ -1,7 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://cx6i0bl2twj5o"]
+[gd_scene load_steps=28 format=3 uid="uid://cx6i0bl2twj5o"]
 
 [ext_resource type="PackedScene" uid="uid://dti2w2cwv46yj" path="res://map/model/map.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_ll1pk"]
+[ext_resource type="Script" path="res://tscn_godot/map.gd" id="2_o5kgn"]
 [ext_resource type="Texture2D" uid="uid://dd3l8auui4ncv" path="res://assets - blender/textures/poison.png" id="5_7d4lx"]
 [ext_resource type="Script" path="res://scripts_godot/losing_life.gd" id="5_7r40g"]
 [ext_resource type="Shader" path="res://shader_godot/fumee.gdshader" id="5_8qg8m"]
@@ -11,6 +12,7 @@
 [ext_resource type="Shader" path="res://shader_godot/lave.gdshader" id="8_dpqpm"]
 [ext_resource type="Texture2D" uid="uid://b8ogd276gs27" path="res://assets - blender/textures/lave.jpg" id="9_q5gun"]
 [ext_resource type="Script" path="res://scripts_godot/door_trigger.gd" id="11_ytxof"]
+[ext_resource type="Script" path="res://scripts_godot/cage.gd" id="12_roulp"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_28lg0"]
 frequency = 0.0048
@@ -101,64 +103,14 @@ _data = {
 "new_animation": SubResource("Animation_f6tp8")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_rv0a3"]
+size = Vector3(125.279, 60, 113.186)
+
 [node name="map" instance=ExtResource("1_by61u")]
+script = ExtResource("2_o5kgn")
 
 [node name="vide12" parent="." index="4"]
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
-
-[node name="poteau _003" parent="." index="12"]
-visible = false
-
-[node name="poteau _002" parent="." index="13"]
-visible = false
-
-[node name="poteau _001" parent="." index="14"]
-visible = false
-
-[node name="poteau _004" parent="." index="15"]
-visible = false
-
-[node name="poteau _005" parent="." index="16"]
-visible = false
-
-[node name="poteau _006" parent="." index="17"]
-visible = false
-
-[node name="poteau _007" parent="." index="18"]
-visible = false
-
-[node name="poteau _008" parent="." index="19"]
-visible = false
-
-[node name="poteau _009" parent="." index="20"]
-visible = false
-
-[node name="poteau _010" parent="." index="21"]
-visible = false
-
-[node name="poteau _011" parent="." index="22"]
-visible = false
-
-[node name="poteau _012" parent="." index="23"]
-visible = false
-
-[node name="poteau _013" parent="." index="24"]
-visible = false
-
-[node name="poteau _014" parent="." index="25"]
-visible = false
-
-[node name="poteau _015" parent="." index="26"]
-visible = false
-
-[node name="poteau _016" parent="." index="27"]
-visible = false
-
-[node name="poteau _017" parent="." index="28"]
-visible = false
-
-[node name="poteau _018" parent="." index="29"]
-visible = false
 
 [node name="poteau _019" parent="." index="30"]
 visible = false
@@ -166,47 +118,11 @@ visible = false
 [node name="poteau _020" parent="." index="31"]
 visible = false
 
-[node name="poteau _021" parent="." index="32"]
-visible = false
+[node name="Area3D" type="Area3D" parent="sol4" index="1"]
 
-[node name="poteau _022" parent="." index="33"]
-visible = false
-
-[node name="poteau _023" parent="." index="34"]
-visible = false
-
-[node name="poteau _024" parent="." index="35"]
-visible = false
-
-[node name="poteau _025" parent="." index="36"]
-visible = false
-
-[node name="poteau _026" parent="." index="37"]
-visible = false
-
-[node name="poteau _027" parent="." index="38"]
-visible = false
-
-[node name="poteau _028" parent="." index="39"]
-visible = false
-
-[node name="poteau _029" parent="." index="40"]
-visible = false
-
-[node name="poteau _030" parent="." index="41"]
-visible = false
-
-[node name="poteau _031" parent="." index="42"]
-visible = false
-
-[node name="poteau _032" parent="." index="43"]
-visible = false
-
-[node name="poteau _033" parent="." index="44"]
-visible = false
-
-[node name="poteau _034" parent="." index="45"]
-visible = false
+[node name="CollisionShape3D" type="CollisionShape3D" parent="sol4/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14819, 3.66412, -0.154175)
+shape = SubResource("BoxShape3D_hqkt7")
 
 [node name="vide1" parent="." index="77"]
 surface_material_override/0 = SubResource("ShaderMaterial_e53s6")
@@ -349,6 +265,17 @@ offset_bottom = 1166.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_i1w80")
 
+[node name="AreaCage" type="Area3D" parent="." index="143"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2203.83, 0, 0)
+script = ExtResource("12_roulp")
+laser_scene = ExtResource("7_snknl")
+
+[node name="CageCollision" type="CollisionShape3D" parent="AreaCage" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.85181, -19.4364, 0.213866)
+shape = SubResource("BoxShape3D_rv0a3")
+
+[connection signal="body_entered" from="sol4/Area3D" to="sol4/Area3D" method="_on_body_entered"]
+[connection signal="body_entered" from="sol4/Area3D" to="plateform2 _011/Area3D" method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="plateform2 _010/Area3D" to="plateform2 _010/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="plateform2 _011/Area3D" to="plateform2 _011/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="plateform2 _012/Area3D" to="plateform2 _012/Area3D" method="_on_body_entered"]

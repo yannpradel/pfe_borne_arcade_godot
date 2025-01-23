@@ -29,9 +29,10 @@ func _on_door_trigger_body_entered(body: Node3D) -> void:
 # Fonction pour jouer l'animation d'ouverture de la porte
 func open_door():
 	print("Avant lancement de l'animation")
-	if animation_player:
+	if animation_player && !(Global.triggered):
 		print("Lancement de l'animation 'new_animation'")
 		animation_player.play("new_animation")
+		Global.triggered = true
 	else:
 		print("Erreur : AnimationPlayer non défini !")
 
