@@ -1,11 +1,12 @@
 extends Area3D
 
 @export var laser_scene: PackedScene
+@export var texture_rect_path: NodePath  # Chemin vers le TextureRect dans la hiérarchie
 var laser_instance
 var player_detected = false
 
 var server_node: ServerNode
-
+var texture_rect: TextureRect
 
 func _ready():
 	print("Laser: Initialisation terminée.")
@@ -14,30 +15,51 @@ func _ready():
 	server_node = get_tree().get_root().get_node("Main/ServerNode")
 	if server_node == null:
 		print("Erreur : Impossible de trouver le nœud ServerNode.")
-
+		
+		# Récupération du TextureRect pour l'image 2D
+	if texture_rect_path:
+		texture_rect = get_node(texture_rect_path)
+		if texture_rect and texture_rect is TextureRect:
+			print("TextureRect trouvé : %s" % texture_rect.name)
+			texture_rect.visible = false
+		else:
+			print("Erreur : Le noeud ciblé n'est pas un TextureRect ou introuvable.")
+	else:
+		print("Erreur : Aucun chemin spécifié pour texture_rect_path.")
 
 func _on_body_entered(body):
 	if body.name == "Player" and not player_detected:
 		print("Le joueur a activé le laser.")
 		player_detected = true
 
+		# Affiche l'image 2D temporairement
+		if texture_rect:
+			texture_rect.visible = true  # Affiche l'image
+			var timer = Timer.new()
+			timer.wait_time = 0.5  # Durée de 0.5 seconde
+			timer.one_shot = true
+			timer.connect("timeout", Callable(self, "_hide_texture_rect"))
+			add_child(timer)
+			timer.start()
+
 		# Envoi des données de la plateforme au serveur
 		send_platform_data()
 
-		if laser_scene:
-			print("La scène du laser est chargée. Instanciation en cours...")
-			laser_instance = laser_scene.instantiate()
-			get_parent().add_child(laser_instance)
-			print("Laser instancié et ajouté au parent.")
-
-			# Positionner le laser
-			laser_instance.global_transform.origin = global_transform.origin + Vector3(0, 2, 0)
-			print("Laser positionné au-dessus de la plateforme : %s" % str(laser_instance.global_transform.origin))
+		if texture_rect_path:
+			texture_rect = get_node(texture_rect_path)
+			if texture_rect:
+				update_texture_position()
+				texture_rect.visible = true  # Affiche à nouveau au cas où
+			else:
+				print("Erreur : TextureRect introuvable !")
 		else:
-			print("Erreur : laser_scene n'est pas défini.")
-	else:
-		if player_detected:
-			print("Le laser a déjà été activé pour ce joueur.")
+			print("Erreur : Aucun chemin de TextureRect spécifié.")
+
+# Fonction appelée après le délai pour masquer l'image
+func _hide_texture_rect():
+	if texture_rect:
+		texture_rect.visible = false
+		print("TextureRect masqué après le délai.")
 
 # 🚀 Fonction pour envoyer les données de position au serveur
 func send_platform_data():
@@ -66,6 +88,22 @@ func _send_zero_to_server():
 		print("Données '0' envoyées au serveur.")
 	else:
 		print("Erreur : Pas de client TCP connecté.")
+
+func update_texture_position():
+	if texture_rect:
+		# Récupérer et limiter X à la plage [-20, 20]
+		var area3d_x = clamp(global_transform.origin.x, -20, 20)
+
+		# Mapper X (-20 à 20) sur la position 2D X (0 à 1366)
+		texture_rect.position.x = map_range(area3d_x, -20, 20, 300, 1066)
+
+		# Debug : Afficher les informations pour vérification
+		print("Position 3D X :", area3d_x, " → Position 2D X :", texture_rect.position.x)
+
+func map_range(value, min_3D, max_3D, min_2D, max_2D):
+	# Mappe une valeur d'une plage à une autre
+	return ((value - min_3D) / (max_3D - min_3D)) * (max_2D - min_2D) + min_2D
+
 
 
 # 🔍 Détermine la position de la plateforme pour envoyer au serveur
