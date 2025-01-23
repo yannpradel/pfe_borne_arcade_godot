@@ -1,18 +1,10 @@
-import RPi.GPIO as GPIO
-import time
+from gpiozero import LED
+from time import sleep
 
-# Configuration du GPIO
-GPIO.setmode(GPIO.BCM)  # Utilisation de la numérotation BCM
-GPIO.setup(26, GPIO.OUT)  # Configuration du GPIO 26 comme sortie
+# Configurer le GPIO 26 comme une sortie
+gpio_26 = LED(26)
 
-try:
-    # Envoi de la valeur 1 sur le GPIO 26
-    GPIO.output(26, GPIO.HIGH)
-    time.sleep(0.5)  # Maintenir la valeur haute pendant 0,5 seconde
-    
-    # Remettre le GPIO à 0
-    GPIO.output(26, GPIO.LOW)
-
-finally:
-    # Nettoyage des configurations GPIO
-    GPIO.cleanup()
+# Envoyer un signal haut (1) pendant 0.5 seconde
+gpio_26.on()
+sleep(0.5)
+gpio_26.off()
