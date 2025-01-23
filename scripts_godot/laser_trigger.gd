@@ -14,6 +14,7 @@ func _ready():
 	server_node = get_tree().get_root().get_node("Main/ServerNode")
 	if server_node == null:
 		print("Erreur : Impossible de trouver le nœud ServerNode.")
+		
 
 
 func _on_body_entered(body):
@@ -79,3 +80,4 @@ func determine_platform_position() -> String:
 	else:
 		return "3"
 	#faire des zones de plateforme -25, -7, 10
+	
