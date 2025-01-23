@@ -2,7 +2,7 @@ class_name ServerNode
 extends Node
 
 var server := TCPServer.new()  # Créer un serveur TCP
-var port := 12345  # Port d'écoute
+var port := 12346  # Port d'écoute
 var client = null  # Stocker le client connecté
 
 var player: CharacterBody3D  # Référence au personnage à contrôler
@@ -60,7 +60,7 @@ func _exit_tree():
 	print("Serveur TCP arrêté.")
 	
 func _launch_python_script():
-	var python_script_path = "res://python udp/tcp_for_serial.py"  # Chemin relatif
+	var python_script_path = "res://python udp/serial_laser.py"  # Chemin relatif
 	var absolute_path = ProjectSettings.globalize_path(python_script_path)  # Convertit en chemin absolu
 	var output = []  # Tableau pour capturer la sortie standard (stdout)
 

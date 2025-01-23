@@ -16,10 +16,7 @@ func _ready():
 		print("Erreur : Impossible de trouver le nœud ServerNode.")
 
 
-
 func _on_body_entered(body):
-	print("Un corps est entré dans l'Area3D : %s" % body.name)
-
 	if body.name == "Player" and not player_detected:
 		print("Le joueur a activé le laser.")
 		player_detected = true
@@ -46,17 +43,39 @@ func _on_body_entered(body):
 func send_platform_data():
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		var platform_data = determine_platform_position()
+		
+		# Envoi immédiat de la position
 		server_node.client.put_utf8_string(platform_data + "\n")
 		print("Données envoyées au serveur : %s" % platform_data)
+		
+		# Mise en place d'un Timer pour envoyer "0" après 0.5 secondes
+		var timer = Timer.new()
+		timer.wait_time = 0.5
+		timer.one_shot = true
+		timer.connect("timeout", Callable(self, "_send_zero_to_server"))
+		add_child(timer)
+		timer.start()
 	else:
 		print("Erreur : Pas de client TCP connecté.")
+
+# ⏱️ Fonction appelée après le délai
+func _send_zero_to_server():
+	print("cense envoyer 0")
+	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+		server_node.client.put_utf8_string("0\n")
+		print("Données '0' envoyées au serveur.")
+	else:
+		print("Erreur : Pas de client TCP connecté.")
+
 
 # 🔍 Détermine la position de la plateforme pour envoyer au serveur
 func determine_platform_position() -> String:
 	var platform_x = global_transform.origin.x
+	print("X de la plateforme %d" % platform_x)
 	if platform_x < -1:
-		return "100"  # Gauche
+		return "1"  # Gauche
 	elif platform_x > 1:
-		return "001"  # Droite
+		return "2"  # Droite
 	else:
-		return "010"
+		return "3"
+	#faire des zones de plateforme -25, -7, 10

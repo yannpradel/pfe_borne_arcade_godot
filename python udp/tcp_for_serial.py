@@ -22,18 +22,34 @@ for line in lines:
 input_line = chip.get_line(INPUT_PIN)
 input_line.request(consumer="gpio_input", type=gpiod.LINE_REQ_DIR_IN)
 
-# Configuration du port série
-PORT = '/dev/serial/by-id/usb-Arduino_www.arduino.cc_0043_4343935353635111F101-if00'  # Nom du port (à adapter si nécessaire)
-BAUD_RATE = 9600  # Débit en bauds (doit correspondre à celui configuré dans le programme Arduino)
+# Port série pour les lasers
+PORT_LASERS = 'COM6'
+BAUD_RATE_LASERS = 9600
 
-print(f"Initialisation du port série : {PORT} à {BAUD_RATE} bauds")
-# Initialisation du port série
+# Port série pour la DUE
+PORT_DUE = '/dev/serial/by-id/usb-Arduino_www.arduino.cc_0043_4343935353635111F101-if00'
+BAUD_RATE_DUE = 9600
+
+
+print(f"Initialisation du port série : {PORT_DUE} à {BAUD_RATE} bauds")
+
+# Initialisation du port série pour les lasers
 try:
-    ser = serial.Serial(PORT, BAUD_RATE, timeout=0.1)  # Timeout court pour éviter de bloquer longtemps
-    print("Port série initialisé avec succès.")
+    laser_ser = serial.Serial(PORT_LASERS, BAUD_RATE_LASERS, timeout=0.1)
+    print("Port série pour les lasers initialisé avec succès.")
 except serial.SerialException as e:
-    print(f"Erreur lors de l'initialisation du port série : {e}")
+    print(f"Erreur lors de l'initialisation du port série pour les lasers : {e}")
     exit(1)
+
+# Initialisation du port série pour la DUE
+try:
+    ser_due = serial.Serial(PORT_DUE, BAUD_RATE_DUE, timeout=0.1)
+    print("Port série pour la DUE initialisé avec succès.")
+except serial.SerialException as e:
+    print(f"Erreur lors de l'initialisation du port série pour la DUE : {e}")
+    laser_ser.close()
+    exit(1)
+
 
 # Configuration du client TCP
 SERVER_IP = '127.0.0.1'  # Adresse IP du serveur Godot
@@ -82,24 +98,20 @@ try:
             elif ready == sock:
                 # Données disponibles du serveur Godot
                 try:
-                    data_from_godot = sock.recv(1024).decode('utf-8').strip()
+                    # Traitement des données reçues depuis Godot
+                    # Supposons que data_from_godot contient la configuration des lasers (entre 0 et 5)
                     if data_from_godot:
-                        data_from_godot = re.sub(r'[^0-9]', '', data_from_godot)  # Garder uniquement les chiffres
-                        print(f"Données reçues de Godot : f{data_from_godot}f")
+                        data_from_godot = re.sub(r'[^0-5]', '', data_from_godot)  # Filtrer pour garder uniquement les chiffres de 0 à 5
 
-                        # Vérification si les données sont valides (exactement 3 caractères, composées uniquement de 0 et 1)
-                        print(f"DEBUG: {data_from_godot} - Longueur : {len(data_from_godot)}")
-                        if len(data_from_godot) == 3 and all(c in '01' for c in data_from_godot):
-                            print(f"Données valides reçues de Godot : {data_from_godot}")
-                            for i, value in enumerate(data_from_godot):
-                                if value == '1':
-                                    lines[i].set_value(1)  # Activer le GPIO correspondant
-                                    print(f"Laser {i} activé")
-                                else:
-                                    lines[i].set_value(0)  # Désactiver le GPIO correspondant
-                                    print(f"Laser {i} désactivé")
+                        if data_from_godot.isdigit() and 0 <= int(data_from_godot) <= 5:
+                            # Envoie la configuration au port série
+                            laser_command = f"{data_from_godot}\n"  # Format de la commande
+                            laser_ser.write(laser_command.encode('utf-8'))
+                            print(f"Commande envoyée au laser : {laser_command.strip()}")
                         else:
                             print(f"Données invalides reçues : {data_from_godot}")
+
+
                 except socket.error:
                     print("Erreur de lecture du socket.")
         
