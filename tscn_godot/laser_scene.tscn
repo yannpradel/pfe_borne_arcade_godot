@@ -1,28 +1,19 @@
-[gd_scene load_steps=3 format=3 uid="uid://bbtb5qtrnovpk"]
+[gd_scene load_steps=4 format=3 uid="uid://bbtb5qtrnovpk"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_elbru"]
+radius = 1.0
 
 [ext_resource type="Script" path="res://tscn_godot/laser_scene.gd" id="1_boso4"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4pspf"]
 
-[node name="Node2D" type="Node2D"]
-script = ExtResource("1_boso4")
+[node name="Area3D" type="Area3D"]
 
-[node name="Polygon2D3" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_4pspf")
-position = Vector2(200, 200)
-color = Color(0.526793, 2.20198e-06, 1.92523e-07, 1)
-polygon = PackedVector2Array(0, 0, 100, 0, 75, 200, 25, 200)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_elbru")
 
-[node name="Polygon2D2" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_4pspf")
-position = Vector2(190, 166)
-scale = Vector2(1.2, 1.2)
-color = Color(0.645551, 2.56296e-06, 4.81307e-07, 1)
-texture_scale = Vector2(1.2, 1.2)
-polygon = PackedVector2Array(0, 0, 100, 0, 75, 200, 25, 200)
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_4pspf")
-position = Vector2(225, 439)
-color = Color(0.645551, 2.56296e-06, 4.81307e-07, 1)
-polygon = PackedVector2Array(0, 0, 52, 0, 50, 50, 0, 50)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -7.15256e-07, 0)
+mesh = SubResource("SphereMesh_t12fr")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_yudak")
