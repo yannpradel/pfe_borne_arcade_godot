@@ -26,6 +26,7 @@ func start_laser_sequence():
 	total_session_timer.connect("timeout", Callable(self, "_end_laser_session"))
 	add_child(total_session_timer)
 	total_session_timer.start()
+	
 
 	# Timer pour spawner des lasers
 	laser_spawn_timer = Timer.new()
@@ -33,30 +34,47 @@ func start_laser_sequence():
 	laser_spawn_timer.connect("timeout", Callable(self, "_spawn_laser"))
 	add_child(laser_spawn_timer)
 	laser_spawn_timer.start()
+	
 
 func _spawn_laser():
 	if not can_spawn_laser:
 		return
-	
+
 	can_spawn_laser = false
-	
-	var positions = ["left", "center", "right"]
+
+	var positions = ["far_left", "left", "center", "right", "far_right"]
 	var chosen_position = positions[randi() % positions.size()]
-	
+
 	send_platform_data(chosen_position)
-	
+
 	if laser_scene:
 		var laser_instance = laser_scene.instantiate()
 		get_parent().add_child(laser_instance)
-		
+
+		# Définir la position du laser en fonction de `chosen_position`
 		match chosen_position:
+			"far_left":
+				laser_instance.scale = Vector3(100, 1, 15)
+				laser_instance.global_transform.origin = global_transform.origin + Vector3(-40, -45, -25)
 			"left":
-				laser_instance.global_transform.origin = global_transform.origin + Vector3(-15, 0, -19)
+				laser_instance.scale = Vector3(100, 1, 15)
+				laser_instance.global_transform.origin = global_transform.origin + Vector3(-20, -45, -25)
+			"far_right":
+				laser_instance.scale = Vector3(100, 1, 15)
+				laser_instance.global_transform.origin = global_transform.origin + Vector3(40, -45, -25)
 			"right":
-				laser_instance.global_transform.origin = global_transform.origin + Vector3(15, 0, -19)
+				laser_instance.scale = Vector3(100, 1, 15)
+				laser_instance.global_transform.origin = global_transform.origin + Vector3(20, -45, -25)
 			"center":
-				laser_instance.global_transform.origin = global_transform.origin + Vector3(0, 0, -19)
-		
+				laser_instance.scale = Vector3(100, 1, 15)
+				laser_instance.global_transform.origin = global_transform.origin + Vector3(0, -45, -25)
+
+		# Connecter les signaux de détection pour ce laser
+		laser_instance.connect("body_entered", self._on_laser_body_entered)
+
+		# Ajouter le laser à la liste des lasers actifs
+		active_lasers.append(laser_instance)
+
 		# Timer pour désactiver ce laser spécifique après 2 secondes
 		var laser_timer = Timer.new()
 		laser_timer.wait_time = 2.0
@@ -64,14 +82,15 @@ func _spawn_laser():
 		laser_timer.connect("timeout", Callable(self, "_remove_laser").bind(laser_instance))
 		add_child(laser_timer)
 		laser_timer.start()
-		
-		# Timer pour réactiver la spawn de lasers
+
+		# Timer pour réactiver le spawn de lasers
 		var spawn_delay_timer = Timer.new()
 		spawn_delay_timer.wait_time = 2.0
 		spawn_delay_timer.one_shot = true
 		spawn_delay_timer.connect("timeout", Callable(self, "_enable_laser_spawn"))
 		add_child(spawn_delay_timer)
 		spawn_delay_timer.start()
+
 
 func _remove_laser(laser):
 	if laser:
@@ -93,7 +112,7 @@ func _end_laser_session():
 
 func send_platform_data(position):
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		var platform_code = {"left": "1", "right": "2", "center": "3"}
+		var platform_code = {"far_left": "1", "left": "2", "far_right": "3","right": "4", "center": "5"}
 		server_node.client.put_utf8_string(platform_code[position] + "\n")
 		
 		var zero_timer = Timer.new()
@@ -106,3 +125,8 @@ func send_platform_data(position):
 func _send_zero_to_server():
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		server_node.client.put_utf8_string("0\n")
+		
+func _on_laser_body_entered(body):
+	if body.name == "Player":
+		print("Le joueur est touché par un laser !")
+		body.lose_life()  # Appelle la méthode lose_life() du joueur
