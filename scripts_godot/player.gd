@@ -35,7 +35,17 @@ var auto_move_z = true  # Définit si le Z est auto ou manuel
 # Système de vie
 var lives = 2  # Le joueur commence avec 7 vies
 
+# Gestion de l'invincibilité
+var is_invincible = false  # Indique si le joueur est invincible
+@export var invincibility_duration = 2.0  # Durée d'invincibilité en secondes
+@onready var invincibility_timer := Timer.new()
+
 func _ready():
+	# Initialisation du Timer d'invincibilité
+	invincibility_timer.one_shot = true
+	invincibility_timer.wait_time = invincibility_duration
+	add_child(invincibility_timer)
+	invincibility_timer.connect("timeout", self._on_invincibility_timeout)
 	# Met à jour l'affichage initial des vies et des FPS
 	update_lives_label()
 	
@@ -143,13 +153,30 @@ func adjust_camera_speed(delta):
 
 	if auto_move_z:
 		target_camera_z += offset_camera_1  # Ajoute un offset seulement si auto_move_z est activé
-
+	
 func lose_life():
+	if is_invincible:
+		print("Le joueur est invincible, aucune vie perdue.")
+		return
+	
 	lives -= 1
 	print("Le joueur a perdu une vie. Vies restantes : ", lives)
 	update_lives_label()
+	
 	if lives <= 0:
 		game_over()
+	else:
+		activate_invincibility()  # Active l'invincibilité
+		
+
+func activate_invincibility():
+	is_invincible = true
+	invincibility_timer.start()
+	print("Invincibilité activée pour 2 secondes.")
+
+func _on_invincibility_timeout():
+	is_invincible = false
+	print("Invincibilité terminée.")
 
 
 func game_over():
