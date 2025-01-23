@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://cx6i0bl2twj5o"]
+[gd_scene load_steps=29 format=3 uid="uid://cx6i0bl2twj5o"]
 
 [ext_resource type="PackedScene" uid="uid://dti2w2cwv46yj" path="res://map/model/map.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_ll1pk"]
@@ -31,6 +31,9 @@ shader_parameter/distortion_strength = 0.2
 shader_parameter/lava_texture = ExtResource("5_7d4lx")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_pibhc")
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_hqkt7"]
+size = Vector3(5.29639, 8.32825, 7.02271)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e53s6"]
 render_priority = 0
 shader = ExtResource("5_8qg8m")
@@ -40,7 +43,7 @@ shader_parameter/lava_texture = SubResource("NoiseTexture2D_pibhc")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_pibhc")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_drbgk"]
-size = Vector3(0.763672, 15.5673, 14.2375)
+size = Vector3(0.763672, 4.45172, 14.2375)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0i73v"]
 size = Vector3(290.676, 32.5936, 189.615)
@@ -144,7 +147,7 @@ transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _010" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -2.01811)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
 texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
@@ -154,43 +157,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -5.80402)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _011" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.78829, 0, -2.25)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.92206)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
 texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _011/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 0.19598)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 0.118528)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _012" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.59466)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.90611)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
 texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _012/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.50159, -3.05994, -1.48932)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -0.292615)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _014" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.65697)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.54231)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
 texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _014/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 1.50739, -0.841603)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -4.90262)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _015" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.93751)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.93035)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
 texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _015/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -1.59829)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 0.0764942)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="PoisonZone2" type="Area3D" parent="." index="107"]
@@ -265,7 +268,7 @@ offset_bottom = 1166.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_i1w80")
 
-[node name="AreaCage" type="Area3D" parent="." index="143"]
+[node name="AreaCage" type="Area3D" parent="." index="144"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2203.83, 0, 0)
 script = ExtResource("12_roulp")
 laser_scene = ExtResource("7_snknl")
