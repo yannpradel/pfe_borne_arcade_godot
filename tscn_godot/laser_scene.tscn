@@ -3,12 +3,9 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_elbru"]
 radius = 1.0
 
-[sub_resource type="SphereMesh" id="SphereMesh_t12fr"]
-radius = 1.0
-height = 2.0
+[ext_resource type="Script" path="res://tscn_godot/laser_scene.gd" id="1_boso4"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yudak"]
-albedo_color = Color(0, 0, 0, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4pspf"]
 
 [node name="Area3D" type="Area3D"]
 
