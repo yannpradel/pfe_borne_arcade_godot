@@ -335,6 +335,8 @@ libraries = {
 }
 speed_scale = 0.644
 
+[node name="DangerZoneDebug" type="Polygon2D" parent="CanvasLayer/TextureRect" index="1"]
+
 [node name="AreaCage" type="Area3D" parent="." index="144"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2203.83, 0, 0)
 script = ExtResource("12_roulp")
