@@ -111,6 +111,10 @@ size = Vector3(125.279, 60, 113.186)
 
 [node name="map" instance=ExtResource("1_by61u")]
 script = ExtResource("2_o5kgn")
+cage1 = NodePath("cage1 ")
+cage2 = NodePath("cage2 ")
+cage3 = NodePath("cage3 ")
+cage4 = NodePath("cage4 ")
 
 [node name="vide12" parent="." index="4"]
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
