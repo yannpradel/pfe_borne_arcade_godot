@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cx6i0bl2twj5o"]
+[gd_scene load_steps=32 format=3 uid="uid://cx6i0bl2twj5o"]
 
 [ext_resource type="PackedScene" uid="uid://dti2w2cwv46yj" path="res://map/model/map.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_ll1pk"]
@@ -104,6 +104,67 @@ tracks/0/keys = {
 _data = {
 "RESET": SubResource("Animation_84udy"),
 "new_animation": SubResource("Animation_f6tp8")
+}
+
+[sub_resource type="Animation" id="Animation_h1sra"]
+resource_name = "mark_animation"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.2, 0.2), Vector2(0.3, 0.3), Vector2(0.2, 0.2), Vector2(0.3, 0.3), Vector2(0.2, 0.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:pivot_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-35, -30), Vector2(0, 0), Vector2(-35, -30), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lko8u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.2, 0.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:pivot_offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bte4y"]
+_data = {
+"RESET": SubResource("Animation_lko8u"),
+"mark_animation": SubResource("Animation_h1sra")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_rv0a3"]
@@ -267,6 +328,12 @@ offset_right = 1168.0
 offset_bottom = 1166.0
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_i1w80")
+
+[node name="MoveTexture" type="AnimationPlayer" parent="CanvasLayer/TextureRect" index="0"]
+libraries = {
+"": SubResource("AnimationLibrary_bte4y")
+}
+speed_scale = 0.644
 
 [node name="AreaCage" type="Area3D" parent="." index="144"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2203.83, 0, 0)

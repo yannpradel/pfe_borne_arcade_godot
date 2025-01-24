@@ -35,8 +35,16 @@ func _on_body_entered(body):
 		# Affiche l'image 2D temporairement
 		if texture_rect:
 			texture_rect.visible = true  # Affiche l'image
+
+			# Lancer l'animation via AnimationPlayer
+			var animation_player = texture_rect.get_node("MoveTexture")
+			if animation_player:
+				animation_player.play("mark_animation")  # Remplacez par le nom de votre animation
+				print("on lacne l'animation")
+
+			# Masquer après 0.5 seconde
 			var timer = Timer.new()
-			timer.wait_time = 0.5  # Durée de 0.5 seconde
+			timer.wait_time = 0.7  # Durée de 0.5 seconde
 			timer.one_shot = true
 			timer.connect("timeout", Callable(self, "_hide_texture_rect"))
 			add_child(timer)
@@ -54,6 +62,7 @@ func _on_body_entered(body):
 				print("Erreur : TextureRect introuvable !")
 		else:
 			print("Erreur : Aucun chemin de TextureRect spécifié.")
+
 
 # Fonction appelée après le délai pour masquer l'image
 func _hide_texture_rect():
