@@ -17,8 +17,8 @@ script = ExtResource("1_xmuh3")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_right = 1363.0
-offset_bottom = 768.0
+offset_right = 1116.0
+offset_bottom = 577.0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2

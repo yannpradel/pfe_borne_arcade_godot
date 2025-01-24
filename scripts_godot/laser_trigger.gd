@@ -34,7 +34,7 @@ func _ready():
 		print("Erreur : Aucun chemin spécifié pour texture_rect_path.")
 		
 	# Récupérer le Polygon2D pour la zone de débogage
-	debug_polygon = debug_polygon.get_node("MoveTexture")
+	debug_polygon = $DangerZoneDebug
 	if debug_polygon:
 		debug_polygon.visible = false  # Masquer par défaut
 
@@ -103,7 +103,7 @@ func _make_zone_dangerous():
 	
 func update_debug_zone():
 	if debug_polygon:
-		print("on affiche la zone debug")
+		print("on affiche la zon")
 		# Définir les points pour dessiner un rectangle correspondant à la zone dangereuse
 		var height = 1  # Hauteur de la zone dangereuse (arbitraire pour le débogage)
 		debug_polygon.polygon = PackedVector2Array([
