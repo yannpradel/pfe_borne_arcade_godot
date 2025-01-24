@@ -91,19 +91,19 @@ func _send_zero_to_server():
 
 func update_texture_position():
 	if texture_rect:
-		# Récupérer et limiter X à la plage [-20, 20]
-		var area3d_x = clamp(global_transform.origin.x, -20, 20)
+		# Récupérer la position X de l'Area3D
+		var area3d_x = global_transform.origin.x
 
-		# Mapper X (-20 à 20) sur la position 2D X (0 à 1366)
-		texture_rect.position.x = map_range(area3d_x, -20, 20, 300, 1066)
+		# Déterminer la position en fonction de plages fixes
+		if area3d_x < -7:
+			texture_rect.position.x = 250  # Zone gauche
+		elif area3d_x <= 10:
+			texture_rect.position.x = 650  # Zone centrale
+		else:
+			texture_rect.position.x = 1050  # Zone droite
 
 		# Debug : Afficher les informations pour vérification
-		print("Position 3D X :", area3d_x, " → Position 2D X :", texture_rect.position.x)
-
-func map_range(value, min_3D, max_3D, min_2D, max_2D):
-	# Mappe une valeur d'une plage à une autre
-	return ((value - min_3D) / (max_3D - min_3D)) * (max_2D - min_2D) + min_2D
-
+		print("Position 3D X :", area3d_x, " → Position 2D X fixe :", texture_rect.position.x)
 
 
 # 🔍 Détermine la position de la plateforme pour envoyer au serveur
