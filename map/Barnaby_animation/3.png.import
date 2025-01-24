@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmc554msg3voi"
-path.s3tc="res://.godot/imported/4.png-b9088d78122f59fc044d9a5c17ee9b08.s3tc.ctex"
-path.etc2="res://.godot/imported/4.png-b9088d78122f59fc044d9a5c17ee9b08.etc2.ctex"
+uid="uid://du18dj2d8lgv3"
+path.s3tc="res://.godot/imported/3.png-28d5914ab099ba8dc5c4fffbae1f8ab0.s3tc.ctex"
+path.etc2="res://.godot/imported/3.png-28d5914ab099ba8dc5c4fffbae1f8ab0.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Barnaby_animation/4.png"
-dest_files=["res://.godot/imported/4.png-b9088d78122f59fc044d9a5c17ee9b08.s3tc.ctex", "res://.godot/imported/4.png-b9088d78122f59fc044d9a5c17ee9b08.etc2.ctex"]
+source_file="res://map/Barnaby_animation/3.png"
+dest_files=["res://.godot/imported/3.png-28d5914ab099ba8dc5c4fffbae1f8ab0.s3tc.ctex", "res://.godot/imported/3.png-28d5914ab099ba8dc5c4fffbae1f8ab0.etc2.ctex"]
 
 [params]
 
