@@ -1,9 +1,20 @@
-extends Node3D
+extends AnimatedSprite3D
 
 @onready var player := $"../Player"  # Référence au joueur (ajustez le chemin si nécessaire)
 @onready var camera2 := $"../SubViewport/Camera3DBarnaby"  # Référence à la caméra secondaire
+@onready var animated_sprite := $barnaby  # Référence à l'AnimatedSprite3D (dans la même scène ou sous ce noeud)
 @export var max_camera_speed = 22.5  # Vitesse maximale de la caméra pour rattraper l'ennemi
 @export var camera_distance = 50.0  # Distance constante entre la caméra et l'ennemi
+
+func _ready():
+	# Vérifie si l'animation "barnaby" existe
+	if sprite_frames.has_animation("barnaby"):
+		# Définit et joue l'animation
+		animation = "barnaby"
+		play()  # Joue l'animation active
+	else:
+		print("L'animation 'barnaby' n'existe pas dans SpriteFrames !")
+
 
 func _process(delta):
 	# Vérifier que le joueur existe
