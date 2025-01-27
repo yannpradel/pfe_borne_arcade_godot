@@ -101,6 +101,7 @@ animations = [{
 }]
 
 [node name="Main" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.72416)
 script = ExtResource("6_8ggdq")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
@@ -175,5 +176,5 @@ shape = SubResource("BoxShape3D_k1ef4")
 transform = Transform3D(28, 0, 0, 0, 30, 0, 0, 0, 15, 0, 27.2101, -92.7261)
 sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
-frame_progress = 0.785532
+frame_progress = 0.118169
 script = ExtResource("8_n1g66")

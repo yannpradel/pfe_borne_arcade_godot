@@ -75,9 +75,6 @@ cage2 = NodePath("cage2 ")
 cage3 = NodePath("cage3 ")
 cage4 = NodePath("cage4 ")
 
-[node name="vide12" parent="." index="4"]
-surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
-
 [node name="poteau _019" parent="." index="30"]
 visible = false
 
