@@ -1,12 +1,13 @@
 import socket
 import serial
+from serial.tools import list_ports
 import gpiod
 import time
 import select
 import re
 
 # Configuration des GPIO
-LASER_PINS = [17, 27, 22]  # Exemple : GPIO 17, 27, 22
+LASER_PINS = [17, 27, 22, 26]  # Exemple : GPIO 17, 27, 22
 CHIP_NAME = "gpiochip0"  # Nom de la puce GPIO sur Raspberry Pi 5
 INPUT_PIN = 23  # GPIO à surveiller pour détecter un "1"
 
@@ -23,7 +24,7 @@ input_line = chip.get_line(INPUT_PIN)
 input_line.request(consumer="gpio_input", type=gpiod.LINE_REQ_DIR_IN)
 
 # Port série pour les lasers
-PORT_LASERS = 'COM6'
+PORT_LASERS = '/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_B001WVA8-if00-port0'
 BAUD_RATE_LASERS = 9600
 
 # Port série pour la DUE
@@ -31,7 +32,7 @@ PORT_DUE = '/dev/serial/by-id/usb-Arduino_www.arduino.cc_0043_4343935353635111F1
 BAUD_RATE_DUE = 9600
 
 
-print(f"Initialisation du port série : {PORT_DUE} à {BAUD_RATE} bauds")
+print(f"Initialisation du port série : {PORT_DUE} à {BAUD_RATE_DUE} bauds")
 
 # Initialisation du port série pour les lasers
 try:
@@ -42,6 +43,7 @@ except serial.SerialException as e:
     exit(1)
 
 # Initialisation du port série pour la DUE
+'''
 try:
     ser_due = serial.Serial(PORT_DUE, BAUD_RATE_DUE, timeout=0.1)
     print("Port série pour la DUE initialisé avec succès.")
@@ -49,6 +51,7 @@ except serial.SerialException as e:
     print(f"Erreur lors de l'initialisation du port série pour la DUE : {e}")
     laser_ser.close()
     exit(1)
+    '''
 
 
 # Configuration du client TCP
@@ -77,33 +80,32 @@ try:
 
 except socket.error as e:
     print(f"Erreur lors de la connexion au serveur TCP : {e}")
-    ser.close()
+    ser_due.close()
     exit(1)
 
 try:
     while True:
-        
         # Utiliser select pour gérer les entrées sans bloquer
-        ready_to_read, _, _ = select.select([ser, sock], [], [], 0.1)
+        ready_to_read, _, _ = select.select([sock], [], [], 0.1)
         
         for ready in ready_to_read:
-            if ready == ser:
-                # Données disponibles sur le port série
-                data_from_serial = ser.readline().decode('utf-8').strip()
-                if data_from_serial:
-                    #print(f"DEBUG - Données série reçues : {data_from_serial}")
-                    sock.sendall(data_from_serial.encode('utf-8'))
-                    #print(f"Envoyé à Godot : {data_from_serial}")
-            
-            elif ready == sock:
+            if ready == sock:
                 # Données disponibles du serveur Godot
                 try:
-                    # Traitement des données reçues depuis Godot
-                    # Supposons que data_from_godot contient la configuration des lasers (entre 0 et 5)
+                    data_from_godot = sock.recv(1024).decode('utf-8').strip()
                     if data_from_godot:
-                        data_from_godot = re.sub(r'[^0-5]', '', data_from_godot)  # Filtrer pour garder uniquement les chiffres de 0 à 5
+                        print(f"Reçu de Godot : {data_from_godot}")
 
-                        if data_from_godot.isdigit() and 0 <= int(data_from_godot) <= 5:
+                        if data_from_godot == "MinusLife":
+                            # Allumer la pin 26 puis éteindre
+                            pin_26 = chip.get_line(26)
+                            pin_26.set_value(1)
+                            print("Pin 26 activée.")
+                            time.sleep(0.1)  # Temporisation
+                            pin_26.set_value(0)
+                            print("Pin 26 désactivée.")
+
+                        elif re.match(r'^[0-5]$', data_from_godot):
                             # Envoie la configuration au port série
                             laser_command = f"{data_from_godot}\n"  # Format de la commande
                             laser_ser.write(laser_command.encode('utf-8'))
@@ -111,15 +113,14 @@ try:
                         else:
                             print(f"Données invalides reçues : {data_from_godot}")
 
-
                 except socket.error:
                     print("Erreur de lecture du socket.")
-        
+
         # Vérification de l'état de la ligne GPIO d'entrée
         gpio_value = input_line.get_value()
         
         if gpio_value == 1:
-            #print("Signal détecté sur le GPIO d'entrée ! Envoi de 'jump' à Godot.")
+            print("Signal détecté sur le GPIO d'entrée ! Envoi de 'jump' à Godot.")
             sock.sendall("jump\n".encode('utf-8'))
 
 except KeyboardInterrupt:
@@ -131,6 +132,6 @@ finally:
         line.release()
     input_line.release()
     chip.close()
-    ser.close()
+    #ser_due.close()
     sock.close()
     print("GPIO, port série et connexion TCP libérés.")
