@@ -9,6 +9,7 @@ extends CharacterBody3D
 @export var camera_offset_z = -15  # Distance constante entre le personnage et la caméra
 
 @export var offset_camera_1 = 10
+var server_node: ServerNode
 
 var target_velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
@@ -46,6 +47,11 @@ func _ready():
 	invincibility_timer.wait_time = invincibility_duration
 	add_child(invincibility_timer)
 	invincibility_timer.connect("timeout", self._on_invincibility_timeout)
+	
+	server_node = get_tree().get_root().get_node("Main/ServerNode")
+	if server_node == null:
+		print("Erreur : Impossible de trouver le nœud ServerNode.")
+	
 	# Met à jour l'affichage initial des vies et des FPS
 	update_lives_label()
 	
@@ -160,6 +166,9 @@ func lose_life():
 		return
 	
 	lives -= 1
+	# Send TCP "MinusLife"
+	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+		server_node.client.put_utf8_string("MinusLife\n")
 	print("Le joueur a perdu une vie. Vies restantes : ", lives)
 	update_lives_label()
 	
