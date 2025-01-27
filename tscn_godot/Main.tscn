@@ -1,6 +1,5 @@
-[gd_scene load_steps=26 format=3 uid="uid://dtbky5x6iqlws"]
+[gd_scene load_steps=25 format=3 uid="uid://dtbky5x6iqlws"]
 
-[ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="1_0ilsh"]
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://tscn_godot/Player.tscn" id="1_pc7mc"]
 [ext_resource type="Script" path="res://scripts_godot/rotating_section.gd" id="3_dybc4"]
 [ext_resource type="PackedScene" uid="uid://cx6i0bl2twj5o" path="res://tscn_godot/map.tscn" id="4_hsnir"]
@@ -128,9 +127,6 @@ script = ExtResource("3_dybc4")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_1cf5p")
 autoplay = true
-
-[node name="ServerNode" type="Node" parent="."]
-script = ExtResource("1_0ilsh")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 
