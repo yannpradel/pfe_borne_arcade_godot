@@ -20,7 +20,7 @@ func _ready():
 		
 	_launch_python_script()
 
-func _process(delta):
+func _process(_delta):
 	if server.is_connection_available():
 		client = server.take_connection()  # Accepter une nouvelle connexion
 		if client != null:
@@ -62,9 +62,9 @@ func _exit_tree():
 func _launch_python_script():
 	var python_script_path = "res://python udp/serial_laser.py"  # Chemin relatif
 	var absolute_path = ProjectSettings.globalize_path(python_script_path)  # Convertit en chemin absolu
-	var output = []  # Tableau pour capturer la sortie standard (stdout)
+	var _output = []  # Tableau pour capturer la sortie standard (stdout)
 
 	# Convertit les arguments en PackedStringArray
-	var args = PackedStringArray([absolute_path])
+	var _args = PackedStringArray([absolute_path])
 
 	print("avant le execute du python")

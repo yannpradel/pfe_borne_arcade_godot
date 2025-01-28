@@ -1,9 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://6odpdhjg2jhq"]
+[gd_scene load_steps=4 format=3 uid="uid://6odpdhjg2jhq"]
 
 [ext_resource type="Script" path="res://menu.gd" id="1_xmuh3"]
 [ext_resource type="FontFile" uid="uid://cxjyogfatwmhl" path="res://fonts/BillieDEMO-Black.otf" id="2_u0381"]
 [ext_resource type="FontFile" uid="uid://butwx5c7kctrf" path="res://fonts/BillieDEMO-Light.otf" id="3_27gqd"]
-[ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="4_i3ofi"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -53,11 +52,8 @@ theme_override_fonts/font = ExtResource("3_27gqd")
 theme_override_font_sizes/font_size = 50
 text = "Quit"
 
-[node name="ServerNode" type="Node" parent="."]
-script = ExtResource("4_i3ofi")
-
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

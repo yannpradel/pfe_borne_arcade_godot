@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dtbky5x6iqlws"]
+[gd_scene load_steps=26 format=3 uid="uid://dtbky5x6iqlws"]
 
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://tscn_godot/Player.tscn" id="1_pc7mc"]
 [ext_resource type="Script" path="res://scripts_godot/rotating_section.gd" id="3_dybc4"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://lmocjk5xcamq" path="res://map/Barnaby_animation/8.png" id="19_q2jbd"]
 [ext_resource type="Texture2D" uid="uid://dc1fmqbp3ooft" path="res://map/Barnaby_animation/9.png" id="20_jdddp"]
 [ext_resource type="Texture2D" uid="uid://c0xsy3ae0i66t" path="res://map/Barnaby_animation/10.png" id="21_ox4ok"]
+[ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="22_io0xb"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bvhiw"]
 viewport_path = NodePath("SubViewport")
@@ -173,3 +174,6 @@ sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
 frame_progress = 0.785532
 script = ExtResource("8_n1g66")
+
+[node name="ServerNode" type="Node" parent="."]
+script = ExtResource("22_io0xb")
