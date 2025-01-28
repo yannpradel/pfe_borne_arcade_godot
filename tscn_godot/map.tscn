@@ -154,6 +154,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
+texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _010/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 2.44052)
@@ -163,6 +164,7 @@ shape = SubResource("BoxShape3D_drbgk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.92206)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
+texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _011/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 0.118528)
@@ -172,6 +174,7 @@ shape = SubResource("BoxShape3D_drbgk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.90611)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
+texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _012/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -0.292615)
@@ -181,6 +184,7 @@ shape = SubResource("BoxShape3D_drbgk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.54231)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
+texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _014/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -4.90262)
@@ -190,6 +194,7 @@ shape = SubResource("BoxShape3D_drbgk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.93035)
 script = ExtResource("6_koqju")
 laser_scene = ExtResource("7_snknl")
+texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _015/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 0.0764942)
