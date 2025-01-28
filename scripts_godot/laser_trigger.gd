@@ -11,12 +11,15 @@ var dangerous_zone_min_x = 0
 var dangerous_zone_max_x = 0
 
 func _ready():
-	print("Laser: Initialisation terminée.")
 	_initialize_server_node()
 	_initialize_texture_rect()
-	_initialize_debug_polygon()
 
-	connect("body_entered", self._on_body_entered)
+	# Vérifier si le signal "body_entered" est déjà connecté avant de le connecter
+	if not is_connected("body_entered", Callable(self, "_on_body_entered")):
+		connect("body_entered", Callable(self, "_on_body_entered"))
+	else:
+		print("Le signal 'body_entered' est déjà connecté à _on_body_entered.")
+
 
 func _initialize_server_node():
 	server_node = get_tree().get_root().get_node("Main/ServerNode")
@@ -33,14 +36,8 @@ func _initialize_texture_rect():
 	else:
 		print("Erreur : Aucun chemin de TextureRect spécifié.")
 
-func _initialize_debug_polygon():
-	debug_polygon = $DangerZoneDebug
-	if debug_polygon:
-		debug_polygon.visible = false  # Masquer par défaut
-
 func _on_body_entered(body):
 	if body.name == "Player" and not player_detected:
-		print("Le joueur a activé le laser.")
 		player_detected = true
 		_display_laser_effect()
 		_send_platform_data()
@@ -63,9 +60,8 @@ func _spawn_laser_scene():
 		var laser_scale = laser_instance.get_node("CollisionShape3D")  # Remplacez "CollisionShape3D" par le nœud à ajuster
 		if laser_scale:
 			var zone_width = dangerous_zone_max_x - dangerous_zone_min_x
-			laser_instance.global_transform.origin.x = dangerous_zone_min_x + zone_width / 2
+			laser_instance.global_transform.origin.x = dangerous_zone_min_x + zone_width / 2.0
 			laser_scale.scale.x = zone_width + 50  # Ajuste l'échelle X du laser
-			print("Laser ajusté pour couvrir la zone dangereuse.")
 		else:
 			print("Erreur : Nœud de collision ou échelle non trouvé dans la scène du laser.")
 
@@ -113,8 +109,6 @@ func _mark_zone_as_dangerous():
 	if texture_rect:
 		texture_rect.visible = true
 
-	print("Point d'exclamation affiché ! Le laser tombera ici dans 1 seconde.")
-
 
 func _set_dangerous_zone_limits():
 	var area3d_x = global_transform.origin.x
@@ -158,6 +152,7 @@ func determine_platform_position() -> String:
 		return "3"  # Droite
 
 func update_texture_position():
+	print("aoiap")
 	if texture_rect:
 		var area3d_x = global_transform.origin.x
 		if area3d_x < -7:
@@ -169,19 +164,16 @@ func update_texture_position():
 			
 func _remove_laser(laser_instance):
 	if laser_instance:
-		laser_instance.queue_free()  # Supprime le laser après 1 seconde
-		print("Laser supprimé après 1 seconde.")
+		laser_instance.queue_free()  # Supprime le laser après 1 seconde.")
 
 func _on_laser_body_entered(body):
 	if body.name == "Player":
-		print("Le joueur a été touché par le laser actif ! Vie perdue.")
 		body.lose_life()
 		
-func _check_player_in_laser_zone(laser_instance):
+func _check_player_in_laser_zone(_laser_instance):
 	var player = get_tree().get_root().get_node("Main/Player")
 	if player:
 		var player_x = player.global_transform.origin.x
 		# Vérifie si le joueur est dans la zone couverte par le laser
 		if player_x >= dangerous_zone_min_x and player_x <= dangerous_zone_max_x:
-			print("Le joueur était déjà dans la zone du laser ! Vie perdue immédiatement.")
 			player.lose_life()
