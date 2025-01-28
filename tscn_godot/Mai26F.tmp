@@ -175,5 +175,5 @@ animation = &"barnaby"
 frame_progress = 0.785532
 script = ExtResource("8_n1g66")
 
-[node name="ClientNode" type="Node" parent="."]
+[node name="ServerNode" type="Node" parent="."]
 script = ExtResource("22_ccu2q")
