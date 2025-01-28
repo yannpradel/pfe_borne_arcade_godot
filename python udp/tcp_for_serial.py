@@ -27,21 +27,21 @@ input_line.request(consumer="gpio_input", type=gpiod.LINE_REQ_DIR_IN)
 PORT_LASERS = '/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_B001WVA8-if00-port0'
 BAUD_RATE_LASERS = 9600
 
-print(f"Initialisation du port série : {PORT_LASERS} à {BAUD_RATE_LASERS} bauds")
+print(f"[PYTHON] Initialisation du port série : {PORT_LASERS} à {BAUD_RATE_LASERS} bauds")
 
 # Initialisation du port série pour les lasers
 try:
     laser_ser = serial.Serial(PORT_LASERS, BAUD_RATE_LASERS, timeout=0.1)
-    print("Port série pour les lasers initialisé avec succès.")
+    print("[PYTHON] Port série pour les lasers initialisé avec succès.")
 except serial.SerialException as e:
-    print(f"Erreur lors de l'initialisation du port série pour les lasers : {e}")
+    print(f"[PYTHON] Erreur lors de l'initialisation du port série pour les lasers : {e}")
     exit(1)
 
 # Configuration du serveur TCP
 SERVER_IP = '0.0.0.0'  # Écoute sur toutes les interfaces
 SERVER_PORT = 12345    # Port d'écoute
 
-print(f"Démarrage du serveur TCP sur {SERVER_IP}:{SERVER_PORT}...")
+print(f"[PYTHON] Démarrage du serveur TCP sur {SERVER_IP}:{SERVER_PORT}...")
 
 # Initialisation du serveur TCP
 try:
@@ -49,9 +49,9 @@ try:
     server_socket.bind((SERVER_IP, SERVER_PORT))
     server_socket.listen(5)
     server_socket.setblocking(False)
-    print("Serveur TCP démarré avec succès et en attente de connexions.")
+    print("[PYTHON] Serveur TCP démarré avec succès et en attente de connexions.")
 except socket.error as e:
-    print(f"Erreur lors du démarrage du serveur TCP : {e}")
+    print(f"[PYTHON] Erreur lors du démarrage du serveur TCP : {e}")
     exit(1)
 
 clients = []
@@ -63,7 +63,7 @@ try:
             client_socket, client_address = server_socket.accept()
             client_socket.setblocking(False)
             clients.append(client_socket)
-            print(f"Nouvelle connexion de {client_address}")
+            print(f"[PYTHON] Nouvelle connexion de {client_address}")
         except BlockingIOError:
             pass
 
@@ -72,10 +72,10 @@ try:
             try:
                 data = client.recv(1024).decode('utf-8').strip()
                 if data:
-                    print(f"Reçu de {client.getpeername()} : {data}")
+                    print(f"[PYTHON] Reçu de {client.getpeername()} : {data}")
 
                     if data == "jump":
-                        print("Signal 'jump' reçu. Activation du GPIO 26.")
+                        print("[PYTHON] Signal 'jump' reçu. Activation du GPIO 26.")
                         pin_26 = chip.get_line(26)
                         pin_26.set_value(1)
                         time.sleep(0.1)
@@ -84,28 +84,28 @@ try:
                     elif re.match(r'^[0-5]$', data):
                         laser_command = f"{data}\n"
                         laser_ser.write(laser_command.encode('utf-8'))
-                        print(f"Commande envoyée au laser : {laser_command.strip()}")
+                        print(f"[PYTHON] Commande envoyée au laser : {laser_command.strip()}")
                     else:
-                        print(f"Données invalides reçues : {data}")
+                        print(f"[PYTHON] Données invalides reçues : {data}")
 
             except BlockingIOError:
                 continue
             except ConnectionResetError:
-                print(f"Connexion perdue avec {client.getpeername()}.")
+                print(f"[PYTHON] Connexion perdue avec {client.getpeername()}.")
                 clients.remove(client)
 
         # Vérification de l'état de la ligne GPIO d'entrée
         gpio_value = input_line.get_value()
         if gpio_value == 1:
-            print("Signal détecté sur le GPIO d'entrée !")
+            print("[PYTHON] Signal détecté sur le GPIO d'entrée !")
             for client in clients:
                 try:
                     client.sendall("jump\n".encode('utf-8'))
                 except socket.error:
-                    print(f"Erreur d'envoi au client {client.getpeername()}.")
+                    print(f"[PYTHON] Erreur d'envoi au client {client.getpeername()}.")
 
 except KeyboardInterrupt:
-    print("Fermeture du serveur.")
+    print("[PYTHON] Fermeture du serveur.")
 finally:
     # Libération des ressources
     for line in lines:
@@ -117,4 +117,4 @@ finally:
     for client in clients:
         client.close()
     server_socket.close()
-    print("GPIO, ports série et serveur TCP libérés.")
+    print("[PYTHON] GPIO, ports série et serveur TCP libérés.")
