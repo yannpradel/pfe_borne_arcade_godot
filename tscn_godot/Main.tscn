@@ -138,8 +138,9 @@ script = ExtResource("7_6gmvb")
 [node name="Window" type="Window" parent="."]
 auto_translate_mode = 1
 own_world_3d = true
-position = Vector2i(0, 48)
-size = Vector2i(500, 500)
+mode = 3
+position = Vector2i(0, 36)
+size = Vector2i(1720, 1080)
 
 [node name="TextureRect" type="TextureRect" parent="Window"]
 anchors_preset = 15
@@ -148,15 +149,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
-
-[node name="CameraPivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 324.159)
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -348.288)
-current = true
-size = 19.0
-script = ExtResource("8_j71ug")
 
 [node name="Area3D" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -36.6863, 2254.03)
@@ -173,3 +165,12 @@ sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
 frame_progress = 0.785532
 script = ExtResource("8_n1g66")
+
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 324.159)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -348.288)
+current = true
+size = 19.0
+script = ExtResource("8_j71ug")
