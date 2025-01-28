@@ -39,7 +39,7 @@ except serial.SerialException as e:
 
 # Configuration du serveur TCP
 SERVER_IP = '0.0.0.0'  # Écoute sur toutes les interfaces
-SERVER_PORT = 12345    # Port d'écoute
+SERVER_PORT = 12346    # Port d'écoute
 
 print(f"[PYTHON] Démarrage du serveur TCP sur {SERVER_IP}:{SERVER_PORT}...")
 
