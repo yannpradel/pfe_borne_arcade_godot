@@ -1,5 +1,7 @@
 extends Area3D
 
+class_name Player
+
 @export var laser_scene: PackedScene
 @export var texture_rect_path: NodePath  # Chemin vers le TextureRect dans la hiérarchie
 var server_node: ServerNode
@@ -37,9 +39,7 @@ func _initialize_texture_rect():
 		print("Erreur : Aucun chemin de TextureRect spécifié.")
 
 func _on_body_entered(body):
-	print("a")
 	if body.name == "Player" and not player_detected:
-		print("b")
 		player_detected = true
 		_display_laser_effect()
 		_send_platform_data()
@@ -63,15 +63,11 @@ func _spawn_laser_scene():
 		if laser_scale:
 			var zone_width = dangerous_zone_max_x - dangerous_zone_min_x
 			laser_instance.global_transform.origin.x = dangerous_zone_min_x + zone_width / 2.0
-			laser_scale.scale.x = zone_width + 50  # Ajuste l'échelle X du laser
-		else:
-			print("Erreur : Nœud de collision ou échelle non trouvé dans la scène du laser.")
+			laser_instance.global_transform.origin.y = -5
+			laser_scale.scale.x = zone_width + 70  # Ajuste l'échelle X du laser
 
 		# Connecter l'événement de collision du laser
-		laser_instance.connect("body_entered", Callable(self, "_on_laser_body_entered"))
-
-		# Vérifier si le joueur est DÉJÀ dans la zone dangereuse
-		_check_player_in_laser_zone(laser_instance)
+		laser_instance.connect("body_entered", self._on_laser_body_entered)
 
 		# Création d'un timer pour désactiver le laser après 1 seconde
 		var laser_timer = Timer.new()
@@ -125,7 +121,6 @@ func _set_dangerous_zone_limits():
 	else:
 		dangerous_zone_min_x = 10
 		dangerous_zone_max_x = 25
-	print("Zone dangereuse activée : X entre", dangerous_zone_min_x, "et", dangerous_zone_max_x)
 
 func _send_platform_data():
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
@@ -170,13 +165,19 @@ func _remove_laser(laser_instance):
 		laser_instance.queue_free()  # Supprime le laser après 1 seconde.")
 
 func _on_laser_body_entered(body):
-	if body.name == "Player":
-		body.lose_life()
-		
-func _check_player_in_laser_zone(_laser_instance):
-	var player = get_tree().get_root().get_node("Main/Player")
-	if player:
-		var player_x = player.global_transform.origin.x
-		# Vérifie si le joueur est dans la zone couverte par le laser
-		if player_x >= dangerous_zone_min_x and player_x <= dangerous_zone_max_x:
+	print("🚨 Collision détectée avec :", body.name, "(", body.get_class(), ")")
+
+	# Remonter dans la hiérarchie jusqu'à "RotatingSection" pour atteindre le Player
+	var current_node = body
+	while current_node and current_node.name != "RotatingSection":  
+		current_node = current_node.get_parent()
+
+	if current_node:  # Vérifier si on a atteint RotatingSection
+		var player = get_tree().get_root().get_node("Main/Player")  # Adapter selon le chemin exact
+		if player:
+			print("🎯 Le joueur est touché !")
 			player.lose_life()
+		else:
+			print("❌ Impossible de trouver le joueur dans la scène.")
+	else:
+		print("❌ La remontée n'a pas permis de trouver RotatingSection.")
