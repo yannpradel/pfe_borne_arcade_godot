@@ -15,7 +15,6 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.name == "Player":
-		print("Joueur dans la cage")
 		start_laser_sequence()
 
 func start_laser_sequence():
@@ -110,7 +109,7 @@ func _end_laser_session():
 		if laser.name.begins_with("Laser"):
 			laser.queue_free()
 
-func send_platform_data(position):
+func send_platform_data(_position):
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		var platform_code = {"far_left": "1", "left": "2", "far_right": "3","right": "4", "center": "5"}
 		server_node.client.put_utf8_string(platform_code[position] + "\n")
@@ -128,5 +127,4 @@ func _send_zero_to_server():
 		
 func _on_laser_body_entered(body):
 	if body.name == "Player":
-		print("Le joueur est touché par un laser !")
 		body.lose_life()  # Appelle la méthode lose_life() du joueur

@@ -114,17 +114,13 @@ func _physics_process(delta):
 # Désactive le déplacement automatique sur Z et ajuste la logique de la caméra
 func stop_auto_move_z():
 	auto_move_z = false
-	print("Le déplacement automatique sur Z a été désactivé.")
 
 
 # Active le déplacement automatique sur Z
 func start_auto_move_z():
 	auto_move_z = true
-	print("Le déplacement automatique sur Z a été activé.")
 
 func jump():
-	print(jump_count,max_jump_count)
-	print("essayer de sauter")
 	if in_lava:
 		# Saut continu activé
 		target_velocity.y = jump_force
@@ -132,7 +128,6 @@ func jump():
 	else:
 		# Saut normal (double saut)
 		if is_on_floor() or jump_count < max_jump_count:
-			print("saut normal")
 			target_velocity.y = jump_force
 			jump_count += 1
 
@@ -162,14 +157,12 @@ func adjust_camera_speed(delta):
 	
 func lose_life():
 	if is_invincible:
-		print("Le joueur est invincible, aucune vie perdue.")
 		return
 	
 	lives -= 1
 	# Send TCP "MinusLife"
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		server_node.client.put_utf8_string("MinusLife\n")
-	print("Le joueur a perdu une vie. Vies restantes : ", lives)
 	update_lives_label()
 	
 	if lives <= 0:
@@ -181,15 +174,12 @@ func lose_life():
 func activate_invincibility():
 	is_invincible = true
 	invincibility_timer.start()
-	print("Invincibilité activée pour 2 secondes.")
 
 func _on_invincibility_timeout():
 	is_invincible = false
-	print("Invincibilité terminée.")
 
 
 func game_over():
-	print("Game Over !")
 	get_tree().change_scene_to_file("res://tscn_godot/game_over.tscn")  # Mets ici le chemin exact vers ta scène "game_over.tscn"
 
 func update_lives_label():
@@ -200,15 +190,12 @@ func update_lives_label():
 		lives_label.text = "Vies : " + str(lives) + " | FPS : " + str(fps)
 		
 func jump_high():
-	print("Grand saut activé !")
 	jump()
 
 # Ajuste l'état lorsque le joueur entre ou sort de la lave
 func enter_lava():
 	in_lava = true
 	jump_high()
-	print("Le joueur est entré dans la lave !")
 
 func exit_lava():
 	in_lava = false
-	print("Le joueur est sorti de la lave.")
