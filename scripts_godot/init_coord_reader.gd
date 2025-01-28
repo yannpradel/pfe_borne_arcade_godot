@@ -15,6 +15,12 @@ var _status: int = 0               # Statut de la connexion
 
 func _ready():
 	_status = client.get_status()
+	# Recherche du nœud `player` dans la scène (assurez-vous du chemin correct)
+	player = get_tree().get_root().get_node("Main/Player")
+	if player == null:
+		print("Erreur : Le nœud 'player' n'a pas été trouvé.")
+	else:
+		print("Nœud 'player' trouvé.")
 	connect_to_server()
 
 func _process(delta):
