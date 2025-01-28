@@ -1,27 +1,22 @@
 extends Node
 
 func _ready():
-	print("Nombre d'écrans détectés :", DisplayServer.get_screen_count())
-
-	# Crée une fenêtre pour le premier écran
-	var window1 = Window.new()
-	window1.title = "Fenêtre 1"
-	window1.size = Vector2(800, 600)
-	window1.position = DisplayServer.screen_get_position(0)  # Place sur l'écran 1
-	window1.current_screen = 0
-	window1.set_exclusive(true)  # Force la séparation
-	add_child(window1)
-	window1.show()
-
-	# Crée une fenêtre pour le deuxième écran
-	if DisplayServer.get_screen_count() > 1:  # Vérifie s'il y a bien 2 écrans
-		var window2 = Window.new()
-		window2.title = "Fenêtre 2"
-		window2.size = Vector2(800, 600)
-		window2.position = DisplayServer.screen_get_position(1)  # Place sur l'écran 2
-		window2.current_screen = 1
-		window2.set_exclusive(true)
-		add_child(window2)
-		window2.show()
-	else:
-		print("⚠️ Un seul écran détecté. Impossible d'afficher la deuxième fenêtre.")
+	# Mettre la fenêtre principale en plein écran
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	
+	# Afficher les tailles des écrans pour débogage
+	print("Taille de l'écran principal :", DisplayServer.screen_get_size(0))
+	print("Taille du deuxième écran :", DisplayServer.screen_get_size(1))
+	
+	# Configurer une deuxième fenêtre en plein écran
+	var window = $Window
+	window.name = "Barnaby"
+	window.size = Vector2(1920, 1080)  # Taille de la deuxième fenêtre
+	window.mode = Window.MODE_FULLSCREEN  # Activer le plein écran pour la deuxième fenêtre
+	window.set_current_screen(0)
+	
+	# Positionner la fenêtre à une position fixe (exemple : X=0, Y=-1080)
+	window.set_position(Vector2(1920, 0))
+	
+	# Afficher la fenêtre
+	window.show()
