@@ -45,7 +45,14 @@ func _on_body_entered(body):
 		_display_laser_effect()
 		_send_platform_data()
 		_mark_zone_as_dangerous()
-		_spawn_laser_scene()
+
+		# Créer un timer pour retarder l'apparition du laser
+		var delay_timer = Timer.new()
+		delay_timer.wait_time = 1.0  # Délai avant l'affichage du laser (1 seconde)
+		delay_timer.one_shot = true
+		delay_timer.connect("timeout", Callable(self, "_spawn_laser_scene"))
+		add_child(delay_timer)
+		delay_timer.start()
 
 func _spawn_laser_scene():
 	if laser_scene:
@@ -57,10 +64,24 @@ func _spawn_laser_scene():
 		if laser_scale:
 			var zone_width = dangerous_zone_max_x - dangerous_zone_min_x
 			laser_instance.global_transform.origin.x = dangerous_zone_min_x + zone_width / 2
-			laser_scale.scale.x = zone_width  # Ajuste l'échelle X du laser
+			laser_scale.scale.x = zone_width + 50  # Ajuste l'échelle X du laser
 			print("Laser ajusté pour couvrir la zone dangereuse.")
 		else:
 			print("Erreur : Nœud de collision ou échelle non trouvé dans la scène du laser.")
+
+		# Connecter l'événement de collision du laser
+		laser_instance.connect("body_entered", Callable(self, "_on_laser_body_entered"))
+
+		# Vérifier si le joueur est DÉJÀ dans la zone dangereuse
+		_check_player_in_laser_zone(laser_instance)
+
+		# Création d'un timer pour désactiver le laser après 1 seconde
+		var laser_timer = Timer.new()
+		laser_timer.wait_time = 1.0
+		laser_timer.one_shot = true
+		laser_timer.connect("timeout", Callable(self, "_remove_laser").bind(laser_instance))
+		add_child(laser_timer)
+		laser_timer.start()
 	else:
 		print("Erreur : `laser_scene` n'est pas défini.")
 
@@ -83,11 +104,17 @@ func _display_laser_effect():
 func _hide_texture_rect():
 	if texture_rect:
 		texture_rect.visible = false
-
+		
 func _mark_zone_as_dangerous():
 	is_zone_dangerous = true
-	_set_dangerous_zone_limits()
-	check_player_in_danger_zone()
+	_set_dangerous_zone_limits()  # Définir la bonne zone pour ce trigger
+
+	# Afficher le point d’exclamation à la bonne position
+	if texture_rect:
+		texture_rect.visible = true
+
+	print("Point d'exclamation affiché ! Le laser tombera ici dans 1 seconde.")
+
 
 func _set_dangerous_zone_limits():
 	var area3d_x = global_transform.origin.x
@@ -101,14 +128,6 @@ func _set_dangerous_zone_limits():
 		dangerous_zone_min_x = 10
 		dangerous_zone_max_x = 25
 	print("Zone dangereuse activée : X entre", dangerous_zone_min_x, "et", dangerous_zone_max_x)
-
-func check_player_in_danger_zone():
-	var player = get_tree().get_root().get_node("Main/Player")
-	if player:
-		var player_x = player.global_transform.origin.x
-		if is_zone_dangerous and player_x >= dangerous_zone_min_x and player_x <= dangerous_zone_max_x:
-			print("Le joueur est dans la zone dangereuse. Vie perdue !")
-			player.lose_life()
 
 func _send_platform_data():
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
@@ -147,3 +166,22 @@ func update_texture_position():
 			texture_rect.position.x = 650
 		else:
 			texture_rect.position.x = 1050
+			
+func _remove_laser(laser_instance):
+	if laser_instance:
+		laser_instance.queue_free()  # Supprime le laser après 1 seconde
+		print("Laser supprimé après 1 seconde.")
+
+func _on_laser_body_entered(body):
+	if body.name == "Player":
+		print("Le joueur a été touché par le laser actif ! Vie perdue.")
+		body.lose_life()
+		
+func _check_player_in_laser_zone(laser_instance):
+	var player = get_tree().get_root().get_node("Main/Player")
+	if player:
+		var player_x = player.global_transform.origin.x
+		# Vérifie si le joueur est dans la zone couverte par le laser
+		if player_x >= dangerous_zone_min_x and player_x <= dangerous_zone_max_x:
+			print("Le joueur était déjà dans la zone du laser ! Vie perdue immédiatement.")
+			player.lose_life()
