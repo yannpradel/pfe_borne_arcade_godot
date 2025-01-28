@@ -13,7 +13,7 @@ var server_node: ServerNode
 
 var target_velocity = Vector3.ZERO
 var move_direction = Vector3.ZERO
-@onready var camera := $"../CameraPivot/Camera3D"
+@onready var camera := $"../SubViewport2/CameraPivot/Camera3D"
 @onready var camera2 := $"../SubViewport/Camera3DBarnaby"
 @onready var lives_label := $"../FPSLabel"
 

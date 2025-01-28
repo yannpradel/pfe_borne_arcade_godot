@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dtbky5x6iqlws"]
+[gd_scene load_steps=26 format=3 uid="uid://dtbky5x6iqlws"]
 
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://tscn_godot/Player.tscn" id="1_pc7mc"]
 [ext_resource type="Script" path="res://scripts_godot/rotating_section.gd" id="3_dybc4"]
@@ -99,6 +99,9 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_ispk0"]
+viewport_path = NodePath("SubViewport2")
+
 [node name="Main" type="Node3D"]
 script = ExtResource("6_8ggdq")
 
@@ -149,10 +152,12 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
 
-[node name="CameraPivot" type="Marker3D" parent="."]
+[node name="SubViewport2" type="SubViewport" parent="."]
+
+[node name="CameraPivot" type="Marker3D" parent="SubViewport2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 324.159)
 
-[node name="Camera3D" type="Camera3D" parent="CameraPivot"]
+[node name="Camera3D" type="Camera3D" parent="SubViewport2/CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -348.288)
 current = true
 size = 19.0
@@ -173,3 +178,12 @@ sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
 frame_progress = 0.785532
 script = ExtResource("8_n1g66")
+
+[node name="Window2" type="Window" parent="."]
+position = Vector2i(0, 59)
+size = Vector2i(500, 500)
+
+[node name="TextureRect" type="TextureRect" parent="Window2"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("ViewportTexture_ispk0")
