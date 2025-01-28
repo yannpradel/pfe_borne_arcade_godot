@@ -5,18 +5,18 @@ extends Area3D
 var laser_instance
 var player_detected = false
 
-var server_node: ServerNode
+var client_node: ClientNode
 var texture_rect: TextureRect
 
 func _ready():
 	print("Laser: Initialisation terminée.")
 
-	# Connexion au ServerNode
-	server_node = get_tree().get_root().get_node("Main/ServerNode")
-	if server_node == null:
-		print("Erreur : Impossible de trouver le nœud ServerNode.")
-		
-		# Récupération du TextureRect pour l'image 2D
+	# Connexion au ClientNode
+	client_node = get_tree().get_root().get_node("Main/ClientNode")
+	if client_node == null:
+		print("Erreur : Impossible de trouver le nœud ClientNode.")
+	
+	# Récupération du TextureRect pour l'image 2D
 	if texture_rect_path:
 		texture_rect = get_node(texture_rect_path)
 		if texture_rect and texture_rect is TextureRect:
@@ -63,11 +63,11 @@ func _hide_texture_rect():
 
 # 🚀 Fonction pour envoyer les données de position au serveur
 func send_platform_data():
-	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+	if client_node and client_node.is_connected:
 		var platform_data = determine_platform_position()
 		
 		# Envoi immédiat de la position
-		server_node.client.put_utf8_string(platform_data + "\n")
+		client_node.send_data(platform_data + "\n")
 		print("Données envoyées au serveur : %s" % platform_data)
 		
 		# Mise en place d'un Timer pour envoyer "0" après 0.5 secondes
@@ -83,8 +83,8 @@ func send_platform_data():
 # ⏱️ Fonction appelée après le délai
 func _send_zero_to_server():
 	print("cense envoyer 0")
-	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		server_node.client.put_utf8_string("0\n")
+	if client_node and client_node.is_connected:
+		client_node.send_data("0\n")
 		print("Données '0' envoyées au serveur.")
 	else:
 		print("Erreur : Pas de client TCP connecté.")
@@ -104,8 +104,6 @@ func map_range(value, min_3D, max_3D, min_2D, max_2D):
 	# Mappe une valeur d'une plage à une autre
 	return ((value - min_3D) / (max_3D - min_3D)) * (max_2D - min_2D) + min_2D
 
-
-
 # 🔍 Détermine la position de la plateforme pour envoyer au serveur
 func determine_platform_position() -> String:
 	var platform_x = global_transform.origin.x
@@ -116,5 +114,3 @@ func determine_platform_position() -> String:
 		return "2"  # Droite
 	else:
 		return "3"
-	#faire des zones de plateforme -25, -7, 10
-	
