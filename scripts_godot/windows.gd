@@ -8,15 +8,11 @@ func _ready():
 	print("Taille de l'écran principal :", DisplayServer.screen_get_size(0))
 	print("Taille du deuxième écran :", DisplayServer.screen_get_size(1))
 	
-	# Configurer une deuxième fenêtre en plein écran
-	var window = $Window
-	window.name = "Barnaby"
-	window.size = Vector2(1920, 1080)  # Taille de la deuxième fenêtre
-	window.mode = Window.MODE_WINDOWED  # Activer le plein écran pour la deuxième fenêtre
-	window.set_current_screen(0)
-	
-	# Positionner la fenêtre à une position fixe (exemple : X=0, Y=-1080)
-	window.set_position(Vector2(1920, 0))
-	
-	# Afficher la fenêtre
+	# Crée la première fenêtre sur l'écran 0
+	var window = Window.new()
+	window.title = "Fenêtre 1"
+	window.size = Vector2(1366, 768)  # Taille de la fenêtre
+	window.position = DisplayServer.screen_get_position(1)  # Coin supérieur gauche de l'écran 0
+	window.current_screen = 1  # Affiche sur l'écran 0
 	window.show()
+	
