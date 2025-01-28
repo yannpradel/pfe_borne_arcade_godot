@@ -1,67 +1,95 @@
 class_name ClientNode
 extends Node
 
-var client := StreamPeerTCP.new()  # Créer un client TCP
-var server_ip := "127.0.0.1"  # Adresse IP du serveur
-var server_port := 12346  # Port du serveur
+signal connected      # Signal émis lors de la connexion au serveur
+signal data_received  # Signal émis lorsqu'une donnée est reçue
+signal disconnected   # Signal émis lors de la déconnexion
+signal error          # Signal émis en cas d'erreur
 
-var player: CharacterBody3D  # Référence au personnage à contrôler
+var client := StreamPeerTCP.new()  # Créer un client TCP
+var server_ip := "127.0.0.1"       # Adresse IP du serveur
+var server_port := 12345           # Port du serveur
+
+var player: CharacterBody3D        # Référence au personnage à contrôler
+var _status: int = 0               # Statut de la connexion
 
 func _ready():
-	# Connecter au serveur
-	var err = client.connect_to_host(server_ip, server_port)
-	if err == OK:
-		print("Connexion au serveur %s:%d réussie." % [server_ip, server_port])
-		set_process(true)
-	else:
-		print("Erreur de connexion au serveur : %s" % err)
-		set_process(false)
-
-	# Trouver et assigner la référence au joueur (supposons qu'il est un enfant de la scène principale)
-	player = get_tree().get_root().get_node("Main/Player")
+	_status = client.get_status()
+	connect_to_server()
 
 func _process(delta):
-	if client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		# Vérifier si des données sont disponibles depuis le serveur
+	# Appeler poll() pour mettre à jour l'état de la connexion
+	client.poll()
+
+	# Vérifier le statut de la connexion
+	var new_status: int = client.get_status()
+	
+	# Si le statut a changé, mettre à jour et émettre les signaux appropriés
+	if new_status != _status:
+		_status = new_status
+		match _status:
+			client.STATUS_NONE:
+				print("Déconnecté du serveur.")
+				emit_signal("disconnected")
+			client.STATUS_CONNECTING:
+				print("Tentative de connexion au serveur...")
+			client.STATUS_CONNECTED:
+				print("Connexion au serveur réussie.")
+				emit_signal("connected")
+			client.STATUS_ERROR:
+				print("Erreur de connexion au serveur.")
+				emit_signal("error")
+
+	# Lire les données si connecté
+	if _status == client.STATUS_CONNECTED:
 		if client.get_available_bytes() > 0:
 			var data = client.get_utf8_string(client.get_available_bytes())
 			print("Données reçues du serveur : %s" % data)
+			emit_signal("data_received", data)
+			_handle_data(data)
 
-			# Si les données sont des coordonnées, les extraire
-			if data.find("X:") != -1:
-				var x_str = data.split(":")[1]
-				var x = float(x_str)
-
-				print("Coordonnée extraite : X = %d" % x)
-
-				# Déplacer le personnage en fonction de la coordonnée X reçue
-				_move_player(x)
-
-			if data.strip_edges() == "jump":
-				if player and player.has_method("jump"):
-					player.jump()
-					print("Commande 'jump' exécutée : le joueur saute.")
-				else:
-					print("Erreur : La méthode 'jump' n'existe pas ou 'player' est invalide.")
+func connect_to_server():
+	print("Connexion au serveur %s:%d..." % [server_ip, server_port])
+	_status = client.STATUS_NONE
+	var err = client.connect_to_host(server_ip, server_port)
+	if err != OK:
+		print("Erreur de connexion au serveur : %s" % err)
+		emit_signal("error")
 	else:
-		print("Déconnecté du serveur.")
-		set_process(false)
+		print("Tentative de connexion en cours...")
+
+func send_data(data: String):
+	# Envoyer des données au serveur
+	if client.get_status() == client.STATUS_CONNECTED:
+		client.put_utf8_string(data + "\n")
+		print("Données envoyées au serveur : %s" % data)
+	else:
+		print("Erreur : Impossible d'envoyer les données, client non connecté.")
+
+func _handle_data(data: String):
+	# Gestion des données reçues
+	var commands = data.split("\n")
+	for command in commands:
+		if command.find("X:") != -1:
+			var x_str = command.split(":")[1]
+			var x = float(x_str)
+			print("Coordonnée extraite : X = %f" % x)
+			_move_player(x)
+
+		elif command.strip_edges() == "jump":
+			if player and player.has_method("jump"):
+				player.jump()
+				print("Commande 'jump' exécutée : le joueur saute.")
+			else:
+				print("Erreur : La méthode 'jump' n'existe pas ou 'player' est invalide.")
 
 func _move_player(x: float):
 	# Déplacement du personnage uniquement sur l'axe X
 	var new_position = Vector3(x, player.global_position.y, player.global_position.z)
 	player.global_position = new_position
-	print("Personnage déplacé à : X = %d" % x)
-
-func send_data(data: String):
-	# Envoyer des données au serveur
-	if client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		client.put_utf8_string(data)
-		print("Données envoyées au serveur : %s" % data)
-	else:
-		print("Erreur : Impossible d'envoyer les données, client non connecté.")
+	print("Personnage déplacé à : X = %f" % x)
 
 func _exit_tree():
-	if client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+	if client.get_status() == client.STATUS_CONNECTED:
 		client.disconnect_from_host()
-		print("Déconnecté du serveur.")
+		print("Déconnecté du serveur | Exit.")
