@@ -15,4 +15,5 @@ func _ready():
 	window.position = DisplayServer.screen_get_position(0)  # Coin supérieur gauche de l'écran 0
 	window.current_screen = 1  # Affiche sur l'écran 0
 	window.show()
+
 	
