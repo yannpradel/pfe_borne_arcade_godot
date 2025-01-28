@@ -2,7 +2,7 @@ extends Node
 
 func _ready():
 	# Mettre la fenêtre principale en plein écran
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	
 	# Afficher les tailles des écrans pour débogage
 	print("Taille de l'écran principal :", DisplayServer.screen_get_size(0))
