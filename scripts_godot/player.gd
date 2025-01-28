@@ -6,7 +6,7 @@ extends CharacterBody3D
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
 @export var camera_distance = 20
-@export var camera_offset_z = -15  # Distance constante entre le personnage et la caméra
+@export var camera_offset_z = -10  # Distance constante entre le personnage et la caméra
 
 @export var offset_camera_1 = 10
 @onready var client_node := $"../ClientNode"
