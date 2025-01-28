@@ -12,7 +12,7 @@ func _ready():
 	var window = Window.new()
 	window.title = "Fenêtre 1"
 	window.size = Vector2(1366, 768)  # Taille de la fenêtre
-	window.position = DisplayServer.screen_get_position(1)  # Coin supérieur gauche de l'écran 0
+	window.position = DisplayServer.screen_get_position(0)  # Coin supérieur gauche de l'écran 0
 	window.current_screen = 1  # Affiche sur l'écran 0
 	window.show()
 	
