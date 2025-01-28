@@ -37,7 +37,9 @@ func _initialize_texture_rect():
 		print("Erreur : Aucun chemin de TextureRect spécifié.")
 
 func _on_body_entered(body):
+	print("a")
 	if body.name == "Player" and not player_detected:
+		print("b")
 		player_detected = true
 		_display_laser_effect()
 		_send_platform_data()
@@ -83,7 +85,9 @@ func _spawn_laser_scene():
 
 
 func _display_laser_effect():
+	print("c")
 	if texture_rect:
+		print("d")
 		update_texture_position()
 		texture_rect.visible = true
 		var animation_player = texture_rect.get_node("MoveTexture")
@@ -152,7 +156,6 @@ func determine_platform_position() -> String:
 		return "3"  # Droite
 
 func update_texture_position():
-	print("aoiap")
 	if texture_rect:
 		var area3d_x = global_transform.origin.x
 		if area3d_x < -7:
