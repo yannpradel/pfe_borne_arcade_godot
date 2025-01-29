@@ -29,7 +29,12 @@ func start_falling():
 	
 	while global_transform.origin.y > -100:
 		global_transform.origin.y -= fall_speed * get_process_delta_time()
-		await get_tree().process_frame  # Attend une frame pour lisser le mouvement
+		if not get_tree():
+			print("Erreur: get_tree() est null, annulation de l'attente de frame")
+			return
+		else:
+			await get_tree().process_frame
+
 
 	print("💥 La plateforme est tombée !")
 
