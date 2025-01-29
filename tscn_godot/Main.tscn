@@ -111,7 +111,7 @@ script = ExtResource("6_8ggdq")
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 97.6085)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.501)
 
 [node name="FPSLabel" type="Label" parent="."]
 anchors_preset = 1
@@ -136,7 +136,7 @@ autoplay = true
 [node name="SubViewport" type="SubViewport" parent="."]
 
 [node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, 90.6773)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -12.959)
 current = true
 script = ExtResource("7_6gmvb")
 
@@ -154,11 +154,11 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
 
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 103.272)
+[node name="CameraPivot" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999466, -0.0326668, 0, 0.0326668, 0.999466, 0, -4, 324.159)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, 3.23492)
-
+transform = Transform3D(1, 0, 0, 0, 0.134591, 0.990901, 0, -0.990901, 0.134591, 0, 13.4625, -343.423)
 current = true
 size = 19.0
 script = ExtResource("8_j71ug")
@@ -173,7 +173,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.8113
 shape = SubResource("BoxShape3D_k1ef4")
 
 [node name="Barnaby" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(28, 0, 0, 0, 30, 0, 0, 0, 15, 0, 27.2101, 10.9073)
+transform = Transform3D(28, 0, 0, 0, 30, 0, 0, 0, 15, 0, 27.2101, -92.7261)
 sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
 frame_progress = 0.785532
@@ -187,14 +187,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.118643, 0, -0.697)
 script = ExtResource("23_c8h8s")
 
 [node name="StartMeteorSpawn" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, -15.5641)
+transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 951.907)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StartMeteorSpawn"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66199, 0, 8.63135)
 shape = SubResource("BoxShape3D_sql6d")
 
 [node name="StopMeteorSpawn" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 53.4102)
+transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 1803.72)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StopMeteorSpawn"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66199, 0, 8.63135)
