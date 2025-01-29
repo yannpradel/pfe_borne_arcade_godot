@@ -41,6 +41,7 @@ var is_invincible = false  # Indique si le joueur est invincible
 @onready var invincibility_timer := Timer.new()
 
 func _ready():
+	add_to_group("player")
 	# Initialisation du Timer d'invincibilité
 	invincibility_timer.one_shot = true
 	invincibility_timer.wait_time = invincibility_duration
