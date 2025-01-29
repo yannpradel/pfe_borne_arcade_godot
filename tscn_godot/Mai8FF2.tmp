@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://lmocjk5xcamq" path="res://map/Barnaby_animation/8.png" id="19_q2jbd"]
 [ext_resource type="Texture2D" uid="uid://dc1fmqbp3ooft" path="res://map/Barnaby_animation/9.png" id="20_jdddp"]
 [ext_resource type="Texture2D" uid="uid://c0xsy3ae0i66t" path="res://map/Barnaby_animation/10.png" id="21_ox4ok"]
-
 [ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="22_ccu2q"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bvhiw"]
@@ -108,7 +107,7 @@ script = ExtResource("6_8ggdq")
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.501)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -33.482)
 
 [node name="FPSLabel" type="Label" parent="."]
 anchors_preset = 1
@@ -133,7 +132,7 @@ autoplay = true
 [node name="SubViewport" type="SubViewport" parent="."]
 
 [node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -103.138)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -12.959)
 current = true
 script = ExtResource("7_6gmvb")
 
@@ -152,10 +151,10 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
 
 [node name="CameraPivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, -90.5437)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 324.159)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
-transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, 3.23492)
+transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, -348.288)
 current = true
 size = 19.0
 script = ExtResource("8_j71ug")
@@ -170,7 +169,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.8113
 shape = SubResource("BoxShape3D_k1ef4")
 
 [node name="Barnaby" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(28, 0, 0, 0, 30, 0, 0, 0, 15, 0, 27.2101, -182.908)
+transform = Transform3D(28, 0, 0, 0, 30, 0, 0, 0, 15, 0, 27.2101, -92.7261)
 sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
 frame_progress = 0.785532

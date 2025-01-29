@@ -1,16 +1,16 @@
 extends Area3D
 
 @export var laser_scene: PackedScene
-var server_node: ServerNode
+var client_node: ClientNode
 var total_session_timer: Timer
 var laser_spawn_timer: Timer
 var active_lasers = []
 var can_spawn_laser = true
 
 func _ready():
-	server_node = get_tree().get_root().get_node("Main/ServerNode")
-	if server_node == null:
-		print("Erreur : Impossible de trouver le nœud ServerNode.")
+	client_node = get_tree().get_root().get_node("Main/ClientNode")
+	if client_node == null:
+		print("Erreur : Impossible de trouver le nœud ClientNode.")
 	connect("body_entered", self._on_body_entered)
 
 func _on_body_entered(body):
@@ -26,7 +26,6 @@ func start_laser_sequence():
 	add_child(total_session_timer)
 	total_session_timer.start()
 	
-
 	# Timer pour spawner des lasers
 	laser_spawn_timer = Timer.new()
 	laser_spawn_timer.wait_time = 2.0  # Toutes les 2 secondes
@@ -109,10 +108,10 @@ func _end_laser_session():
 		if laser.name.begins_with("Laser"):
 			laser.queue_free()
 
-func send_platform_data(_position):
-	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
+func send_platform_data(position):
+	if client_node and client_node.is_connected:
 		var platform_code = {"far_left": "1", "left": "2", "far_right": "3","right": "4", "center": "5"}
-		server_node.client.put_utf8_string(platform_code[position] + "\n")
+		client_node.send_data(platform_code[position] + "\n")
 		
 		var zero_timer = Timer.new()
 		zero_timer.wait_time = 0.5
@@ -122,8 +121,8 @@ func send_platform_data(_position):
 		zero_timer.start()
 
 func _send_zero_to_server():
-	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		server_node.client.put_utf8_string("0\n")
+	if client_node and client_node.is_connected:
+		client_node.send_data("0\n")
 		
 func _on_laser_body_entered(body):
 	if body.name == "Player":

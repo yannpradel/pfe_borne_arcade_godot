@@ -4,7 +4,9 @@ class_name Player
 
 @export var laser_scene: PackedScene
 @export var texture_rect_path: NodePath  # Chemin vers le TextureRect dans la hiérarchie
-var server_node: ServerNode
+var laser_instance
+var player_detected = false
+var client_node: ClientNode
 var texture_rect: TextureRect
 var debug_polygon: Polygon2D  # Zone visuelle pour le débogage
 var player_detected = false
@@ -22,13 +24,13 @@ func _ready():
 	
 	connect("body_entered", Callable(self, "_on_body_entered"))
 
-
-func _initialize_server_node():
-	server_node = get_tree().get_root().get_node("Main/ServerNode")
-	if server_node == null:
-		print("Erreur : Impossible de trouver le nœud ServerNode.")
-
 func _initialize_texture_rect():
+	# Connexion au ClientNode
+	client_node = get_tree().get_root().get_node("Main/ClientNode")
+	if client_node == null:
+		print("Erreur : Impossible de trouver le nœud ClientNode.")
+	
+	# Récupération du TextureRect pour l'image 2D
 	if texture_rect_path:
 		texture_rect = get_node(texture_rect_path)
 		if texture_rect and texture_rect is TextureRect:
@@ -90,6 +92,16 @@ func _display_laser_effect():
 		if animation_player:
 			animation_player.play("mark_animation")
 
+# 🚀 Fonction pour envoyer les données de position au serveur
+func send_platform_data():
+	if client_node and client_node.is_connected:
+		var platform_data = determine_platform_position()
+		
+		# Envoi immédiat de la position
+		client_node.send_data(platform_data + "\n")
+		print("Données envoyées au serveur : %s" % platform_data)
+		
+		# Mise en place d'un Timer pour envoyer "0" après 0.5 secondes
 		var timer = Timer.new()
 		timer.wait_time = 0.7
 		timer.one_shot = true
@@ -104,11 +116,18 @@ func _hide_texture_rect():
 func _mark_zone_as_dangerous():
 	is_zone_dangerous = true
 	_set_dangerous_zone_limits()  # Définir la bonne zone pour ce trigger
-
 	# Afficher le point d’exclamation à la bonne position
 	if texture_rect:
 		texture_rect.visible = true
-
+    
+# ⏱️ Fonction appelée après le délai
+func _send_zero_to_server():
+	print("cense envoyer 0")
+	if client_node and client_node.is_connected:
+		client_node.send_data("0\n")
+		print("Données '0' envoyées au serveur.")
+	else:
+		print("Erreur : Pas de client TCP connecté.")
 
 func _set_dangerous_zone_limits():
 	var area3d_x = global_transform.origin.x
@@ -141,6 +160,7 @@ func _send_zero_to_server():
 	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
 		server_node.client.put_utf8_string("0\n")
 
+# 🔍 Détermine la position de la plateforme pour envoyer au serveur
 func determine_platform_position() -> String:
 	var area3d_x = global_transform.origin.x
 	if area3d_x < -7:
@@ -164,3 +184,4 @@ func _remove_laser(laser_instance):
 	if laser_instance:
 		laser_instance.queue_free()  # Supprime le laser après 1 seconde.")
 		
+
