@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cx6i0bl2twj5o"]
+[gd_scene load_steps=30 format=3 uid="uid://cx6i0bl2twj5o"]
 
 [ext_resource type="PackedScene" uid="uid://dti2w2cwv46yj" path="res://map/model/map.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_ll1pk"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://i84y4r4awtpj" path="res://map/images/laser_exclamation_mark.png" id="7_i1w80"]
 [ext_resource type="PackedScene" uid="uid://bbtb5qtrnovpk" path="res://tscn_godot/laser_scene.tscn" id="7_snknl"]
 [ext_resource type="Shader" path="res://shader_godot/lave.gdshader" id="8_dpqpm"]
+[ext_resource type="Script" path="res://scripts_godot/plateform.gd" id="8_dwltr"]
 [ext_resource type="Texture2D" uid="uid://b8ogd276gs27" path="res://assets - blender/textures/lave.jpg" id="9_q5gun"]
 [ext_resource type="Script" path="res://scripts_godot/door_trigger.gd" id="11_ytxof"]
 [ext_resource type="Script" path="res://scripts_godot/cage.gd" id="12_roulp"]
@@ -150,6 +151,9 @@ surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 transform = Transform3D(5, 0, 0, 0, -4.5, 1.74846e-06, 0, -3.93403e-07, -20, 286.992, -7.69, 0)
 surface_material_override/0 = SubResource("ShaderMaterial_8ki20")
 
+[node name="plateform2 _010" parent="." index="92"]
+script = ExtResource("8_dwltr")
+
 [node name="Area3D" type="Area3D" parent="plateform2 _010" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, 0)
 script = ExtResource("6_koqju")
@@ -159,6 +163,9 @@ texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _010/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 2.44052)
 shape = SubResource("BoxShape3D_drbgk")
+
+[node name="plateform2 _011" parent="." index="93"]
+script = ExtResource("8_dwltr")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _011" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.92206)
@@ -170,6 +177,9 @@ texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 0.118528)
 shape = SubResource("BoxShape3D_drbgk")
 
+[node name="plateform2 _012" parent="." index="94"]
+script = ExtResource("8_dwltr")
+
 [node name="Area3D" type="Area3D" parent="plateform2 _012" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.90611)
 script = ExtResource("6_koqju")
@@ -180,6 +190,9 @@ texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -0.292615)
 shape = SubResource("BoxShape3D_drbgk")
 
+[node name="plateform2 _014" parent="." index="95"]
+script = ExtResource("8_dwltr")
+
 [node name="Area3D" type="Area3D" parent="plateform2 _014" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.54231)
 script = ExtResource("6_koqju")
@@ -189,6 +202,9 @@ texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _014/Area3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -4.90262)
 shape = SubResource("BoxShape3D_drbgk")
+
+[node name="plateform2 _015" parent="." index="96"]
+script = ExtResource("8_dwltr")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _015" index="1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.8188, 0, -1.93035)
