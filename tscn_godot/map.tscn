@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dti2w2cwv46yj" path="res://map/model/map.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_ll1pk"]
-[ext_resource type="Script" path="res://tscn_godot/map.gd" id="2_o5kgn"]
+[ext_resource type="Script" path="res://scripts_godot/map.gd" id="2_o5kgn"]
 [ext_resource type="Texture2D" uid="uid://dd3l8auui4ncv" path="res://assets - blender/textures/poison.png" id="5_7d4lx"]
 [ext_resource type="Script" path="res://scripts_godot/losing_life.gd" id="5_7r40g"]
 [ext_resource type="Shader" path="res://shader_godot/fumee.gdshader" id="5_8qg8m"]
@@ -43,7 +43,7 @@ shader_parameter/lava_texture = SubResource("NoiseTexture2D_pibhc")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_pibhc")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_drbgk"]
-size = Vector3(0.763672, 4.45172, 14.2375)
+size = Vector3(0.763672, 4.45172, 14.6802)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0i73v"]
 size = Vector3(290.676, 32.5936, 189.615)
@@ -157,7 +157,7 @@ laser_scene = ExtResource("7_snknl")
 texture_rect_path = NodePath("../../CanvasLayer/TextureRect")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="plateform2 _010/Area3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, -5.80402)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.719879, 2.00261, 2.44052)
 shape = SubResource("BoxShape3D_drbgk")
 
 [node name="Area3D" type="Area3D" parent="plateform2 _011" index="1"]
