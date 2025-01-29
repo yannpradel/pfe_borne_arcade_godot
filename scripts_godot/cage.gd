@@ -15,7 +15,6 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.name == "Player":
-		print("Joueur dans la cage")
 		start_laser_sequence()
 
 func start_laser_sequence():
@@ -127,5 +126,4 @@ func _send_zero_to_server():
 		
 func _on_laser_body_entered(body):
 	if body.name == "Player":
-		print("Le joueur est touché par un laser !")
 		body.lose_life()  # Appelle la méthode lose_life() du joueur
