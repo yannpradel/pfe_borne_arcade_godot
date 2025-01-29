@@ -12,6 +12,7 @@ var debug_polygon: Polygon2D  # Zone visuelle pour le débogage
 var is_zone_dangerous = false
 var dangerous_zone_min_x = 0
 var dangerous_zone_max_x = 0
+var taille = 90
 
 func _ready():
 	_initialize_texture_rect()
@@ -67,7 +68,7 @@ func _spawn_laser_scene():
 		# Ajuste la largeur du laser
 		var laser_scale = laser_instance.get_node("CollisionShape3D")
 		if laser_scale:
-			laser_scale.scale.x = (dangerous_zone_max_x - dangerous_zone_min_x) + 70  # Ajuste l'échelle X
+			laser_scale.scale.x = (dangerous_zone_max_x - dangerous_zone_min_x) + taille  # Ajuste l'échelle X
 
 		# On connecte l'événement de collision DANS le laser lui-même
 		var laser_area = laser_instance as Area3D
