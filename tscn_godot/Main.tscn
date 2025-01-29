@@ -21,7 +21,8 @@
 [ext_resource type="Texture2D" uid="uid://lmocjk5xcamq" path="res://map/Barnaby_animation/8.png" id="19_q2jbd"]
 [ext_resource type="Texture2D" uid="uid://dc1fmqbp3ooft" path="res://map/Barnaby_animation/9.png" id="20_jdddp"]
 [ext_resource type="Texture2D" uid="uid://c0xsy3ae0i66t" path="res://map/Barnaby_animation/10.png" id="21_ox4ok"]
-[ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="22_f2er3"]
+
+[ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="22_ccu2q"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bvhiw"]
 viewport_path = NodePath("SubViewport")
@@ -107,7 +108,7 @@ script = ExtResource("6_8ggdq")
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -100.034)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -29.501)
 
 [node name="FPSLabel" type="Label" parent="."]
 anchors_preset = 1
@@ -175,5 +176,5 @@ animation = &"barnaby"
 frame_progress = 0.785532
 script = ExtResource("8_n1g66")
 
-[node name="ServerNode" type="Node" parent="."]
-script = ExtResource("22_f2er3")
+[node name="ClientNode" type="Node" parent="."]
+script = ExtResource("22_ccu2q")
