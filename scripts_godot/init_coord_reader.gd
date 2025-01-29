@@ -1,9 +1,9 @@
 class_name ClientNode
 extends Node
 
-signal connected      # Signal émis lors de la connexion au serveur
-signal data_received  # Signal émis lorsqu'une donnée est reçue
-signal disconnected   # Signal émis lors de la déconnexion
+signal _connected      # Signal émis lors de la connexion au serveur
+signal _data_received  # Signal émis lorsqu'une donnée est reçue
+signal _disconnected   # Signal émis lors de la déconnexion
 signal error          # Signal émis en cas d'erreur
 
 var client := StreamPeerTCP.new()  # Créer un client TCP
