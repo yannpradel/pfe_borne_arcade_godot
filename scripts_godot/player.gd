@@ -33,7 +33,7 @@ var move_back_flag = false  # Déplacement manuel sur Z
 var auto_move_z = true  # Définit si le Z est auto ou manuel
 
 # Système de vie
-var lives = 7  # Le joueur commence avec 7 vies
+var lives = 8  # Le joueur commence avec 7 vies
 
 # Gestion de l'invincibilité
 var is_invincible = false  # Indique si le joueur est invincible

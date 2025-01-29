@@ -94,7 +94,7 @@ func _display_laser_effect():
 		texture_rect.visible = true
 		var animation_player = texture_rect.get_node("MoveTexture")
 		if animation_player:
-			animation_player.play("mark_animation")
+			animation_player.play("new_animation")
 
 # 🚀 Fonction pour envoyer les données de position au serveur
 func send_platform_data():
