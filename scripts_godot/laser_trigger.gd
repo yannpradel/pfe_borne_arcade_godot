@@ -16,11 +16,11 @@ func _ready():
 	_initialize_server_node()
 	_initialize_texture_rect()
 
-	# Vérifier si le signal "body_entered" est déjà connecté avant de le connecter
-	if not is_connected("body_entered", Callable(self, "_on_body_entered")):
-		connect("body_entered", Callable(self, "_on_body_entered"))
-	else:
-		print("Le signal 'body_entered' est déjà connecté à _on_body_entered.")
+	# Vérifier si le signal est déjà connecté avant d'ajouter une nouvelle connexion
+	if is_connected("body_entered", Callable(self, "_on_body_entered")):
+		disconnect("body_entered", Callable(self, "_on_body_entered"))
+	
+	connect("body_entered", Callable(self, "_on_body_entered"))
 
 
 func _initialize_server_node():
@@ -55,20 +55,22 @@ func _on_body_entered(body):
 
 func _spawn_laser_scene():
 	if laser_scene:
+				# Ajuste la taille du laser en fonction des limites de la zone dangereuse
 		var laser_instance = laser_scene.instantiate()
 		get_parent().add_child(laser_instance)
 
-		# Ajuste la taille du laser en fonction des limites de la zone dangereuse
-		var laser_scale = laser_instance.get_node("CollisionShape3D")  # Remplacez "CollisionShape3D" par le nœud à ajuster
+		# Position du laser
+		laser_instance.global_transform.origin.x = dangerous_zone_min_x + (dangerous_zone_max_x - dangerous_zone_min_x) / 2.0
+		laser_instance.global_transform.origin.y = -5
+		laser_instance.global_transform.origin.z = global_transform.origin.z  # 📌 Aligner Z avec la plateforme
+
+		# Ajuste la largeur du laser
+		var laser_scale = laser_instance.get_node("CollisionShape3D")
 		if laser_scale:
-			var zone_width = dangerous_zone_max_x - dangerous_zone_min_x
-			laser_instance.global_transform.origin.x = dangerous_zone_min_x + zone_width / 2.0
-			laser_instance.global_transform.origin.y = -5
-			laser_scale.scale.x = zone_width + 70  # Ajuste l'échelle X du laser
+			laser_scale.scale.x = (dangerous_zone_max_x - dangerous_zone_min_x) + 70  # Ajuste l'échelle X
 
-		# Connecter l'événement de collision du laser
-		laser_instance.connect("body_entered", self._on_laser_body_entered)
-
+		# On connecte l'événement de collision DANS le laser lui-même
+		var laser_area = laser_instance as Area3D
 		# Création d'un timer pour désactiver le laser après 1 seconde
 		var laser_timer = Timer.new()
 		laser_timer.wait_time = 1.0
@@ -81,9 +83,7 @@ func _spawn_laser_scene():
 
 
 func _display_laser_effect():
-	print("c")
 	if texture_rect:
-		print("d")
 		update_texture_position()
 		texture_rect.visible = true
 		var animation_player = texture_rect.get_node("MoveTexture")
@@ -163,21 +163,4 @@ func update_texture_position():
 func _remove_laser(laser_instance):
 	if laser_instance:
 		laser_instance.queue_free()  # Supprime le laser après 1 seconde.")
-
-func _on_laser_body_entered(body):
-	print("🚨 Collision détectée avec :", body.name, "(", body.get_class(), ")")
-
-	# Remonter dans la hiérarchie jusqu'à "RotatingSection" pour atteindre le Player
-	var current_node = body
-	while current_node and current_node.name != "RotatingSection":  
-		current_node = current_node.get_parent()
-
-	if current_node:  # Vérifier si on a atteint RotatingSection
-		var player = get_tree().get_root().get_node("Main/Player")  # Adapter selon le chemin exact
-		if player:
-			print("🎯 Le joueur est touché !")
-			player.lose_life()
-		else:
-			print("❌ Impossible de trouver le joueur dans la scène.")
-	else:
-		print("❌ La remontée n'a pas permis de trouver RotatingSection.")
+		

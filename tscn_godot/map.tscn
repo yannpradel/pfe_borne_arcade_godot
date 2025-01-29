@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dti2w2cwv46yj" path="res://map/model/map.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_ll1pk"]
-[ext_resource type="Script" path="res://tscn_godot/map.gd" id="2_o5kgn"]
+[ext_resource type="Script" path="res://scripts_godot/map.gd" id="2_o5kgn"]
 [ext_resource type="Texture2D" uid="uid://dd3l8auui4ncv" path="res://assets - blender/textures/poison.png" id="5_7d4lx"]
 [ext_resource type="Script" path="res://scripts_godot/losing_life.gd" id="5_7r40g"]
 [ext_resource type="Shader" path="res://shader_godot/fumee.gdshader" id="5_8qg8m"]
