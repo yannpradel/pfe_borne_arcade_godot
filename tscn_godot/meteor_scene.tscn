@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=3 uid="uid://ckphra57vti5t"]
+
+[ext_resource type="Script" path="res://tscn_godot/meteor_scene.gd" id="1_3jufj"]
+[ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_0ab3c"]
+[ext_resource type="Texture2D" uid="uid://dd3l8auui4ncv" path="res://assets - blender/textures/poison.png" id="3_ehdfs"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_vyjv7"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_15kdg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_15v27"]
+render_priority = 0
+shader = ExtResource("2_0ab3c")
+shader_parameter/time_speed = 1.0
+shader_parameter/distortion_strength = 1.0
+shader_parameter/lava_texture = ExtResource("3_ehdfs")
+shader_parameter/noise_texture = ExtResource("3_ehdfs")
+
+[node name="RigidBody3D" type="RigidBody3D"]
+collision_mask = 256
+contact_monitor = true
+max_contacts_reported = 5
+script = ExtResource("1_3jufj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
+shape = SubResource("SphereShape3D_vyjv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("SphereMesh_15kdg")
+skeleton = NodePath("../../..")
+surface_material_override/0 = SubResource("ShaderMaterial_15v27")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
