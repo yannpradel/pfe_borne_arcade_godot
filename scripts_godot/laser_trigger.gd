@@ -9,13 +9,11 @@ var player_detected = false
 var client_node: ClientNode
 var texture_rect: TextureRect
 var debug_polygon: Polygon2D  # Zone visuelle pour le débogage
-var player_detected = false
 var is_zone_dangerous = false
 var dangerous_zone_min_x = 0
 var dangerous_zone_max_x = 0
 
 func _ready():
-	_initialize_server_node()
 	_initialize_texture_rect()
 
 	# Vérifier si le signal est déjà connecté avant d'ajouter une nouvelle connexion
@@ -44,7 +42,7 @@ func _on_body_entered(body):
 	if body.name == "Player" and not player_detected:
 		player_detected = true
 		_display_laser_effect()
-		_send_platform_data()
+		send_platform_data()
 		_mark_zone_as_dangerous()
 
 		# Créer un timer pour retarder l'apparition du laser
@@ -119,7 +117,7 @@ func _mark_zone_as_dangerous():
 	# Afficher le point d’exclamation à la bonne position
 	if texture_rect:
 		texture_rect.visible = true
-    
+	
 # ⏱️ Fonction appelée après le délai
 func _send_zero_to_server():
 	print("cense envoyer 0")
@@ -141,13 +139,6 @@ func _set_dangerous_zone_limits():
 		dangerous_zone_min_x = 10
 		dangerous_zone_max_x = 25
 
-func _send_platform_data():
-	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		var platform_data = determine_platform_position()
-		server_node.client.put_utf8_string(platform_data + "\n")
-		print("Données envoyées au serveur : %s" % platform_data)
-		_send_zero_after_delay()
-
 func _send_zero_after_delay():
 	var timer = Timer.new()
 	timer.wait_time = 0.5
@@ -155,10 +146,6 @@ func _send_zero_after_delay():
 	timer.connect("timeout", Callable(self, "_send_zero_to_server"))
 	add_child(timer)
 	timer.start()
-
-func _send_zero_to_server():
-	if server_node and server_node.client != null and server_node.client.get_status() == StreamPeerTCP.STATUS_CONNECTED:
-		server_node.client.put_utf8_string("0\n")
 
 # 🔍 Détermine la position de la plateforme pour envoyer au serveur
 func determine_platform_position() -> String:
@@ -184,4 +171,3 @@ func _remove_laser(laser_instance):
 	if laser_instance:
 		laser_instance.queue_free()  # Supprime le laser après 1 seconde.")
 		
-
