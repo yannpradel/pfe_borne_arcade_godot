@@ -56,22 +56,27 @@ func _on_body_entered(body):
 
 func _spawn_laser_scene():
 	if laser_scene:
-				# Ajuste la taille du laser en fonction des limites de la zone dangereuse
-		var laser_instance = laser_scene.instantiate()
-		get_parent().add_child(laser_instance)
+		# Instancier le laser
+		laser_instance = laser_scene.instantiate()
 
-		# Position du laser
-		laser_instance.global_transform.origin.x = dangerous_zone_min_x + (dangerous_zone_max_x - dangerous_zone_min_x) / 2.0
-		laser_instance.global_transform.origin.y = -5
-		laser_instance.global_transform.origin.z = global_transform.origin.z  # 📌 Aligner Z avec la plateforme
+		# Déplacer le laser sous 'Main' pour ne pas suivre la plateforme
+		get_tree().get_root().get_node("Main").add_child(laser_instance)
+		
+		# Corrige l'orientation du laser
+		laser_instance.global_transform.basis = global_transform.basis
+
+		# Position du laser (fixe)
+		laser_instance.global_transform.origin = Vector3(
+			dangerous_zone_min_x + (dangerous_zone_max_x - dangerous_zone_min_x) / 2.0,
+			-5,  # Hauteur fixée
+			global_transform.origin.z  # Alignement avec la plateforme
+		)
 
 		# Ajuste la largeur du laser
 		var laser_scale = laser_instance.get_node("CollisionShape3D")
 		if laser_scale:
-			laser_scale.scale.x = (dangerous_zone_max_x - dangerous_zone_min_x) + taille  # Ajuste l'échelle X
+			laser_scale.scale.x = (dangerous_zone_max_x - dangerous_zone_min_x) + taille  
 
-		# On connecte l'événement de collision DANS le laser lui-même
-		var laser_area = laser_instance as Area3D
 		# Création d'un timer pour désactiver le laser après 1 seconde
 		var laser_timer = Timer.new()
 		laser_timer.wait_time = 1.0
