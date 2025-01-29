@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dtbky5x6iqlws"]
+[gd_scene load_steps=28 format=3 uid="uid://dtbky5x6iqlws"]
 
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://tscn_godot/Player.tscn" id="1_pc7mc"]
 [ext_resource type="Script" path="res://scripts_godot/rotating_section.gd" id="3_dybc4"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://dc1fmqbp3ooft" path="res://map/Barnaby_animation/9.png" id="20_jdddp"]
 [ext_resource type="Texture2D" uid="uid://c0xsy3ae0i66t" path="res://map/Barnaby_animation/10.png" id="21_ox4ok"]
 [ext_resource type="Script" path="res://scripts_godot/init_coord_reader.gd" id="22_ccu2q"]
+[ext_resource type="Script" path="res://tscn_godot/meteor_spawner.gd" id="23_c8h8s"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_bvhiw"]
 viewport_path = NodePath("SubViewport")
@@ -100,6 +101,9 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_sql6d"]
+size = Vector3(48.9817, 1, 18.2627)
+
 [node name="Main" type="Node3D"]
 script = ExtResource("6_8ggdq")
 
@@ -150,11 +154,11 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
 
-[node name="CameraPivot" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 103.272)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.0933436, 0.995634, 0, -0.995634, 0.0933436, 0, 25.8615, 3.23492)
+
 current = true
 size = 19.0
 script = ExtResource("8_j71ug")
@@ -177,3 +181,24 @@ script = ExtResource("8_n1g66")
 
 [node name="ClientNode" type="Node" parent="."]
 script = ExtResource("22_ccu2q")
+
+[node name="MeteorSpawner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.118643, 0, -0.697)
+script = ExtResource("23_c8h8s")
+
+[node name="StartMeteorSpawn" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, -15.5641)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StartMeteorSpawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66199, 0, 8.63135)
+shape = SubResource("BoxShape3D_sql6d")
+
+[node name="StopMeteorSpawn" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 53.4102)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StopMeteorSpawn"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66199, 0, 8.63135)
+shape = SubResource("BoxShape3D_sql6d")
+
+[connection signal="body_entered" from="StartMeteorSpawn" to="MeteorSpawner" method="_on_Area3D_body_entered"]
+[connection signal="body_entered" from="StopMeteorSpawn" to="MeteorSpawner" method="_on_Area3D_body_exited"]
