@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed = 18
+@export var speed = 15
 @export var fall_acceleration = 75
 @export var jump_force = 30
 @export var max_camera_speed = 22.5
