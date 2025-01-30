@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://6odpdhjg2jhq"]
+[gd_scene load_steps=8 format=3 uid="uid://cndqcfsn3b2tb"]
 
 [ext_resource type="Script" path="res://scripts_godot/menu.gd" id="1_xmuh3"]
 [ext_resource type="Texture2D" uid="uid://dr11v1payfrr4" path="res://map/images/billybustup.png" id="2_maqam"]
