@@ -343,6 +343,7 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2203.83, 0, 0)
 script = ExtResource("12_roulp")
 laser_scene = ExtResource("7_snknl")
+texture_rect_path = NodePath("../CanvasLayer/TextureRect")
 
 [node name="CageCollision" type="CollisionShape3D" parent="AreaCage" index="0"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5.85181, -19.4364, 0.213866)
