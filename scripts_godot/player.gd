@@ -33,7 +33,7 @@ var move_back_flag = false  # Déplacement manuel sur Z
 var auto_move_z = true  # Définit si le Z est auto ou manuel
 
 # Système de vie
-var lives = 8  # Le joueur commence avec 7 vies
+var lives = 1  # Le joueur commence avec 7 vies
 
 # Gestion de l'invincibilité
 var is_invincible = false  # Indique si le joueur est invincible
@@ -158,22 +158,24 @@ func adjust_camera_speed(delta):
 func lose_life():
 	if is_invincible:
 		return
-	
+
 	lives -= 1
-	# Send TCP "MinusLife"
+	# Envoie "MinusLife" immédiatement si lives > 0
 	if client_node and client_node.is_connected:
 		client_node.send_data("MinusLife\n")
+	
 	print("Le joueur a perdu une vie. Vies restantes : ", lives)
 	update_lives_label()
-	
+
 	if lives <= 0:
+		# Pause pour envoyer "MinusLife" avant que la scène ne disparaisse
 		if client_node and client_node.is_connected:
+			await get_tree().create_timer(0.2).timeout
 			client_node.send_data("MinusLife\n")
-		print("reset le nombre de vie", lives)
+		print("[GAME OVER] reset le nombre de vie", lives)
 		game_over()
 	else:
 		activate_invincibility()  # Active l'invincibilité
-		
 
 func activate_invincibility():
 	is_invincible = true
