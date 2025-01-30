@@ -91,6 +91,5 @@ position = Vector2(679, 192)
 scale = Vector2(0.979201, 1.03102)
 texture = ExtResource("6_a2uvy")
 
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/VBoxContainer/Restart" to="." method="_on_restart_button_pressed"]
