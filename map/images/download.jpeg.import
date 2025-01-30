@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://v42mqpjllera"
-path="res://.godot/imported/herbe.jpg-dda0ca9fecdc4a52299b241ed6bdcf58.ctex"
+uid="uid://ck3rpnn2y7diu"
+path="res://.godot/imported/download.jpeg-ef3acc41a2cf3a63ccf4e2af7737e94a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets - blender/textures/herbe.jpg"
-dest_files=["res://.godot/imported/herbe.jpg-dda0ca9fecdc4a52299b241ed6bdcf58.ctex"]
+source_file="res://map/images/download.jpeg"
+dest_files=["res://.godot/imported/download.jpeg-ef3acc41a2cf3a63ccf4e2af7737e94a.ctex"]
 
 [params]
 

@@ -8,10 +8,12 @@ func _ready():
 func _on_body_entered(body: Node3D) -> void:
 	# Vérifie si l'objet détecté est le joueur
 	if body.name == "Player":
+		print("PERTE DE VIE : Le joueur est entré dans la lave !")
 		body.lose_life()  # Appelle la méthode lose_life() du joueur
 		body.enter_lava()  # Active le saut continu
 
 func _on_body_exited(body: Node3D) -> void:
 	# Vérifie si l'objet détecté est le joueur
 	if body.name == "Player":
+		print("Le joueur est sorti de la lave.")
 		body.exit_lava()  # Désactive le saut continu
