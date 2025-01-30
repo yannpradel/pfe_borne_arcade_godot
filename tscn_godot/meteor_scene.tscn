@@ -1,9 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://ckphra57vti5t"]
 
-[ext_resource type="Script" path="res://tscn_godot/meteor_scene.gd" id="1_3jufj"]
-[ext_resource type="Shader" path="res://tscn_godot/meteor_scene.gdshader" id="2_mt0hw"]
+
+[ext_resource type="Script" path="res://scripts_godot/meteor_scene.gd" id="1_3jufj"]
+[ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_0ab3c"]
 [ext_resource type="Texture2D" uid="uid://dd3l8auui4ncv" path="res://assets - blender/textures/poison.png" id="3_ehdfs"]
 [ext_resource type="Shader" path="res://shader_godot/green_lava.gdshader" id="3_yxopb"]
+
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vyjv7"]
 
