@@ -15,7 +15,6 @@ func _ready():
 
 func _on_body_entered(body):
 	if body.name == "Player":
-		print("Joueur dans la cage")
 		start_laser_sequence()
 
 func start_laser_sequence():
@@ -109,10 +108,10 @@ func _end_laser_session():
 		if laser.name.begins_with("Laser"):
 			laser.queue_free()
 
-func send_platform_data(position):
+func send_platform_data(position_platform):
 	if client_node and client_node.is_connected:
 		var platform_code = {"far_left": "1", "left": "2", "far_right": "3","right": "4", "center": "5"}
-		client_node.send_data(platform_code[position] + "\n")
+		client_node.send_data(platform_code[position_platform] + "\n")
 		
 		var zero_timer = Timer.new()
 		zero_timer.wait_time = 0.5
@@ -127,5 +126,4 @@ func _send_zero_to_server():
 		
 func _on_laser_body_entered(body):
 	if body.name == "Player":
-		print("Le joueur est touché par un laser !")
 		body.lose_life()  # Appelle la méthode lose_life() du joueur
