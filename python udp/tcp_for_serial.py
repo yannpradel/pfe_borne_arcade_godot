@@ -88,7 +88,7 @@ try:
                 # Données disponibles du client
                 try:
                     data_from_client = client_sock.recv(1024).decode('utf-8').strip()
-                    data_from_client = data_from_client.replace('\n', '').replace('\r', '').replace('\t', '').strip()
+                    data_from_client = data_from_client.replace('\r', '').replace('\t', '').strip()
                     data_from_client = re.sub(r'[^\x20-\x7E]', '', data_from_client)
 
                     if data_from_client:
