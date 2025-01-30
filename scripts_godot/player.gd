@@ -1,5 +1,6 @@
 extends CharacterBody3D
 
+
 @export var speed = 18
 @export var fall_acceleration = 75
 @export var jump_force = 30
@@ -33,7 +34,7 @@ var move_back_flag = false  # Déplacement manuel sur Z
 var auto_move_z = true  # Définit si le Z est auto ou manuel
 
 # Système de vie
-var lives = 8  # Le joueur commence avec 7 vies
+var lives = 7  # Le joueur commence avec 7 vies
 
 # Gestion de l'invincibilité
 var is_invincible = false  # Indique si le joueur est invincible
@@ -41,7 +42,6 @@ var is_invincible = false  # Indique si le joueur est invincible
 @onready var invincibility_timer := Timer.new()
 
 func _ready():
-	add_to_group("player")
 	# Initialisation du Timer d'invincibilité
 	invincibility_timer.one_shot = true
 	invincibility_timer.wait_time = invincibility_duration
@@ -114,13 +114,17 @@ func _physics_process(delta):
 # Désactive le déplacement automatique sur Z et ajuste la logique de la caméra
 func stop_auto_move_z():
 	auto_move_z = false
+	print("Le déplacement automatique sur Z a été désactivé.")
 
 
 # Active le déplacement automatique sur Z
 func start_auto_move_z():
 	auto_move_z = true
+	print("Le déplacement automatique sur Z a été activé.")
 
 func jump():
+	print(jump_count,max_jump_count)
+	print("essayer de sauter")
 	if in_lava:
 		# Saut continu activé
 		target_velocity.y = jump_force
@@ -128,6 +132,7 @@ func jump():
 	else:
 		# Saut normal (double saut)
 		if is_on_floor() or jump_count < max_jump_count:
+			print("saut normal")
 			target_velocity.y = jump_force
 			jump_count += 1
 
@@ -157,6 +162,7 @@ func adjust_camera_speed(delta):
 	
 func lose_life():
 	if is_invincible:
+		print("Le joueur est invincible, aucune vie perdue.")
 		return
 	
 	lives -= 1
@@ -175,12 +181,15 @@ func lose_life():
 func activate_invincibility():
 	is_invincible = true
 	invincibility_timer.start()
+	print("Invincibilité activée pour 2 secondes.")
 
 func _on_invincibility_timeout():
 	is_invincible = false
+	print("Invincibilité terminée.")
 
 
 func game_over():
+	print("Game Over !")
 	get_tree().change_scene_to_file("res://tscn_godot/game_over.tscn")  # Mets ici le chemin exact vers ta scène "game_over.tscn"
 
 func update_lives_label():
@@ -191,12 +200,15 @@ func update_lives_label():
 		lives_label.text = "Vies : " + str(lives) + " | FPS : " + str(fps)
 		
 func jump_high():
+	print("Grand saut activé !")
 	jump()
 
 # Ajuste l'état lorsque le joueur entre ou sort de la lave
 func enter_lava():
 	in_lava = true
 	jump_high()
+	print("Le joueur est entré dans la lave !")
 
 func exit_lava():
 	in_lava = false
+	print("Le joueur est sorti de la lave.")
