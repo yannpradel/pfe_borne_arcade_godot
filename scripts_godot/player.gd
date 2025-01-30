@@ -101,6 +101,11 @@ func _physics_process(delta):
 	# Gravité si le personnage est en l'air
 	if not is_on_floor():
 		target_velocity.y -= fall_acceleration * delta
+		
+	if global_transform.origin.y <= -200:
+		lives = 0
+		game_over()
+
 
 	# Déplacement final
 	velocity = target_velocity
