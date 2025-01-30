@@ -102,7 +102,7 @@ animations = [{
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sql6d"]
-size = Vector3(48.9817, 1, 18.2627)
+size = Vector3(170.907, 1, 45.3678)
 
 [node name="Main" type="Node3D"]
 script = ExtResource("6_8ggdq")
@@ -188,17 +188,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.118643, 0, -0.697)
 script = ExtResource("23_c8h8s")
 
 [node name="StartMeteorSpawn" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 951.907)
+transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 1066.76)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StartMeteorSpawn"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66199, 0, 8.63135)
 shape = SubResource("BoxShape3D_sql6d")
 
 [node name="StopMeteorSpawn" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 1803.72)
+transform = Transform3D(1, 0, 0, 0, 0.166889, 0.985976, 0, -0.985976, 0.166889, 0, 0, 1667.47)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StopMeteorSpawn"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66199, 0, 8.63135)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.53113, 0.000854492, 22.1838)
 shape = SubResource("BoxShape3D_sql6d")
 
 [connection signal="body_entered" from="StartMeteorSpawn" to="MeteorSpawner" method="_on_Area3D_body_entered"]
