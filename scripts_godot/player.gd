@@ -167,6 +167,9 @@ func lose_life():
 	update_lives_label()
 	
 	if lives <= 0:
+		if client_node and client_node.is_connected:
+			client_node.send_data("MinusLife\n")
+		print("reset le nombre de vie", lives)
 		game_over()
 	else:
 		activate_invincibility()  # Active l'invincibilité
