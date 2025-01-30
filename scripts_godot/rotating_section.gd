@@ -7,7 +7,7 @@ extends Node3D
 var is_transforming = false
 
 # Fonction appelée chaque frame (désactivée car aucun effet de caméra)
-func _process(_delta):
+func _process(delta):
 	# Rien à effectuer ici car aucun effet de caméra
 	pass
 
