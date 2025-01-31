@@ -1,19 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://ckphra57vti5t"]
-
+[gd_scene load_steps=10 format=3 uid="uid://ckphra57vti5t"]
 
 [ext_resource type="Script" path="res://scripts_godot/meteor_scene.gd" id="1_3jufj"]
-[ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_0ab3c"]
 [ext_resource type="Texture2D" uid="uid://dd3l8auui4ncv" path="res://assets - blender/textures/poison.png" id="3_ehdfs"]
 [ext_resource type="Shader" path="res://shader_godot/green_lava.gdshader" id="3_yxopb"]
-
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vyjv7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ahwbb"]
 render_priority = 0
-shader = ExtResource("2_mt0hw")
-shader_parameter/emission_color = Vector3(0.2, 1, 0.2)
-shader_parameter/emission_strength = 1.5
+shader = ExtResource("3_yxopb")
+shader_parameter/time_speed = 1.0
+shader_parameter/distortion_strength = 0.2
+shader_parameter/glow_intensity = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rvgpo"]
 
