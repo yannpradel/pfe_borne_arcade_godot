@@ -128,7 +128,7 @@ func _mark_zone_as_dangerous():
 func _send_zero_to_server():
 	print("cense envoyer 0")
 	if client_node and client_node.is_connected:
-		client_node.send_data("5\n")
+		client_node.send_data("0\n")
 		print("Données '0' envoyées au serveur.")
 	else:
 		print("Erreur : Pas de client TCP connecté.")
