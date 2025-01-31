@@ -210,3 +210,7 @@ func enter_lava():
 
 func exit_lava():
 	in_lava = false
+
+# Réactive le déplacement automatique sur l'axe Z
+func resume_auto_move_z():
+	auto_move_z = true
