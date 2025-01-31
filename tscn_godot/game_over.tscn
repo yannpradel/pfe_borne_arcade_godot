@@ -10,7 +10,7 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8l740"]
 texture = ExtResource("2_cbf3y")
 
-[node name="Control" type="Control"]
+[node name="game_over" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

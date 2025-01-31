@@ -1,36 +1,50 @@
 extends Control
 
+signal _connected
+signal _data_received
+signal _disconnected
+signal error
+
 var client := StreamPeerTCP.new()
 var server_ip := "127.0.0.1"
 var server_port := 12345
+var _status: int = 0
 
 func _ready():
 	connect_to_server()
 
 func connect_to_server():
 	print("Connexion au serveur %s:%d..." % [server_ip, server_port])
+	_status = client.STATUS_NONE
 	var err = client.connect_to_host(server_ip, server_port)
 	if err != OK:
 		print("Erreur de connexion au serveur : %s" % err)
+		emit_signal("error")
 	else:
 		print("Tentative de connexion en cours...")
 
-func _on_quit_pressed() -> void:
-	get_tree().quit()
-
-func _on_play_pressed() -> void:
-	print("launching game...")
-	get_tree().change_scene_to_file("res://tscn_godot/Main.tscn")
-
-func _on_menu_pressed() -> void:
-	get_tree().change_scene_to_file("res://tscn_godot/menu.tscn")
-
-# Vérifier si le client TCP est actif et recevoir les commandes
 func _process(delta):
-	if client.get_status() == client.STATUS_CONNECTED and client.get_available_bytes() > 0:
+	client.poll()
+	var new_status: int = client.get_status()
+	if new_status != _status:
+		_status = new_status
+		match _status:
+			client.STATUS_NONE:
+				print("Déconnecté du serveur.")
+				emit_signal("disconnected")
+			client.STATUS_CONNECTING:
+				print("Tentative de connexion au serveur...")
+			client.STATUS_CONNECTED:
+				print("Connexion au serveur réussie.")
+				emit_signal("connected")
+			client.STATUS_ERROR:
+				print("Erreur de connexion au serveur.")
+				emit_signal("error")
+	
+	if _status == client.STATUS_CONNECTED and client.get_available_bytes() > 0:
 		var buffer = client.get_string(client.get_available_bytes()).strip_edges()
-		if buffer in ["up", "down"]:
-			handle_menu_navigation(buffer)
+		emit_signal("data_received", buffer)
+		handle_menu_navigation(buffer)
 
 func handle_menu_navigation(direction):
 	var current_scene = get_tree().current_scene.name.to_lower()
@@ -45,3 +59,13 @@ func handle_menu_navigation(direction):
 			Input.action_press("ui_down")
 			await get_tree().create_timer(0.1).timeout
 			Input.action_release("ui_down")
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()
+
+func _on_play_pressed() -> void:
+	print("launching game...")
+	get_tree().change_scene_to_file("res://tscn_godot/Main.tscn")
+
+func _on_menu_pressed() -> void:
+	get_tree().change_scene_to_file("res://tscn_godot/menu.tscn")
