@@ -83,6 +83,14 @@ func _process_falling_platform(delta):
 		elapsed_time = 0.0
 		fall_speed = initial_fall_speed
 		print("Session terminée : plateformes réinitialisées")
+		
+		# Réactivation du déplacement du joueur
+		var player = get_tree().get_root().get_node("Main/Player")
+		if player:
+			player.resume_auto_move_z()  # Vérifie que cette fonction existe dans le script du joueur
+			print("Le déplacement du joueur est réactivé.")
+		else:
+			print("Erreur : Joueur introuvable !")
 
 func _start_platform_warning():
 	if is_falling:

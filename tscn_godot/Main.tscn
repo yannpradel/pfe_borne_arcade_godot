@@ -111,7 +111,7 @@ script = ExtResource("6_8ggdq")
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2220.52)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -95.0761)
 
 [node name="FPSLabel" type="Label" parent="."]
 anchors_preset = 1
@@ -136,7 +136,7 @@ autoplay = true
 [node name="SubViewport" type="SubViewport" parent="."]
 
 [node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, 2237.06)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -78.5361)
 current = true
 script = ExtResource("7_6gmvb")
 
@@ -156,7 +156,7 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
 
 [node name="CameraPivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.999466, -0.0326668, 0, 0.0326668, 0.999466, 0, -4, 2634.66)
+transform = Transform3D(1, 0, 0, 0, 0.999466, -0.0326668, 0, 0.0326668, 0.999466, 0, -4, 319.064)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.134591, 0.990902, 0, -0.990902, 0.134591, 0, 11.4867, -403.873)
@@ -174,7 +174,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.8113
 shape = SubResource("BoxShape3D_k1ef4")
 
 [node name="Barnaby" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(28, 0, 0, 0, 30, 0, 0, 0, 15, 0, 27.2101, 2157.29)
+transform = Transform3D(28, 0, 0, 0, 30, 0, 0, 0, 15, 0, 27.2101, -158.306)
 sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
 frame_progress = 0.785532

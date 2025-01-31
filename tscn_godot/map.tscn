@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cx6i0bl2twj5o"]
+[gd_scene load_steps=35 format=3 uid="uid://cx6i0bl2twj5o"]
 
 [ext_resource type="PackedScene" uid="uid://dti2w2cwv46yj" path="res://map/model/map.glb" id="1_by61u"]
 [ext_resource type="Shader" path="res://shader_godot/poison.gdshader" id="2_ll1pk"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://b8ogd276gs27" path="res://assets - blender/textures/lave.jpg" id="9_q5gun"]
 [ext_resource type="Script" path="res://scripts_godot/door_trigger.gd" id="11_ytxof"]
 [ext_resource type="Script" path="res://scripts_godot/cage.gd" id="12_roulp"]
+[ext_resource type="Script" path="res://tscn_godot/win_zone.gd" id="15_fcyr0"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_28lg0"]
 frequency = 0.0048
@@ -170,6 +171,9 @@ _data = {
 "RESET": SubResource("Animation_0bcud"),
 "new_animation": SubResource("Animation_nohdk")
 }
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ya4bs"]
+size = Vector3(0.001, 51.5019, 120.214)
 
 [node name="map" instance=ExtResource("1_by61u")]
 script = ExtResource("2_o5kgn")
@@ -364,6 +368,14 @@ root_node = NodePath("../../../AnimationPlayer")
 libraries = {
 "": SubResource("AnimationLibrary_5ly5f")
 }
+
+[node name="WinZone" type="Area3D" parent="." index="149"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2243.19, 0, 0)
+script = ExtResource("15_fcyr0")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WinZone" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9329, -41.0975, -0.0435619)
+shape = SubResource("BoxShape3D_ya4bs")
 
 [connection signal="body_entered" from="sol4/Area3D" to="sol4/Area3D" method="_on_body_entered"]
 [connection signal="body_entered" from="sol4/Area3D" to="plateform2 _011/Area3D" method="_on_area_3d_body_entered"]
