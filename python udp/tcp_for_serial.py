@@ -25,11 +25,11 @@ input_line.request(consumer="gpio_input", type=gpiod.LINE_REQ_DIR_IN)
 
 # ########### PORTS SÉRIE ###########
 # ########### NANO_LASER ###########
-PORT_LASERS = '/dev/serial/by-id/usb-FTDI_FT232R_USB_UART_B001WVA8-if00-port0'
+PORT_LASERS = '/dev/serial/by-path/platform-xhci-hcd.1-usb-0:2:1.0-port0'
 BAUD_RATE_LASERS = 9600
 
 # ########### UNO_POSITION_X ###########
-PORT_DUE = '/dev/serial/by-id/usb-Arduino_www.arduino.cc_0043_4343935353635111F101-if00'
+PORT_DUE = '/dev/serial/by-path/platform-xhci-hcd.0-usb-0:2:1.0'
 BAUD_RATE_DUE = 9600
 
 print(f"(python) Initialisation du port série : {PORT_DUE} à {BAUD_RATE_DUE} bauds")
