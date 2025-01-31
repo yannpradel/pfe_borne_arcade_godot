@@ -51,14 +51,30 @@ func handle_menu_navigation(direction):
 	var valid_menus = ["game_over", "menu", "you_win"]
 	if current_scene in valid_menus:
 		print("🎮 Navigation dans le menu :", direction)
-		if direction == "up":
-			Input.action_press("ui_up")
-			await get_tree().create_timer(0.1).timeout
-			Input.action_release("ui_up")
-		elif direction == "down":
-			Input.action_press("ui_down")
-			await get_tree().create_timer(0.1).timeout
-			Input.action_release("ui_down")
+		var focused = get_viewport().gui_get_focus_owner()
+		if not focused or not focused is Button:
+			var first_button = find_first_button()
+			if first_button:
+				first_button.grab_focus()
+		else:
+			if direction == "up":
+				focused.next_focus_prefer_wrap = false
+				focused.release_focus()
+				Input.action_press("ui_up")
+				await get_tree().create_timer(0.1).timeout
+				Input.action_release("ui_up")
+			elif direction == "down":
+				focused.next_focus_prefer_wrap = false
+				focused.release_focus()
+				Input.action_press("ui_down")
+				await get_tree().create_timer(0.1).timeout
+				Input.action_release("ui_down")
+
+func find_first_button():
+	for child in get_tree().current_scene.get_children():
+		if child is Button:
+			return child
+	return null
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
