@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var spawn_area: Vector2 = Vector2(10, 10) # Zone de spawn
-@export var fall_height: float = 20.0  # Hauteur de spawn des météorites
+@export var fall_height: float = 20.0  # Hauteur initiale de spawn des météorites  # Hauteur de spawn des météorites
 var shadow_texture
 @export var shadow_scale_factor: float = 1.0  # Facteur d'échelle de l'ombre
 
@@ -13,17 +13,16 @@ func _ready():
 	player = get_tree().get_root().get_node("Main/Player")
 	if player != null:
 		print("Player détecté :", player.name)
-	# Les spawns commenceront uniquement dans une zone spécifique
 
 func start_spawning():
 	if is_spawning:
 		return
-
+	
 	is_spawning = true
 	var timer = Timer.new()
 	timer.wait_time = 2.0  # Fréquence d'apparition
 	timer.autostart = true
-	timer.timeout.connect(spawn_meteor)
+	timer.timeout.connect(spawn_meteors)
 	add_child(timer)
 
 func stop_spawning():
@@ -35,7 +34,7 @@ func stop_spawning():
 		if child is Timer:
 			child.queue_free()  # Supprime tous les timers en cours
 
-func spawn_meteor():
+func spawn_meteors():
 	if player == null or not is_spawning:
 		return
 
@@ -44,43 +43,44 @@ func spawn_meteor():
 	if meteor_scene == null:
 		return
 
+	var num_meteors = randi_range(3, 7)  # Générer entre 3 et 7 météorites
+	for i in range(num_meteors):
+		spawn_single_meteor(meteor_scene)
+
+func spawn_single_meteor(meteor_scene):
 	var meteor = meteor_scene.instantiate() as RigidBody3D
+	await get_tree().create_timer(1.0).timeout  # Délai avant la chute
 	if meteor == null:
 		return
 
-	# Position de spawn aléatoire autour du joueur avec un offset sur l'axe Z
 	var player_position = player.global_position
-	var spawn_x = player_position.x + randf_range(-spawn_area.x, spawn_area.x)
+	var spawn_x = player_position.x + randf_range(-20, 20)
 	var spawn_z = player_position.z + randf_range(-spawn_area.y, spawn_area.y) + 15
 	meteor.global_position = Vector3(spawn_x, fall_height, spawn_z)
 
-	# Créer et configurer l'ombre
 	var shadow = create_shadow()
-	shadow.global_position = Vector3(spawn_x, 0.1, spawn_z)  # Position au sol
-	add_child(shadow)  # Ajouter l'ombre à la scène principale
-
-	# Lier l'ombre à la météorite
+	shadow.global_position = Vector3(spawn_x, 0.1, spawn_z)
+	add_child(shadow)
 	add_child(meteor)
 
-	# Stocker l'ombre et la météorite pour mise à jour
 	meteors.append({ "meteor": meteor, "shadow": shadow })
+	meteor.gravity_scale = 4.0  # Augmente la gravité
 
 func create_shadow() -> MeshInstance3D:
 	var shadow = MeshInstance3D.new()
 	shadow.mesh = PlaneMesh.new()
-	shadow.mesh.size = Vector2(8, 8)  # Taille initiale de l'ombre
+	shadow.mesh.size = Vector2(8, 8)
 
 	var material = StandardMaterial3D.new()
-	material.albedo_texture = shadow_texture  # Assigne la texture d'ombre
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA  # Active la transparence alpha
-	material.use_alpha_scissor = true  # Permet de découper en fonction de l'alpha
-	material.alpha_scissor_threshold = 0.1  # Ajuste la sensibilité de l'alpha
+	material.albedo_texture = shadow_texture
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.use_alpha_scissor = true
+	material.alpha_scissor_threshold = 0.1
 	shadow.material_override = material
 
 	return shadow
 
 func _process(delta):
-	# Met à jour les ombres et supprime celles des météorites tombées
 	for entry in meteors:
 		var meteor = entry["meteor"]
 		var shadow = entry["shadow"]
@@ -92,11 +92,9 @@ func _process(delta):
 		shadow.global_position.x = meteor_position.x
 		shadow.global_position.z = meteor_position.z
 
-		# Mise à l'échelle de l'ombre en fonction de la hauteur
 		var scale = shadow_scale_factor * max(0.5, 1.0 - (meteor_position.y / fall_height))
 		shadow.scale = Vector3(scale, 1, scale)
 
-		# Supprimer l'ombre quand la météorite touche le sol
 		if meteor_position.y <= 0:
 			print("Suppression de l'ombre")
 			shadow.queue_free()
