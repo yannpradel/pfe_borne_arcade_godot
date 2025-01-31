@@ -10,6 +10,8 @@ var can_spawn_laser = true
 var texture_rect: TextureRect  # Référence à l'effet d'alerte
 var upcoming_laser_position = "center"  # Stocke la future position du laser
 var platform_timer: Timer  # Timer pour faire clignoter la plateforme
+var max_simultaneous_lasers = 1  # Commence avec un seul laser au début
+var session_elapsed_time = 0.0  # Temps écoulé dans la session
 
 
 func _ready():
@@ -19,6 +21,16 @@ func _ready():
 	if client_node == null:
 		print("Erreur : Impossible de trouver le nœud ClientNode.")
 	connect("body_entered", self._on_body_entered)
+
+func _process(delta):
+	if total_session_timer and total_session_timer.is_stopped() == false:
+		session_elapsed_time += delta
+
+		# Augmenter progressivement le nombre de lasers actifs
+		if session_elapsed_time >= 20.0 and session_elapsed_time < 40.0:
+			max_simultaneous_lasers = 2
+		elif session_elapsed_time >= 40.0:
+			max_simultaneous_lasers = 3
 
 func _initialize_texture_rect():
 	if texture_rect_path:
@@ -37,7 +49,7 @@ func _on_body_entered(body):
 func start_laser_sequence():
 	# Timer total de la session
 	total_session_timer = Timer.new()
-	total_session_timer.wait_time = 60.0
+	total_session_timer.wait_time = 50.0
 	total_session_timer.one_shot = true
 	total_session_timer.connect("timeout", Callable(self, "_end_laser_session"))
 	add_child(total_session_timer)
@@ -45,11 +57,12 @@ func start_laser_sequence():
 
 	# **Détermination de la position du premier laser et affichage de l'alerte**
 	_determine_laser_position()
+	
 	_display_laser_effect()
 
 	# Timer de délai avant de commencer le spawn des lasers
 	var initial_delay_timer = Timer.new()
-	initial_delay_timer.wait_time = 1.0  # Temps avant que le laser apparaisse
+	initial_delay_timer.wait_time = 5.0  # Temps avant que le laser apparaisse
 	initial_delay_timer.one_shot = true
 	initial_delay_timer.connect("timeout", Callable(self, "_start_laser_spawning"))
 	add_child(initial_delay_timer)
@@ -73,26 +86,9 @@ func _display_laser_effect():
 	hide_effect_timer.connect("timeout", Callable(self, "_hide_texture_rect"))
 	add_child(hide_effect_timer)
 	hide_effect_timer.start()
-	
-		# **Lancer le clignotement de la plateforme**
-	_start_platform_warning()
-
-
-func _start_platform_warning():
-	platform_timer = Timer.new()
-	platform_timer.wait_time = 0.2
-	platform_timer.connect("timeout", Callable(self, "_toggle_platform_visibility"))
-	add_child(platform_timer)
-
-	# Faire clignoter 5 fois avant la chute
-	for i in range(5):
-		platform_timer.start()
-		await get_tree().create_timer(0.4).timeout
-	platform_timer.queue_free()
 
 
 func _toggle_platform_visibility():
-	print("Changement de visibilité de la plateforme.")
 	if texture_rect:
 		texture_rect.visible = not texture_rect.visible
 
@@ -109,12 +105,10 @@ func _start_laser_spawning():
 	laser_spawn_timer.start()
 
 func _spawn_laser():
-	if not can_spawn_laser:
+
+	if active_lasers.size() >= max_simultaneous_lasers:
 		return
 
-	can_spawn_laser = false
-
-	# **Déterminer la position avant d'afficher l'effet**
 	_determine_laser_position()
 	_display_laser_effect()
 
@@ -125,6 +119,7 @@ func _spawn_laser():
 	spawn_laser_timer.connect("timeout", Callable(self, "_create_laser"))
 	add_child(spawn_laser_timer)
 	spawn_laser_timer.start()
+
 
 func _determine_laser_position():
 	# Choisir la position du laser AVANT son apparition
@@ -193,8 +188,11 @@ func update_texture_position():
 				texture_rect.position.x = 900
 
 func _remove_laser(laser):
-	if laser:
+	if laser in active_lasers:
+		active_lasers.erase(laser)
 		laser.queue_free()
+	else:
+		print("Erreur : Tentative de suppression d'un laser non trouvé.")
 
 func _enable_laser_spawn():
 	can_spawn_laser = true

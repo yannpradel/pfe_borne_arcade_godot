@@ -38,8 +38,6 @@ func _ready():
 func _process(delta):
 	if Global.triggered and not local_triggered:
 		local_triggered = true
-		print("Session déclenchée, attente de 5 secondes avant la chute des plateformes...")
-
 		var delay_timer = Timer.new()
 		delay_timer.wait_time = 5.0
 		delay_timer.one_shot = true
@@ -51,7 +49,6 @@ func _process(delta):
 		_process_falling_platform(delta)
 
 func _start_platform_fall_sequence():
-	print("Démarrage de la chute des plateformes !")
 	session_active = true
 	elapsed_time = 0.0
 	fall_speed = initial_fall_speed
@@ -82,13 +79,11 @@ func _process_falling_platform(delta):
 		session_active = false
 		elapsed_time = 0.0
 		fall_speed = initial_fall_speed
-		print("Session terminée : plateformes réinitialisées")
 		
 		# Réactivation du déplacement du joueur
 		var player = get_tree().get_root().get_node("Main/Player")
 		if player:
 			player.resume_auto_move_z()  # Vérifie que cette fonction existe dans le script du joueur
-			print("Le déplacement du joueur est réactivé.")
 		else:
 			print("Erreur : Joueur introuvable !")
 
@@ -103,12 +98,10 @@ func _start_platform_warning():
 		print("Erreur : Impossible de récupérer la plateforme.")
 		return
 	
-	print("Clignotement de la plateforme avant la chute : ", current_cage)
 
 	# Calcul du temps de clignotement en fonction de la vitesse de chute
 	var blink_duration = _calculate_blink_duration()
-	print("Durée de clignotement calculée :", blink_duration)
-
+	
 	_toggle_platform_clignotement(platform, blink_duration)
 
 func _toggle_platform_clignotement(platform, blink_duration):
@@ -126,7 +119,6 @@ func _toggle_platform_clignotement(platform, blink_duration):
 	start_fall()
 
 func start_fall():
-	print("Nouvelle plateforme sélectionnée pour la chute : ", current_cage)
 	is_falling = true
 
 func _calculate_blink_duration():
@@ -139,9 +131,7 @@ func reset_platform(cage_path: NodePath):
 	var cage = get_node(cage_path)
 	if cage and cage_path in initial_positions:
 		cage.global_transform.origin = initial_positions[cage_path]
-		print("Plateforme réinitialisée : ", cage_path)
 
 func reset_all_platforms():
 	for cage_path in initial_positions.keys():
 		reset_platform(cage_path)
-	print("Toutes les plateformes ont été réinitialisées")
