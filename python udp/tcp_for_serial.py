@@ -82,49 +82,67 @@ try:
                 data_from_serial = ser_due.readline().decode('utf-8').strip()
                 if data_from_serial:
                     print(f"(python) Données série reçues : {data_from_serial}")
-                    client_sock.sendall(data_from_serial.encode('utf-8'))
-                    print(f"(python) Envoyé au client : {data_from_serial}")
-            
+                    try:
+                        client_sock.sendall(data_from_serial.encode('utf-8'))
+                        print(f"(python) Envoyé au client : {data_from_serial}")
+                    except (BrokenPipeError, ConnectionResetError):
+                        print("(python) Le client s'est déconnecté. En attente d'une nouvelle connexion...")
+                        client_sock.close()
+                        client_sock, client_addr = sock.accept()
+                        print(f"(python) Nouvelle connexion acceptée depuis {client_addr}")
+
             if ready == client_sock:
                 try:
                     data_from_client = client_sock.recv(1024).decode('utf-8').strip()
+                    
+                    if not data_from_client:
+                        print("(python) Le client a fermé la connexion.")
+                        client_sock.close()
+                        client_sock, client_addr = sock.accept()
+                        print(f"(python) Nouvelle connexion acceptée depuis {client_addr}")
+                        continue  # On repart à la boucle principale
+
                     data_from_client = re.sub(r'[^\x20-\x7E]', '', data_from_client)
+                    print(f"(python) Reçu du client : {data_from_client}")
 
-                    if data_from_client:
-                        print(f"(python) Reçu du client : {data_from_client}")
-
-                        if data_from_client.startswith('Life:'):
-                            life_value = data_from_client.split(':')[1]
-                            if life_value.isdigit() and 0 <= int(life_value) <= 8:
-                                life_command = f"{life_value}\n"
-                                vie_ser.write(life_command.encode())
-                                print(f"(python) Commande vie envoyée au système série : ---{life_value}---")
-
-                                response = vie_ser.readline().decode('utf-8').strip()
-                                if response:
-                                    print(f"(python) Réponse du système série : {response}")
-                                else:
-                                    print(f"(python) Aucune réponse reçue du système série.")
-                            else:
-                                print(f"(python) Valeur de vie invalide : {life_value}")
+                    if data_from_client.startswith('Life:'):
+                        life_value = data_from_client.split(':')[1]
+                        if life_value.isdigit() and 0 <= int(life_value) <= 8:
+                            vie_ser.write(f"{life_value}\n".encode())
+                            print(f"(python) Commande vie envoyée au système série : ---{life_value}---")
+                            
+                            response = vie_ser.readline().decode('utf-8').strip()
+                            print(f"(python) Réponse du système série : {response if response else 'Aucune réponse reçue.'}")
                         else:
-                            print(f"(python) Données invalides reçues : {data_from_client}")
+                            print(f"(python) Valeur de vie invalide : {life_value}")
+                    else:
+                        print(f"(python) Données invalides reçues : {data_from_client}")
+                
                 except socket.error:
                     print("(python) Erreur de lecture du socket.")
-        
+
         gpio_value = input_line.get_value()
         if gpio_value == 1:
-            print("(python) Signal détecté sur le GPIO d'entrée ! Envoi de 'jump' au client.")
-            client_sock.sendall("jump\n".encode('utf-8'))
+            try:
+                client_sock.sendall("jump\n".encode('utf-8'))
+                print("(python) Signal détecté, 'jump' envoyé au client.")
+            except (BrokenPipeError, ConnectionResetError):
+                print("(python) Impossible d'envoyer 'jump', le client s'est déconnecté.")
         
         if joystick_up.get_value() == 1:
-            print("(python) Joystick en position haute détectée ! Envoi de 'up' au client.")
-            client_sock.sendall("up\n".encode('utf-8'))
+            try:
+                client_sock.sendall("up\n".encode('utf-8'))
+                print("(python) Joystick haut détecté, 'up' envoyé au client.")
+            except (BrokenPipeError, ConnectionResetError):
+                print("(python) Impossible d'envoyer 'up', le client s'est déconnecté.")
             time.sleep(0.1)
-        
+
         if joystick_down.get_value() == 1:
-            print("(python) Joystick en position basse détectée ! Envoi de 'down' au client.")
-            client_sock.sendall("down\n".encode('utf-8'))
+            try:
+                client_sock.sendall("down\n".encode('utf-8'))
+                print("(python) Joystick bas détecté, 'down' envoyé au client.")
+            except (BrokenPipeError, ConnectionResetError):
+                print("(python) Impossible d'envoyer 'down', le client s'est déconnecté.")
             time.sleep(0.1)
 
 except KeyboardInterrupt:
@@ -141,3 +159,4 @@ finally:
     client_sock.close()
     sock.close()
     print("(python) GPIO, port série et connexion TCP libérés.")
+
