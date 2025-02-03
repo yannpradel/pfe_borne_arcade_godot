@@ -1,11 +1,6 @@
 class_name ClientNode
 extends Node
 
-signal _connected      # Signal émis lors de la connexion au serveur
-signal _data_received  # Signal émis lorsqu'une donnée est reçue
-signal _disconnected   # Signal émis lors de la déconnexion
-signal error          # Signal émis en cas d'erreur
-
 var client := StreamPeerTCP.new()  # Créer un client TCP
 var server_ip := "127.0.0.1"       # Adresse IP du serveur
 var server_port := 12345           # Port du serveur
@@ -24,28 +19,9 @@ func _ready():
 		print("Nœud 'player' trouvé.")
 	connect_to_server()
 
-func _process(delta):
+func _process(_delta):
 	# Appeler poll() pour mettre à jour l'état de la connexion
 	client.poll()
-
-	# Vérifier le statut de la connexion
-	var new_status: int = client.get_status()
-	
-	# Si le statut a changé, mettre à jour et émettre les signaux appropriés
-	if new_status != _status:
-		_status = new_status
-		match _status:
-			client.STATUS_NONE:
-				print("Déconnecté du serveur.")
-				emit_signal("disconnected")
-			client.STATUS_CONNECTING:
-				print("Tentative de connexion au serveur...")
-			client.STATUS_CONNECTED:
-				print("Connexion au serveur réussie.")
-				emit_signal("connected")
-			client.STATUS_ERROR:
-				print("Erreur de connexion au serveur.")
-				emit_signal("error")
 
 	# Lire les données si connecté
 	if _status == client.STATUS_CONNECTED:

@@ -56,12 +56,15 @@ func _ready():
 	update_lives_label()
 	
 func _physics_process(delta):
+	# Vérifie si l'objet est bien dans l'arbre de scène avant d'exécuter la physique
+	if not is_inside_tree():
+		return
+
 	# Réinitialise la direction
 	move_direction = Vector3.ZERO
 	
 	if is_on_floor():
 		jump_count = 0  # Réinitialise le compteur de saut
-
 
 	# Ajout des directions via les flags UDP
 	if move_left_flag:
@@ -101,15 +104,17 @@ func _physics_process(delta):
 	# Gravité si le personnage est en l'air
 	if not is_on_floor():
 		target_velocity.y -= fall_acceleration * delta
-		
-	if global_transform.origin.y <= -200:
-		lives = 0
-		game_over()
 
+	# Vérifie si `global_transform` est bien accessible
+	if is_inside_tree() and has_method("get_global_transform"):
+		if global_transform.origin.y <= -200:
+			lives = 0
+			game_over()
 
-	# Déplacement final
-	velocity = target_velocity
-	move_and_slide()
+	# Déplacement final en s'assurant que l'objet est bien dans l'arbre
+	if is_inside_tree():
+		velocity = target_velocity
+		move_and_slide()
 
 	# Ajuste la vitesse des caméras
 	adjust_camera_speed(delta)
@@ -138,6 +143,8 @@ func jump():
 
 # Ajustement de la caméra pour suivre le personnage
 func adjust_camera_speed(delta):
+	if not is_inside_tree():
+		return
 	# Calcul de la position cible de la caméra
 	var camera_position = camera.global_transform.origin
 
@@ -165,22 +172,31 @@ func lose_life():
 		return
 
 	lives -= 1
-	# Envoie "Life:X" immédiatement si lives > 0
-	if client_node and client_node.is_connected:
-		client_node.send_data("Life:%d\n" % lives)
-	
-	print("Le joueur a perdu une vie. Vies restantes : ", lives)
+	print("🔴 Le joueur a perdu une vie. Vies restantes :", lives)
+
 	update_lives_label()
 
 	if lives <= 0:
-		# Pause pour envoyer "Life:X" avant que la scène ne disparaisse
-		if client_node and client_node.is_connected:
-			await get_tree().create_timer(0.2).timeout
-			client_node.send_data("Life:%d\n" % lives)
-		print("[GAME OVER] reset le nombre de vie", lives)
-		game_over()
+		print("[GAME OVER] Le joueur n'a plus de vie !")
+		
+		# Vérifie si l'objet est encore dans l'arbre avant d’appeler game_over
+		if not is_inside_tree():
+			print("⚠️ Le joueur n'est plus dans l'arbre, annulation de game_over()")
+			return
+		
+		# Utilise call_deferred pour s'assurer que game_over est appelé après ce cycle de frame
+		call_deferred("game_over")
 	else:
-		activate_invincibility()  # Active l'invincibilité
+		activate_invincibility()
+
+func game_over():
+	if get_tree() == null:
+		print("❌ Erreur : get_tree() est null, impossible de changer de scène.")
+		return
+	
+	print("🚀 Changement de scène vers Game Over...")
+	get_tree().change_scene_to_file("res://tscn_godot/game_over.tscn")  # Mets ici le bon chemin
+
 
 func activate_invincibility():
 	is_invincible = true
@@ -188,10 +204,6 @@ func activate_invincibility():
 
 func _on_invincibility_timeout():
 	is_invincible = false
-
-
-func game_over():
-	get_tree().change_scene_to_file("res://tscn_godot/game_over.tscn")  # Mets ici le chemin exact vers ta scène "game_over.tscn"
 
 func update_lives_label():
 	if lives_label:

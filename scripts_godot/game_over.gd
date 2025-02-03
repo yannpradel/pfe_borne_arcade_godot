@@ -1,9 +1,4 @@
 extends Control
-
-signal _connected
-signal _data_received
-signal _disconnected
-signal error
 	
 var client := StreamPeerTCP.new()
 var server_ip := "127.0.0.1"
@@ -26,7 +21,7 @@ func connect_to_server():
 	else:
 		print("[GODOT] Tentative de connexion en cours...")
 
-func _process(delta):
+func _process(_delta):
 	client.poll()
 	var new_status: int = client.get_status()
 	if new_status != _status:

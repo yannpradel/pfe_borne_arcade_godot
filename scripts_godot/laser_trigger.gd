@@ -173,7 +173,7 @@ func update_texture_position():
 		else:
 			texture_rect.position.x = 1050
 			
-func _remove_laser(laser_instance):
+func _remove_laser(_laser_instance):
 	if laser_instance:
 		laser_instance.queue_free()  # Supprime le laser après 1 seconde.")
 		

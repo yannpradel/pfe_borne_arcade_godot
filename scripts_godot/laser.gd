@@ -8,14 +8,17 @@ func _ready():
 	print("🚀 Laser activé, détecte les collisions !")
 
 func _on_body_entered(body):
-	print("🚀 Collision détectée avec :", body.name, "(", body.get_class(), ")")
+	if body.is_in_group("player"):  
+		print("🎯 Le joueur est touché ! Vies avant : ", body.lives)
+		
+		body.lose_life()  
 
-	if body.is_in_group("player"):  # 📌 Vérifie si c'est bien un joueur
-		print("🎯 Le joueur est touché !")
-		body.lose_life()  # 📌 Applique les dégâts au joueur
-	else:
-		print("⚠️ Collision ignorée :", body.name)
+		# Attendre un court instant avant de supprimer le laser
+		await get_tree().create_timer(0.5).timeout
+		_remove_laser()  
+
 
 func _remove_laser():
 	laser_active = false
-	queue_free()  # Supprime le laser proprement
+	await get_tree().create_timer(0.1).timeout
+	queue_free()
