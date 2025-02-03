@@ -1,4 +1,5 @@
 [gd_scene load_steps=145 format=3 uid="uid://dtbky5x6iqlws"]
+
 [ext_resource type="PackedScene" uid="uid://cfsde5bxeqxy3" path="res://tscn_godot/Player.tscn" id="1_pc7mc"]
 [ext_resource type="Script" path="res://scripts_godot/rotating_section.gd" id="3_dybc4"]
 [ext_resource type="PackedScene" uid="uid://cx6i0bl2twj5o" path="res://tscn_godot/map.tscn" id="4_hsnir"]
@@ -7,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts_godot/camera_3d_barnaby.gd" id="7_6gmvb"]
 [ext_resource type="Script" path="res://scripts_godot/camera_3d.gd" id="8_j71ug"]
 [ext_resource type="Script" path="res://scripts_godot/barnaby.gd" id="8_n1g66"]
-[ext_resource type="Texture2D" uid="uid://18g5cut7nwof" path="res://map/Barnaby_animation/ff.png" id="10_oum3l"]
+[ext_resource type="Texture2D" uid="uid://bj4uco7aiaord" path="res://map/Barnaby_animation/ff.png" id="10_oum3l"]
 [ext_resource type="Script" path="res://scripts_godot/laser_trigger.gd" id="11_8fb0u"]
 [ext_resource type="Texture2D" uid="uid://cwuexhmfvqmnk" path="res://map/Barnaby_animation/ff-2.png" id="11_bm10l"]
 [ext_resource type="PackedScene" uid="uid://bbtb5qtrnovpk" path="res://tscn_godot/laser_scene.tscn" id="12_cq0xo"]
@@ -16,8 +17,8 @@
 [ext_resource type="Texture2D" uid="uid://cxjx4on7rwms0" path="res://map/Barnaby_animation/ff-5.png" id="14_h6nol"]
 [ext_resource type="Texture2D" uid="uid://dci6ygtb8qbe8" path="res://map/Barnaby_animation/ff-6.png" id="15_nqr6g"]
 [ext_resource type="Texture2D" uid="uid://cke26a1upubm6" path="res://map/Barnaby_animation/ff-7.png" id="16_yxrnc"]
-[ext_resource type="Texture2D" uid="uid://fpelwpe4hsb6" path="res://map/Barnaby_animation/ff-8.png" id="17_krwsh"]
-[ext_resource type="Texture2D" uid="uid://dfwfscpyt53q" path="res://map/Barnaby_animation/ff-9.png" id="18_0tajt"]
+[ext_resource type="Texture2D" uid="uid://7nj70dhpub2l" path="res://map/Barnaby_animation/ff-8.png" id="17_krwsh"]
+[ext_resource type="Texture2D" uid="uid://ql2v81diwjw1" path="res://map/Barnaby_animation/ff-9.png" id="18_0tajt"]
 [ext_resource type="Texture2D" uid="uid://t0l54f0i8cco" path="res://map/Barnaby_animation/ff-10.png" id="19_piasj"]
 [ext_resource type="Texture2D" uid="uid://ck7t4piiadi7b" path="res://map/Barnaby_animation/ff-11.png" id="20_yqbwf"]
 [ext_resource type="Texture2D" uid="uid://cl56een0hv7gw" path="res://map/Barnaby_animation/ff-12.png" id="21_arerw"]
@@ -548,7 +549,7 @@ script = ExtResource("6_8ggdq")
 transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 10, -44.6349)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_pc7mc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -38.7007)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1281.59)
 
 [node name="FPSLabel" type="Label" parent="."]
 anchors_preset = 1
@@ -573,7 +574,7 @@ autoplay = true
 [node name="SubViewport" type="SubViewport" parent="."]
 
 [node name="Camera3DBarnaby" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, -22.1609)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.16462, 1298.13)
 current = true
 script = ExtResource("7_6gmvb")
 
@@ -593,7 +594,7 @@ grow_vertical = 2
 texture = SubResource("ViewportTexture_bvhiw")
 
 [node name="CameraPivot" type="Marker3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.999466, -0.0326668, 0, 0.0326668, 0.999466, 0, -4, 375.439)
+transform = Transform3D(1, 0, 0, 0, 0.999466, -0.0326668, 0, 0.0326668, 0.999466, 0, -4, 1695.73)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot"]
 transform = Transform3D(1, 0, 0, 0, 0.134591, 0.990902, 0, -0.990902, 0.134591, 0, 11.4867, -403.873)
@@ -611,7 +612,7 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.8113
 shape = SubResource("BoxShape3D_k1ef4")
 
 [node name="Barnaby" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(5.601, 0, 0, 0, 6, 0, 0, 0, 3, 0, 21.4052, -101.931)
+transform = Transform3D(5.601, 0, 0, 0, 6, 0, 0, 0, 3, 0, 21.4052, 1218.36)
 sprite_frames = SubResource("SpriteFrames_3lc51")
 animation = &"barnaby"
 frame_progress = 0.292294

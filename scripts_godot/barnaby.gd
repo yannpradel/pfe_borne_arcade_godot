@@ -1,16 +1,16 @@
 extends AnimatedSprite3D
 
-@onready var player := $"../Player"  # Référence au joueur
-@onready var camera2 := $"../SubViewport/Camera3DBarnaby"  # Référence à la caméra secondaire
-@onready var animated_sprite := $"../Barnaby"  # Référence à l'AnimatedSprite3D (dans la même scène ou sous ce noeud)
+@onready var player := $"../Player"
+@onready var camera2 := $"../SubViewport/Camera3DBarnaby"
+@onready var animated_sprite := $"../Barnaby"
 
-@export var max_camera_speed = 22.5  # Vitesse maximale de la caméra pour rattraper l'ennemi
-@export var camera_distance = 50.0  # Distance constante entre la caméra et l'ennemi
-@export var min_distance_from_player = 20.0  # Distance minimale entre le joueur et Barnaby
-@export var max_distance_x_from_player = 5.0  # Distance maximale autorisée en X entre Barnaby et le joueur
+@export var max_camera_speed = 22.5
+@export var camera_distance = 50.0
+@export var min_distance_from_player = 50.0
+@export var max_distance_z_from_player = 50
+@export var barnaby_speed = 10.0  # Vitesse de déplacement de Barnaby
 
 func _ready():
-	# Vérifie si l'animation "barnaby" existe
 	if sprite_frames.has_animation("barnaby"):
 		animation = "barnaby"
 		play()
@@ -22,39 +22,36 @@ func _process(delta):
 		print("Le joueur n'est pas trouvé !")
 		return
 
-	# Vérification de la distance avec le joueur
+	# Vérifier la distance et ajuster en douceur
 	adjust_distance_from_player(delta)
 
-	# Synchroniser la vitesse de l'ennemi sur l'axe Z avec celle du joueur
-	var player_velocity_z = player.get("velocity").z  # Suppose que le joueur utilise une propriété "velocity"
-	global_transform.origin.z += player_velocity_z * delta
+	# Synchroniser la vitesse en Z uniquement si le joueur bouge
+	# Synchroniser la vitesse en Z uniquement si le joueur bouge
+	var player_velocity_z = player.velocity.z if player is CharacterBody3D else 0
+	if abs(player_velocity_z) > 0.1:  # Se déplace uniquement si le joueur avance
+		global_transform.origin.z = move_toward(global_transform.origin.z, global_transform.origin.z + player_velocity_z * delta, barnaby_speed * delta)
 
-	# Ajuster la position de la caméra pour suivre Barnaby
+	# Ajuster la caméra en douceur
 	adjust_camera2_speed(delta)
 
-# Empêche le personnage de se rapprocher trop du joueur et de dépasser la distance X autorisée
 func adjust_distance_from_player(delta):
 	var player_position = player.global_transform.origin
 	var barnaby_position = global_transform.origin
 
-	# Distance en X et Z
-	var distance_x = abs(barnaby_position.x - player_position.x)
+	# Vérification de la distance uniquement sur Z
 	var distance_z = abs(barnaby_position.z - player_position.z)
 
-	# Correction si Barnaby est trop proche en Z
+	# Si Barnaby est trop proche, il doit s'arrêter et ne pas "s'envoler"
 	if distance_z < min_distance_from_player:
-		var direction_away = (barnaby_position - player_position).normalized()
-		global_transform.origin += direction_away * (min_distance_from_player - distance_z)
+		global_transform.origin.z = move_toward(barnaby_position.z, player_position.z - min_distance_from_player, barnaby_speed * delta)
 
-	# Correction si Barnaby dépasse en X
-	if distance_x > max_distance_x_from_player:
-		global_transform.origin.x = player_position.x + sign(barnaby_position.x - player_position.x) * max_distance_x_from_player
+	# Si Barnaby dépasse la distance max en Z, il doit être ramené progressivement
+	if distance_z > abs(max_distance_z_from_player):
+		global_transform.origin.z = move_toward(barnaby_position.z, player_position.z + max_distance_z_from_player, barnaby_speed * delta)
 
-# Ajustement de la vitesse de la deuxième caméra pour suivre Barnaby
 func adjust_camera2_speed(delta):
 	var target_camera_z = global_transform.origin.z + camera_distance
-	var camera_position = camera2.global_transform.origin.z
-	var camera_speed = (target_camera_z - camera_position) * max_camera_speed
+	var camera_position_z = camera2.global_transform.origin.z
 
-	camera_speed = clamp(camera_speed, -max_camera_speed, max_camera_speed)
-	camera2.global_transform.origin.z += camera_speed * delta
+	# Ajustement progressif de la caméra
+	camera2.global_transform.origin.z = move_toward(camera_position_z, target_camera_z, max_camera_speed * delta)
