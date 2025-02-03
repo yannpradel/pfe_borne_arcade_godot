@@ -11,7 +11,7 @@ texture = ExtResource("2_a3mf1")
 
 [sub_resource type="ImageTexture" id="ImageTexture_jd5yr"]
 
-[node name="Control" type="Control"]
+[node name="you_win" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

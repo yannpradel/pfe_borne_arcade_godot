@@ -10,13 +10,14 @@
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8l740"]
 texture = ExtResource("2_cbf3y")
 
-[node name="Control" type="Control"]
+[node name="game_over" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -1.0
-offset_right = -1.0
+offset_right = 35.0
+offset_bottom = 25.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.980293, 0.960159)
@@ -24,15 +25,15 @@ script = ExtResource("1_ui386")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 41.0
+offset_bottom = 42.0
 scale = Vector2(33.9798, 18.9452)
 theme_override_styles/panel = SubResource("StyleBoxTexture_8l740")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_right = 1363.0
-offset_bottom = 768.0
+offset_right = 1389.0
+offset_bottom = 806.0
 scale = Vector2(1, 0.988248)
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
