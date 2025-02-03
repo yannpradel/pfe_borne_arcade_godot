@@ -52,6 +52,7 @@ try:
     print("(python) Port série pour l'UNO initialisé avec succès.")
 except serial.SerialException as e:
     print(f"(python) Erreur lors de l'initialisation du port série pour l'UNO : {e}")
+
     vie_ser.close()
     exit(1)
     
@@ -68,6 +69,7 @@ try:
     
     client_sock, client_addr = sock.accept()
     print(f"(python) Connexion acceptée depuis {client_addr}.")
+
 except socket.error as e:
     print(f"(python) Erreur lors de l'initialisation du serveur TCP : {e}")
     exit(1)
@@ -148,6 +150,7 @@ try:
 except KeyboardInterrupt:
     print("(python) Fermeture du programme.")
 finally:
+    # ########### LIBÉRATION DES RESSOURCES ###########
     for line in lines:
         line.set_value(0)
         line.release()
@@ -159,4 +162,3 @@ finally:
     client_sock.close()
     sock.close()
     print("(python) GPIO, port série et connexion TCP libérés.")
-
