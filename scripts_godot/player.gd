@@ -182,7 +182,6 @@ func lose_life():
 	else:
 		activate_invincibility()  # Active l'invincibilité
 
-
 func activate_invincibility():
 	is_invincible = true
 	invincibility_timer.start()
