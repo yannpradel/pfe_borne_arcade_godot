@@ -12,6 +12,7 @@ var server_port := 12345           # Port du serveur
 
 var player: CharacterBody3D        # Référence au personnage à contrôler
 var _status: int = 0               # Statut de la connexion
+var mult: float = 1.5
 
 func _ready():
 	_status = client.get_status()
@@ -80,7 +81,11 @@ func _handle_data(data: String):
 			var x_str = command.split(":")[1]
 			var x = float(x_str)
 			print("Coordonnée extraite : X = %f" % x)
-			_move_player(x)
+			if Global.triggered == true:
+				_move_player(x*mult)
+			else:
+				_move_player(x)
+			
 
 		elif command.strip_edges() == "jump":
 			if player and player.has_method("jump"):
